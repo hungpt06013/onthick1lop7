@@ -3,48 +3,79 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Random 55 câu - Quiz</title>
+<title>Quiz — Random / Làm đề thi</title>
 <style>
-  body { font-family: Arial, sans-serif; max-width:900px; margin:24px auto; padding:12px; line-height:1.5; }
-  .card { border:1px solid #ddd; border-radius:8px; padding:18px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-  h1 { margin:0 0 12px 0; font-size:20px; }
-  .controls { margin:12px 0; display:flex; gap:8px; flex-wrap:wrap; }
-  button, a.btn { background:#2b7bf6; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-block; }
+  body { font-family: Arial, sans-serif; max-width:1100px; margin:20px auto; padding:12px; line-height:1.5; background:#f7f9fc; color:#111; }
+  .card { background:#fff; border:1px solid #e3e7ee; border-radius:10px; padding:18px; box-shadow:0 6px 18px rgba(30,40,50,0.06); }
+  header { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  h1 { margin:0; font-size:20px; }
+  .controls { display:flex; gap:8px; flex-wrap:wrap; }
+  button, a.btn { background:#2b7bf6; color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:600; }
   button.secondary { background:#6c757d; }
-  .question { margin-top:12px; font-weight:600; }
-  .options { margin-top:12px; }
+  button.ghost { background:transparent; color:#2b7bf6; border:1px solid #cfe0ff; }
+  .question { margin-top:12px; font-weight:700; }
+  .options { margin-top:8px; }
   .option { margin:6px 0; }
   .result { margin-top:12px; padding:10px; border-radius:6px; }
   .correct { background:#e6ffed; color:#065f2d; border:1px solid #b7f1c6; }
   .wrong { background:#ffecec; color:#6b0b0b; border:1px solid #f2b3b3; }
   .explain { margin-top:8px; font-size:0.95em; color:#333; }
-  small.source { color:#666; display:block; margin-top:8px; }
+  .exam-meta { display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap; }
+  .exam-question { padding:10px; border-radius:8px; border:1px solid #f0f3f7; margin-bottom:10px; background:#fff; }
+  .qnum { font-weight:700; margin-right:8px; color:#2b7bf6; }
+  .summary { margin-top:12px; padding:12px; border-radius:8px; background:#fff; border:1px solid #e6eefc; }
+  .small { font-size:0.9em; color:#555; }
+  .sticky-actions { position:sticky; top:12px; background:transparent; padding:6px 0; z-index:10; }
+  .muted { color:#666; font-size:0.95em; }
+  @media (max-width:700px){ .controls{width:100%;} header{flex-direction:column;align-items:flex-start;} }
 </style>
 </head>
 <body>
   <div class="card">
-    <h1>Quiz random — 55 câu (Trao đổi khí, Nước, Dinh dưỡng)</h1>
-    <div class="controls">
-      <a href="#" id="randomLink" class="btn">Lấy câu ngẫu nhiên</a>
-      <button id="nextBtn" class="btn secondary">Câu tiếp theo</button>
-      <button id="checkBtn" class="btn">Kiểm tra</button>
-      <button id="revealBtn" class="btn secondary">Hiện đáp án (bỏ qua kiểm tra)</button>
-    </div>
+    <header>
+      <div>
+        <h1>Quiz random — 55 câu</h1>
+        <div class="muted">Hai chế độ: lấy 1 câu ngẫu nhiên hoặc làm đề thi (55 câu).</div>
+      </div>
+      <div class="controls">
+        <a href="#" id="randomLink" class="btn">Lấy câu ngẫu nhiên</a>
+        <button id="examBtn" class="btn">Làm đề thi</button>
+        <button id="nextBtn" class="btn secondary">Câu tiếp theo</button>
+        <button id="checkBtn" class="btn">Kiểm tra (1 câu)</button>
+        <button id="revealBtn" class="btn ghost">Hiện đáp án (1 câu)</button>
+      </div>
+    </header>
 
-    <div id="quizArea">
-      <div id="qbox" class="question">Nhấn "Lấy câu ngẫu nhiên" để bắt đầu.</div>
-      <div id="choices" class="options"></div>
-      <div id="result" style="display:none" class="result"></div>
-      <div id="explain" class="explain"></div>
-      <small class="source">Nguồn: tệp câu hỏi bạn đã tải lên. :contentReference[oaicite:1]{index=1}</small>
-    </div>
+    <main id="mainArea" style="margin-top:14px;">
+      <div id="singleArea" class="">
+        <div id="qbox" class="question">Nhấn "Lấy câu ngẫu nhiên" để bắt đầu (chế độ 1 câu).</div>
+        <div id="choices" class="options"></div>
+        <div id="result" style="display:none" class="result"></div>
+        <div id="explain" class="explain"></div>
+      </div>
+
+      <div id="examArea" style="display:none; margin-top:12px;">
+        <div class="sticky-actions">
+          <button id="submitExam" class="btn">Nộp bài</button>
+          <button id="regenExam" class="btn secondary">Tạo đề khác</button>
+          <button id="backToSingle" class="btn ghost">Quay lại 1 câu</button>
+          <span class="small" style="margin-left:8px;">(55 câu — thứ tự câu và lựa chọn đã được xáo)</span>
+        </div>
+
+        <form id="examForm" style="margin-top:10px;"></form>
+
+        <div id="examResult" style="display:none;" class="summary"></div>
+      </div>
+    </main>
+
+    <footer style="margin-top:12px;">
+      <small class="small">Ghi chú: đáp án và giải thích nếu có sẽ hiển thị sau khi kiểm tra / nộp bài.</small>
+    </footer>
   </div>
 
 <script>
-/*
-  Dữ liệu câu hỏi (55 câu) — trích từ tệp người dùng.
-  Mỗi object: {id, text, options: [{key:'A', text:'...'},... ] OR null for Đ/S, answer: 'A'/'B'/... or 'Đ'/'S', explain: optional}
-*/
+/* --- Dữ liệu câu hỏi (55 câu) --- */
+/* Nếu bạn đã có 1 file nguồn khác, thay mảng này bằng nội dung tương ứng */
 const questions = [
   {id:1, text:"Trong quá trình trao đổi khí ở tế bào, loại khí nào sẽ khuếch tán từ máu vào tế bào?", options:[
     {key:'A', text:'Khí nitrogen'},
@@ -196,9 +227,9 @@ const questions = [
     {key:'C', text:'túi khí của cá bị khô khiến cá không thể thực hiện trao đổi khí.'},
     {key:'D', text:'hệ thống ống khí của cá bị khô khiến cá không thể thực hiện trao đổi khí.'}], answer:'B' },
 
-  {id:26, text:"Hít thở sâu là một trong những biện pháp giúp tăng cường sử dụng khí oxygen hiệu quả.", /* Đ/S */ answer:'Đ', options:null },
+  {id:26, text:"Hít thở sâu là một trong những biện pháp giúp tăng cường sử dụng khí oxygen hiệu quả.", answer:'Đ', options:null },
 
-  {id:27, text:"Người khỏe mạnh trung bình có thể nín thở từ 2-4 phút.", /* Đ/S */ answer:'S', options:null },
+  {id:27, text:"Người khỏe mạnh trung bình có thể nín thở từ 2-4 phút.", answer:'S', options:null },
 
   {id:28, text:"Khi hít vào, không khí ở môi trường ngoài đi qua đâu?", options:[
     {key:'A', text:'Khoang mũi -> khí quản -> phế quản -> phổi -> các phế nang trong phổi'},
@@ -206,9 +237,9 @@ const questions = [
     {key:'C', text:'Khoang mũi -> thanh quản -> phế quản -> phổi -> các phế nang trong phổi'},
     {key:'D', text:'Khoang mũi -> thanh quản -> phế quản -> phổi -> màng phổi'}], answer:'C' },
 
-  {id:29, text:"Ở các phế nang, oxygen khuếch tán vào phế nang và được vận chuyển...; carbon dioxide từ phế nang sẽ khuếch tán vào máu và được đưa ra ngoài qua thở ra.", /* Đ/S (sai) */ answer:'S', options:null },
+  {id:29, text:"Ở các phế nang, oxygen khuếch tán vào phế nang và được vận chuyển...; carbon dioxide từ phế nang sẽ khuếch tán vào máu và được đưa ra ngoài qua thở ra.", answer:'S', options:null },
 
-  {id:30, text:"Ở các phế nang, oxygen khuếch tán vào máu và ...; carbon dioxide từ máu sẽ khuếch tán vào phế nang và được đưa ra ngoài qua thở ra.", /* Đ/S (đúng) */ answer:'Đ', options:null },
+  {id:30, text:"Ở các phế nang, oxygen khuếch tán vào máu và ...; carbon dioxide từ máu sẽ khuếch tán vào phế nang và được đưa ra ngoài qua thở ra.", answer:'Đ', options:null },
 
   {id:31, text:"Cho các phát biểu (1)-(6) về trao đổi khí. Có bao nhiêu phát biểu sai?", options:[
     {key:'A', text:'1'},
@@ -240,7 +271,7 @@ const questions = [
     {key:'C', text:'3'},
     {key:'D', text:'4'}], answer:'B', explain:'Đáp án: cá, trai' },
 
-  {id:36, text:"Quá trình khuếch tán trong trao đổi khí ở sinh vật xảy ra tiêu tốn năng lượng.", /* Đ/S */ answer:'S', options:null },
+  {id:36, text:"Quá trình khuếch tán trong trao đổi khí ở sinh vật xảy ra tiêu tốn năng lượng.", answer:'S', options:null },
 
   {id:37, text:"Nước là", options:[
     {key:'A', text:'một dung môi'},
@@ -248,11 +279,11 @@ const questions = [
     {key:'C', text:'một huyền phù'},
     {key:'D', text:'một nhũ tương'}], answer:'A' },
 
-  {id:38, text:"Nước có khả năng hòa tan tốt được nhiều chất như: các muối tan, đường, …", /* Đ/S */ answer:'Đ', options:null },
+  {id:38, text:"Nước có khả năng hòa tan tốt được nhiều chất như: các muối tan, đường, …", answer:'Đ', options:null },
 
-  {id:39, text:"Nước có khả năng hòa tan tốt được nhiều khí như O2, CO2, …", /* Đ/S */ answer:'S', options:null, explain:'Chú thích: chỉ hòa tan được 1 phần (không hòa tan tốt nhiều khí như chất rắn)' },
+  {id:39, text:"Nước có khả năng hòa tan tốt được nhiều khí như O2, CO2, …", answer:'S', options:null, explain:'Chú thích: chỉ hòa tan được 1 phần (không hòa tan tốt nhiều khí như chất rắn)' },
 
-  {id:40, text:"Nước có khả năng phản ứng với một số chất hóa học khác.", /* Đ/S */ answer:'Đ', options:null },
+  {id:40, text:"Nước có khả năng phản ứng với một số chất hóa học khác.", answer:'Đ', options:null },
 
   {id:41, text:"Một phân tử nước được cấu tạo gồm", options:[
     {key:'A', text:'một nguyên tử oxygen và hai nguyên tử hydrogen liên kết với nhau bằng liên kết cộng hóa trị.'},
@@ -314,65 +345,56 @@ const questions = [
     {key:'C', text:'cung cấp đầy đủ các chất dinh dưỡng cho sự sinh trưởng và phát triển.'},
     {key:'D', text:'kích thích vị giác để dung nạp nhiều nhất có thể.'}], answer:'C' },
 
-  {id:51, text:"Chất dinh dưỡng của thực vật là muối khoáng được rễ hấp thụ từ đất.", /* Đ/S */ answer:'Đ', options:null },
+  {id:51, text:"Chất dinh dưỡng của thực vật là muối khoáng được rễ hấp thụ từ đất.", answer:'Đ', options:null },
 
-  {id:52, text:"Dựa vào tỉ lệ có trong tế bào, muối khoáng chia thành: nhóm chiếm tỉ lệ lớn gồm có C, H, O, N, P, …", /* Đ/S */ answer:'Đ', options:null },
+  {id:52, text:"Dựa vào tỉ lệ có trong tế bào, muối khoáng chia thành: nhóm chiếm tỉ lệ lớn gồm có C, H, O, N, P, …", answer:'Đ', options:null },
 
-  {id:53, text:"Ở thực vật, N có vai trò quan trọng vì N là thành phần cấu tạo nên lipid và chất diệp lục", /* Đ/S - sai */ answer:'S', options:null, explain:'Phải là protein, không phải lipid' },
+  {id:53, text:"Ở thực vật, N có vai trò quan trọng vì N là thành phần cấu tạo nên lipid và chất diệp lục", answer:'S', options:null, explain:'Phải là protein, không phải lipid' },
 
-  {id:54, text:"Ở thực vật, nhóm có tỉ lệ nhỏ gồm Fe, Zn, Cu, Mo,... tham gia điều hòa quá trình trao đổi chất. (Đ/S)", /* Đ/S */ answer:'Đ', options:null },
+  {id:54, text:"Ở thực vật, nhóm có tỉ lệ nhỏ gồm Fe, Zn, Cu, Mo,... tham gia điều hòa quá trình trao đổi chất. (Đ/S)", answer:'Đ', options:null },
 
-  {id:55, text:"Các chất dinh dưỡng sau khi hấp thụ sẽ được sử dụng làm nguyên liệu cấu tạo nên các hợp chất đặc trưng cho tế bào. (Đ/S)", /* Đ/S */ answer:'Đ', options:null }
+  {id:55, text:"Các chất dinh dưỡng sau khi hấp thụ sẽ được sử dụng làm nguyên liệu cấu tạo nên các hợp chất đặc trưng cho tế bào. (Đ/S)", answer:'Đ', options:null }
 ];
 
-// utility: shuffle array in-place
+/* --- Utilities --- */
 function shuffle(arr) {
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
 
-// state
+/* --- Single question mode state --- */
 let current = null;
 
-// render question
+/* render single question */
 function renderQuestion(q) {
   const qbox = document.getElementById('qbox');
   const choicesDiv = document.getElementById('choices');
   const resultDiv = document.getElementById('result');
   const explainDiv = document.getElementById('explain');
-  resultDiv.style.display='none';
-  explainDiv.textContent='';
-  choicesDiv.innerHTML='';
+  resultDiv.style.display = 'none';
+  explainDiv.textContent = '';
+  choicesDiv.innerHTML = '';
 
   qbox.textContent = 'Câu ' + q.id + ': ' + q.text;
 
   // build choices
   let opts = [];
-  if(q.options && Array.isArray(q.options)) {
-    // clone to avoid mutating original
-    opts = q.options.map(o=>({key:o.key, text:o.text}));
+  if (q.options && Array.isArray(q.options)) {
+    opts = q.options.map(o => ({ key: o.key, text: o.text }));
   } else {
-    // Đ/S question => provide options Đúng / Sai as keys Đ / S
-    opts = [{key:'Đ', text:'Đúng'}, {key:'S', text:'Sai'}];
+    opts = [{ key: 'Đ', text: 'Đúng' }, { key: 'S', text: 'Sai' }];
   }
-
-  // shuffle presentation order
   shuffle(opts);
-
-  // store mapping on current
-  current = {
-    q: q,
-    shownOptions: opts
-  };
+  current = { q: q, shownOptions: opts };
 
   const form = document.createElement('form');
-  form.id='qaForm';
-  opts.forEach((o, idx)=>{
-    const id = 'opt_'+idx;
+  form.id = 'qaForm';
+  opts.forEach((o, idx) => {
+    const id = 'opt_' + idx;
     const div = document.createElement('div');
-    div.className='option';
+    div.className = 'option';
     div.innerHTML = `<label><input type="radio" name="choice" value="${o.key}" id="${id}"> <strong>${o.key}.</strong> ${o.text}</label>`;
     form.appendChild(div);
   });
@@ -380,36 +402,33 @@ function renderQuestion(q) {
   choicesDiv.appendChild(form);
 }
 
-// pick random question and render
+/* pick random single question */
 function pickRandom() {
-  const idx = Math.floor(Math.random()*questions.length);
-  const q = questions[idx];
-  renderQuestion(q);
+  const idx = Math.floor(Math.random() * questions.length);
+  renderQuestion(questions[idx]);
 }
 
-// check answer
-function checkAnswer(showOnly=false) {
-  if(!current) return alert('Chưa có câu hỏi. Bấm "Lấy câu ngẫu nhiên" trước.');
+/* check answer for single */
+function checkAnswer(showOnly = false) {
+  if (!current) return alert('Chưa có câu hỏi. Bấm "Lấy câu ngẫu nhiên" trước.');
   const form = document.getElementById('qaForm');
-  if(!form) return;
+  if (!form) return;
   const selected = form.elements['choice'] ? form.elements['choice'].value : null;
 
   const resultDiv = document.getElementById('result');
   const explainDiv = document.getElementById('explain');
-  resultDiv.style.display='block';
+  resultDiv.style.display = 'block';
 
-  // if showOnly requested (hiển thị đáp án), treat as no selection
-  if(showOnly || !selected) {
-    // show correct answer
+  if (showOnly || !selected) {
     const corr = current.q.answer;
     let corrText = '';
-    if(current.q.options && current.q.options.length){
-      const found = current.q.options.find(o=>o.key === corr);
+    if (current.q.options && current.q.options.length) {
+      const found = current.q.options.find(o => o.key === corr);
       corrText = found ? `${corr}. ${found.text}` : corr;
     } else {
       corrText = (corr === 'Đ' ? 'Đúng' : (corr === 'S' ? 'Sai' : corr));
     }
-    resultDiv.className='result correct';
+    resultDiv.className = 'result correct';
     resultDiv.innerHTML = `<strong>Đáp án đúng:</strong> ${corrText}`;
     explainDiv.textContent = current.q.explain ? 'Ghi chú: ' + current.q.explain : '';
     return;
@@ -418,16 +437,15 @@ function checkAnswer(showOnly=false) {
   const correct = current.q.answer;
   const isCorrect = (selected === correct);
 
-  if(isCorrect) {
-    resultDiv.className='result correct';
+  if (isCorrect) {
+    resultDiv.className = 'result correct';
     resultDiv.innerHTML = '<strong>ĐÚNG.</strong>';
     explainDiv.textContent = current.q.explain ? 'Ghi chú: ' + current.q.explain : '';
   } else {
-    resultDiv.className='result wrong';
-    // find correct text
+    resultDiv.className = 'result wrong';
     let corrText = correct;
-    if(current.q.options && current.q.options.length){
-      const found = current.q.options.find(o=>o.key === correct);
+    if (current.q.options && current.q.options.length) {
+      const found = current.q.options.find(o => o.key === correct);
       corrText = found ? `${correct}. ${found.text}` : correct;
     } else {
       corrText = (correct === 'Đ' ? 'Đúng' : (correct === 'S' ? 'Sai' : correct));
@@ -437,26 +455,160 @@ function checkAnswer(showOnly=false) {
   }
 }
 
-// events
+/* --- Exam mode --- */
+let currentExam = null; // array of {q:..., shownOptions: [...]}
+
+/* Generate exam: random 55 questions and shuffle options per question */
+function generateExam() {
+  const pool = questions.slice(); // copy
+  shuffle(pool);
+  const examList = pool.slice(0, 55); // take first 55 (we have exactly 55)
+  // For each question, prepare options shuffled
+  const examPrepared = examList.map(q => {
+    let opts = [];
+    if (q.options && q.options.length) opts = q.options.map(o => ({ key: o.key, text: o.text }));
+    else opts = [{ key: 'Đ', text: 'Đúng' }, { key: 'S', text: 'Sai' }];
+    shuffle(opts);
+    return { q: q, shownOptions: opts };
+  });
+  currentExam = examPrepared;
+  renderExam();
+}
+
+/* Render full exam on page */
+function renderExam() {
+  document.getElementById('singleArea').style.display = 'none';
+  const examArea = document.getElementById('examArea');
+  examArea.style.display = 'block';
+  const form = document.getElementById('examForm');
+  form.innerHTML = '';
+  currentExam.forEach((item, idx) => {
+    const q = item.q;
+    const opts = item.shownOptions;
+    const qDiv = document.createElement('div');
+    qDiv.className = 'exam-question';
+    qDiv.id = 'exam_q_' + idx;
+    const qnum = document.createElement('div');
+    qnum.innerHTML = `<span class="qnum">${idx + 1}</span> <span class="small">Câu gốc #${q.id}</span><div style="margin-top:6px;font-weight:700;">${q.text}</div>`;
+    qDiv.appendChild(qnum);
+
+    const optContainer = document.createElement('div');
+    optContainer.className = 'options';
+    opts.forEach((o, j) => {
+      const rid = `exam_${idx}_opt_${j}`;
+      const wrap = document.createElement('div');
+      wrap.className = 'option';
+      wrap.innerHTML = `<label><input type="radio" name="q${idx}" value="${o.key}" id="${rid}"> <strong>${o.key}.</strong> ${o.text}</label>`;
+      optContainer.appendChild(wrap);
+    });
+    qDiv.appendChild(optContainer);
+
+    // hidden explain area to show after submit
+    const explainDiv = document.createElement('div');
+    explainDiv.className = 'explain';
+    explainDiv.id = `explain_${idx}`;
+    qDiv.appendChild(explainDiv);
+
+    form.appendChild(qDiv);
+  });
+
+  // ensure examResult hidden
+  document.getElementById('examResult').style.display = 'none';
+  // scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* Submit and grade exam */
+function submitExam() {
+  if (!currentExam || currentExam.length === 0) return alert('Chưa có đề. Bấm "Làm đề thi" để tạo đề.');
+  const form = document.getElementById('examForm');
+  let correctCount = 0;
+  currentExam.forEach((item, idx) => {
+    const q = item.q;
+    const userAnswer = form.elements['q' + idx] ? form.elements['q' + idx].value : null;
+    const correct = q.answer;
+    const questionDiv = document.getElementById('exam_q_' + idx);
+    const explainDiv = document.getElementById('explain_' + idx);
+
+    // Disable inputs for this question
+    const inputs = questionDiv.querySelectorAll('input[type=radio]');
+    inputs.forEach(inp => inp.disabled = true);
+
+    if (userAnswer && userAnswer === correct) {
+      correctCount++;
+      questionDiv.style.border = '1px solid #c7f0d0';
+      explainDiv.innerHTML = '<div style="color:#065f2d;font-weight:700">ĐÚNG</div>' + (q.explain ? '<div style="margin-top:6px;">Ghi chú: ' + q.explain + '</div>' : '');
+    } else {
+      questionDiv.style.border = '1px solid #f7caca';
+      // find correct text
+      let corrText = correct;
+      if (q.options && q.options.length) {
+        const found = q.options.find(o => o.key === correct);
+        corrText = found ? `${correct}. ${found.text}` : correct;
+      } else {
+        corrText = (correct === 'Đ' ? 'Đúng' : (correct === 'S' ? 'Sai' : correct));
+      }
+      explainDiv.innerHTML = `<div style="color:#6b0b0b;font-weight:700">SAI — đáp án đúng: ${corrText}</div>` + (q.explain ? '<div style="margin-top:6px;">Ghi chú: ' + q.explain + '</div>' : '');
+    }
+  });
+
+  // show summary
+  const total = currentExam.length;
+  const percent = Math.round((correctCount / total) * 100);
+  const examResult = document.getElementById('examResult');
+  examResult.style.display = 'block';
+  examResult.innerHTML = `<div style="font-size:1.05em;font-weight:700">Kết quả: ${correctCount} / ${total} đúng (${percent}%)</div>
+    <div class="small" style="margin-top:6px;">Bạn có thể bấm "Tạo đề khác" để làm lại đề khác, hoặc "Quay lại 1 câu" để dùng chế độ 1 câu.</div>`;
+  // scroll to result
+  examResult.scrollIntoView({ behavior: 'smooth' });
+}
+
+/* Reset to single-question view */
+function backToSingle() {
+  document.getElementById('examArea').style.display = 'none';
+  document.getElementById('singleArea').style.display = 'block';
+  // clear exam UI
+  document.getElementById('examForm').innerHTML = '';
+  currentExam = null;
+  // scroll up
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* --- Events --- */
 document.getElementById('randomLink').addEventListener('click', function(e){
   e.preventDefault();
   pickRandom();
 });
-
 document.getElementById('nextBtn').addEventListener('click', function(){
   pickRandom();
 });
-
 document.getElementById('checkBtn').addEventListener('click', function(){
   checkAnswer(false);
 });
-
 document.getElementById('revealBtn').addEventListener('click', function(){
   checkAnswer(true);
 });
+document.getElementById('examBtn').addEventListener('click', function(){
+  generateExam();
+});
+document.getElementById('submitExam').addEventListener('click', function(e){
+  e.preventDefault();
+  if(!confirm('Bạn chắc chắn nộp bài? Sau khi nộp sẽ hiện đáp án và không thể thay đổi câu đã chọn.')) return;
+  submitExam();
+});
+document.getElementById('regenExam').addEventListener('click', function(e){
+  e.preventDefault();
+  if(!confirm('Tạo đề khác sẽ làm mất trạng thái đề hiện tại. Tiếp tục?')) return;
+  generateExam();
+});
+document.getElementById('backToSingle').addEventListener('click', function(e){
+  e.preventDefault();
+  backToSingle();
+});
 
-// optional: show a random one at load
+/* Optional: show an initial random single question on load */
 // pickRandom();
+
 </script>
 </body>
 </html>
