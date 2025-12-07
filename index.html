@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Quiz — Trang chủ</title>
+<title>Thi cuối kì 1 — Trang chủ</title>
 <style>
   :root{--primary:#2b7bf6;--muted:#666;}
   body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#f3f6fb; margin:0; padding:18px; color:#111;}
@@ -38,12 +38,20 @@
     <div class="card">
       <header>
         <div>
-          <h1>Trang chủ — Quiz 56 câu</h1>
-          <div class="muted">Chọn chế độ: làm 1 câu ngẫu nhiên hoặc làm đề 56 câu.</div>
+          <h1>Trang chủ — Thi cuối kì 1</h1>
+          <div class="muted">Chọn môn, sau đó chọn chế độ: làm 1 câu ngẫu nhiên hoặc làm đề thi (toàn bộ câu).</div>
         </div>
-        <div class="home-actions">
-          <button id="modeRandom" class="btn">Random 1 câu</button>
-          <button id="modeExam" class="btn">Làm đề thi (56 câu)</button>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <select id="subjectSelect" style="padding:8px;border-radius:8px;border:1px solid #d6e6ff">
+            <option value="">Chọn môn</option>
+            <option value="tin">Tin học</option>
+            <option value="hoa">Hóa học</option>
+            <option value="gdcd">Giáo dục công dân</option>
+          </select>
+          <div class="home-actions">
+            <button id="modeRandom" class="btn" disabled>Random 1 câu</button>
+            <button id="modeExam" class="btn" disabled>Làm đề thi (toàn bộ)</button>
+          </div>
         </div>
       </header>
 
@@ -68,11 +76,11 @@
         <!-- khu vực cho đề thi -->
         <section id="examArea" style="display:none;margin-top:12px">
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button id="startExam" class="btn">Tạo đề (random 56 câu)</button>
+            <button id="startExam" class="btn">Tạo đề (toàn bộ câu)</button>
             <button id="submitExam" class="btn secondary">Nộp bài</button>
             <button id="regenExam" class="btn ghost">Tạo đề khác</button>
             <button id="backHome2" class="btn ghost">Quay lại trang chủ</button>
-            <div class="small" style="margin-left:8px">56 câu — thứ tự câu & lựa chọn được xáo</div>
+            <div class="small" style="margin-left:8px">Toàn bộ câu — thứ tự câu & lựa chọn được xáo</div>
           </div>
 
           <form id="examForm" style="margin-top:12px"></form>
@@ -81,7 +89,7 @@
 
         <!-- trang chủ (giới thiệu ngắn) -->
         <section id="homeIntro" style="margin-top:18px">
-          <div class="small">Nhấn một trong hai nút trên để bắt đầu. "Random 1 câu" chỉ lấy 1 câu, "Làm đề thi" sẽ tạo 56 câu không lặp.</div>
+          <div class="small">Chọn môn trước, sau đó nhấn một trong hai nút để bắt đầu. "Random 1 câu" chỉ lấy 1 câu, "Làm đề thi" sẽ tạo toàn bộ câu không lặp.</div>
         </section>
       </main>
 
@@ -92,520 +100,439 @@
   </div>
 
 <script>
-/* --- Dữ liệu 56 câu (mình dùng bộ câu bạn đã cung cấp) --- */
-const QUESTIONS = [
-  {id:1, text:"Trong quá trình trao đổi khí ở tế bào, loại khí nào sẽ khuếch tán từ máu vào tế bào?", options:[
-    {key:'A', text:'Khí nitrogen'},
-    {key:'B', text:'Khí carbon dioxide'},
-    {key:'C', text:'Khí oxygen'},
-    {key:'D', text:'Khí hydrogen'}], answer:'C' },
-
-  {id:2, text:"Trao đổi khí ở phổi là quá trình:", options:[
-    {key:'A', text:'Trao đổi khí ở phổi là sự khuếch tán của O2 từ không khí ở phổi vào máu.'},
-    {key:'B', text:'Trao đổi CO2 từ máu vào không khí ở phổi.'},
-    {key:'C', text:'Trao đổi khí ở phổi gồm sự khuếch tán của O2 từ máu vào không khí ở phổi và của CO2 từ không khí ở phổi vào máu.'},
-    {key:'D', text:'Trao đổi khí ở phổi gồm sự khuếch tán của O2 từ không khí ở phổi vào máu và của CO2 từ máu vào không khí ở phổi.'}], answer:'D' },
-
-  {id:3, text:"Quá trình hô hấp ở thực vật có ý nghĩa:", options:[
-    {key:'A', text:'Đảm bảo sự cân bằng O2 và CO2 trong khí quyển'},
-    {key:'B', text:'Tạo ra năng lượng cung cấp cho hoạt động sống của các tế bào và cơ thể sinh vật'},
-    {key:'C', text:'Làm sạch môi trường'},
-    {key:'D', text:'Chuyển hóa glucid thành CO2 và H2O'}], answer:'B' },
-
-  {id:4, text:"Cơ quan giúp thực vật trao đổi khí với môi trường là:", options:[
-    {key:'A', text:'Lục lạp'},
-    {key:'B', text:'Rễ'},
-    {key:'C', text:'Khí khổng'},
-    {key:'D', text:'Mô dậu'}], answer:'C' },
-
-  {id:5, text:"Cấu tạo của khí khổng:", options:[
-    {key:'A', text:'Mỗi khí khổng gồm hai tế bào hình hạt đậu nằm áp sát nhau, thành ngoài mỏng, thành trong dày.'},
-    {key:'B', text:'Mỗi khí khổng gồm bốn tế bào hình hạt đậu nằm áp sát nhau, thành ngoài mỏng, thành trong dày.'},
-    {key:'C', text:'Mỗi khí khổng gồm hai tế bào hình bầu dục nằm áp sát nhau.'},
-    {key:'D', text:'Mỗi khí khổng gồm hai tế bào hình que nằm áp sát nhau, thành ngoài mỏng, thành trong dày.'}], answer:'A' },
-
-  {id:6, text:"Chức năng của khí khổng:", options:[
-    {key:'A', text:'Trao đổi khí'},
-    {key:'B', text:'Thoát hơi nước'},
-    {key:'C', text:'Quang hợp'},
-    {key:'D', text:'Cả trao đổi khí và thoát hơi nước'}], answer:'D' },
-
-  {id:7, text:"Ở cá trao đổi khí diễn ra nhờ cơ quan:", options:[
-    {key:'A', text:'Mang'},
-    {key:'B', text:'Phổi'},
-    {key:'C', text:'Da'},
-    {key:'D', text:'Hệ thống ống khí'}], answer:'A' },
-
-  {id:8, text:"Phát biểu nào sau đây là sai khi nói về các hình thức trao đổi khí ở động vật?", options:[
-    {key:'A', text:'Giun đất trao đổi khí qua da.'},
-    {key:'B', text:'Cá trao đổi khí bằng mang.'},
-    {key:'C', text:'Châu chấu trao đổi khí bằng mang.'},
-    {key:'D', text:'Mèo trao đổi khí bằng phổi.'}], answer:'C' },
-
-  {id:9, text:"Cho các loài: Ếch trưởng thành; Châu chấu; Cá chép; Rắn hổ mang; Chim sẻ; Cua; Chuột đồng; Giun đất. Có bao nhiêu loài hô hấp bằng phổi?", options:[
-    {key:'A', text:'2'},
-    {key:'B', text:'3'},
-    {key:'C', text:'4'},
-    {key:'D', text:'5'}], answer:'C', explain:'Các loài hô hấp bằng phổi trong danh sách: Ếch trưởng thành, Rắn hổ mang, Chim sẻ, Chuột đồng.' },
-
-  {id:10, text:"Trong quá trình quang hợp ở thực vật, các khí được trao đổi qua khí khổng như thế nào?", options:[
-    {key:'A', text:'CO2 và O2 khuếch tán từ môi trường vào trong tế bào lá, hơi nước thoát ra ngoài.'},
-    {key:'B', text:'O2 và CO2 khuếch tán từ trong tế bào lá ra môi trường.'},
-    {key:'C', text:'O2 khuếch tán từ môi trường vào trong tế bào lá, CO2 khuếch tán từ trong tế bào lá ra môi trường.'},
-    {key:'D', text:'CO2 khuếch tán từ môi trường vào trong tế bào lá, O2 khuếch tán từ trong tế bào lá ra môi trường.'}], answer:'D' },
-
-  {id:11, text:"Có bao nhiêu quá trình dưới đây liên quan đến trao đổi khí? (1) Quang hợp ở thực vật (2) Hô hấp tế bào ở động vật (3) Hấp thụ nước ở rễ cây (4) Thoát hơi nước qua khí khổng (5) Hô hấp ở thực vật", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'C', explain:'Các quá trình liên quan: 1,2,5' },
-
-  {id:12, text:"Cho các phát biểu: (1) Trao đổi khí chỉ xảy ra ở động vật có phổi. (2) Quá trình trao đổi khí và hô hấp tế bào có mối liên hệ chặt chẽ. (3) Ở người, trao đổi khí xảy ra ở các mao mạch của phổi. (4) Sinh vật lấy khí O₂ hoặc CO₂ và thải khí ra môi trường theo khuếch tán. Có bao nhiêu phát biểu đúng?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'C', explain:'Đúng là 2,3,4' },
-
-  {id:13, text:"Cho các phát biểu: (1) Cơ chế trao đổi khí là khuếch tán từ nơi có nồng độ thấp sang cao. (2) Quá trình trao đổi khí ở động vật diễn ra chủ yếu qua hô hấp ngoài. (3) Thực vật trao đổi khí thông qua khí khổng. (4) Sản phẩm của hô hấp tế bào là nguyên liệu cho trao đổi khí. (5) Sự trao đổi khí giúp đảm bảo cho các hoạt động sống của cơ thể sinh vật. Có bao nhiêu phát biểu đúng?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'C', explain:'Đúng là 2,3,5' },
-
-  {id:14, text:"Cho các phát biểu về khí khổng: (1) Khí khổng gồm 2 tế bào hình hạt đậu. (2) Khí khổng chỉ mở vào ban đêm. (3) Thành trong tế bào khí khổng dày hơn thành ngoài. (4) Tế bào khí khổng chứa lục lạp. (5) Khí khổng đóng khi có ánh sáng và đủ nước. Có bao nhiêu phát biểu đúng?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'C', explain:'Đúng là 1,3,4' },
-
-  {id:15, text:"Sắp xếp trình tự trao đổi khí ở người: (1) CO2 từ các tế bào được vận chuyển theo máu về phổi. (2) O2 từ không khí khuếch tán qua phế nang vào máu. (3) Không khí đi vào cơ thể qua khoang mũi → hầu → khí quản → phế quản → phổi. (4) CO2 khuếch tán từ máu vào phế nang và được thải ra ngoài qua động tác thở ra. Chọn:", options:[
-    {key:'A', text:'1234'},
-    {key:'B', text:'3421'},
-    {key:'C', text:'3214'},
-    {key:'D', text:'2432'}], answer:'C' },
-
-  {id:16, text:"Trao đổi khí là", options:[
-    {key:'A', text:'sự trao đổi khí oxygen và khí carbon dioxide giữa cơ thể sinh vật và môi trường.'},
-    {key:'B', text:'sự trao đổi khí oxygen và khí carbon dioxide giữa sinh vật này và sinh vật khác.'},
-    {key:'C', text:'sự trao đổi khí hydrogen và khí carbon dioxide giữa cơ thể sinh vật và môi trường.'},
-    {key:'D', text:'sự trao đổi khí hyrogen và khí carbon dioxide giữa sinh vật này và sinh vật khác.'}], answer:'A' },
-
-  {id:17, text:"Sự trao đổi khí ở thực vật diễn ra trong", options:[
-    {key:'A', text:'hô hấp.'},
-    {key:'B', text:'quang hợp.'},
-    {key:'C', text:'quang hợp và hô hấp.'},
-    {key:'D', text:'hấp thụ kháng, quang hợp và hô hấp.'}], answer:'C' },
-
-  {id:18, text:"Quá trình trao đổi khí giữa cơ thể sinh vật với môi trường tuân theo cơ chế", options:[
-    {key:'A', text:'khuếch tán.'},
-    {key:'B', text:'bão hòa.'},
-    {key:'C', text:'thẩm thấu.'},
-    {key:'D', text:'thẩm tách.'}], answer:'A' },
-
-{id:19, text:"Cho bảng sau:<table class='question-table'><tr><th>Quá trình</th><th>Khí lấy vào</th><th>Khí thải ra</th></tr><tr><td>(1) Hô hấp ở động vật</td><td>(a) Khí oxygen</td><td>(c) Khí oxygen</td></tr><tr><td>(2) Hô hấp ở thực vật</td><td>(b) Khí carbon dioxide</td><td>(d) Khí carbon dioxide</td></tr><tr><td>(3) Quang hợp ở thực vật</td><td></td><td></td></tr></table>Cách ghép nối 3 cột để được các thông tin đúng khi nói về quá trình trao đổi khí ở động vật và thực vật là", options:[
-  {key:'A', text:'1-a,c; 2-a,d; 3-b,d.'},
-  {key:'B', text:'1-a,d; 2-a,d; 3-b,c.'},
-  {key:'C', text:'1-b,c; 2-a,d; 3-b,d.'},
-  {key:'D', text:'1-a,c; 2-b,d; 3-a,c.'}], answer:'B' },
-
-  {id:20, text:"Ở thực vật, trao đổi khí với môi trường chủ yếu qua", options:[
-    {key:'A', text:'tế bào biểu mô ở lá cây.'},
-    {key:'B', text:'tế bào biểu bì của lá cây.'},
-    {key:'C', text:'tế bào khí khổng ở lá cây.'},
-    {key:'D', text:'tế bào mô mềm ở lá cây.'}], answer:'C' },
-
-  {id:21, text:"Ở thực vật, vận chuyển khí O2 vào khoang chứa khí và CO2 ra ngoài qua khí khổng diễn ra vào", options:[
-    {key:'A', text:'ban ngày.'},
-    {key:'B', text:'ban đêm.'},
-    {key:'C', text:'ban ngày và ban đêm.'},
-    {key:'D', text:'lúc khí khổng đóng hoàn toàn.'}], answer:'C' },
-
-  {id:22, text:"Nhóm sinh vật trao đổi khí qua bề mặt cơ thể?", options:[
-    {key:'A', text:'Ruột khoang, giun tròn, giun dẹp, động vật nguyên sinh.'},
-    {key:'B', text:'Ruột khoang, giun tròn, giun dẹp, côn trùng, cá.'},
-    {key:'C', text:'Ruột khoang, giun tròn, giun dẹp, bò sát, côn trùng.'},
-    {key:'D', text:'Ruột khoang, giun tròn, giun dẹp, cá, chim, thú.'}], answer:'A' },
-
-{id:23, text:"Cho hình ảnh mô tả đường đi của khí qua các cơ quan hô hấp ở người sau:<br><img src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QLoRXhpZgAATU0AKgAAAAgABAE7AAIAAAAKAAABSodpAAQAAAABAAABVJydAAEAAAAUAAACzOocAAcAAAEMAAAAPgAAAAAc6gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGhhbSBIdW5nAAAFkAMAAgAAABQAAAKikAQAAgAAABQAAAK2kpEAAgAAAAMyNAAAkpIAAgAAAAMyNAAA6hwABwAAAQwAAAGWAAAAABzqAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyMDI1OjExOjMwIDIwOjIzOjE3ADIwMjU6MTE6MzAgMjA6MjM6MTcAAABQAGgAYQBtACAASAB1AG4AZwAAAP/hBBxodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvADw/eHBhY2tldCBiZWdpbj0n77u/JyBpZD0nVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkJz8+DQo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIj48cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPjxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSJ1dWlkOmZhZjViZGQ1LWJhM2QtMTFkYS1hZDMxLWQzM2Q3NTE4MmYxYiIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIi8+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iPjx4bXA6Q3JlYXRlRGF0ZT4yMDI1LTExLTMwVDIwOjIzOjE3LjIzNzwveG1wOkNyZWF0ZURhdGU+PC9yZGY6RGVzY3JpcHRpb24+PHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9InV1aWQ6ZmFmNWJkZDUtYmEzZC0xMWRhLWFkMzEtZDMzZDc1MTgyZjFiIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iPjxkYzpjcmVhdG9yPjxyZGY6U2VxIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+PHJkZjpsaT5QaGFtIEh1bmc8L3JkZjpsaT48L3JkZjpTZXE+DQoJCQk8L2RjOmNyZWF0b3I+PC9yZGY6RGVzY3JpcHRpb24+PC9yZGY6UkRGPjwveDp4bXBtZXRhPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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' class='question-image' alt='Sơ đồ hô hấp'><br>(1), (2), (3) lần lượt là", options:[
-  {key:'A', text:'khí quản; thanh quản; phế quản.'},
-  {key:'B', text:'thanh quản; khí quản; phế quản.'},
-  {key:'C', text:'phế quản; khí quản; thanh quản.'},
-  {key:'D', text:'thanh quản; phế quản; khí quản.'}], answer:'B' },
-
-  {id:24, text:"Vì sao vào ban đêm không nên đặt nhiều hoa/cây trong phòng ngủ đóng kín cửa?", options:[
-    {key:'A', text:'Vì khi không có ánh sáng, thực vật chỉ thực hiện hô hấp (lấy O2 và thải CO2) dẫn đến O2 cạn kiệt, CO2 tăng có thể gây ngạt.'},
-    {key:'B', text:'Vì khi không có ánh sáng, thực vật chỉ thực hiện hô hấp dẫn đến O2 và CO2 đều cạn kiệt.'},
-    {key:'C', text:'Vì trong phòng kín, thực vật chỉ thực hiện quang hợp dẫn đến O2 và CO2 đều cạn kiệt.'},
-    {key:'D', text:'Vì trong phòng kín, thực vật chỉ thực hiện quang hợp (lấy CO2 và thải O2) dẫn đến CO2 cạn kiệt.'}], answer:'A' },
-
-  {id:25, text:"Khi bắt cá bỏ lên môi trường trên cạn, sau 1 thời gian cá chết do:", options:[
-    {key:'A', text:'da cá bị khô khiến cá không thể thực hiện trao đổi khí.'},
-    {key:'B', text:'mang cá bị khô khiến cá không thể thực hiện trao đổi khí.'},
-    {key:'C', text:'túi khí của cá bị khô khiến cá không thể thực hiện trao đổi khí.'},
-    {key:'D', text:'hệ thống ống khí của cá bị khô khiến cá không thể thực hiện trao đổi khí.'}], answer:'B' },
-
-  {id:26, text:"Hít thở sâu là một trong những biện pháp giúp tăng cường sử dụng khí oxygen hiệu quả.", answer:'Đ', options:null },
-
-  {id:27, text:"Người khỏe mạnh trung bình có thể nín thở từ 2-4 phút.", answer:'S', options:null },
-
-  {id:28, text:"Khi hít vào, không khí ở môi trường ngoài đi qua đâu?", options:[
-    {key:'A', text:'Khoang mũi -> khí quản -> phế quản -> phổi -> các phế nang trong phổi'},
-    {key:'B', text:'Khoang mũi -> khí quản -> phế quản -> phổi -> màng phổi'},
-    {key:'C', text:'Khoang mũi -> thanh quản -> phế quản -> phổi -> các phế nang trong phổi'},
-    {key:'D', text:'Khoang mũi -> thanh quản -> phế quản -> phổi -> màng phổi'}], answer:'A' },
-
-  {id:29, text:"Ở các phế nang, oxygen khuếch tán vào phế nang và được vận chuyển đến để cung cấp cho các tế bào trong cơ thể; carbon dioxide từ phế nang sẽ khuếch tán vào máu và được đưa ra ngoài qua hoạt động thở ra.", answer:'S', options:null },
-
-  {id:30, text:"Ở các phế nang, oxygen khuếch tán vào máu và được vận chuyển đến để cung cấp cho các tế bào trong cơ thể; carbon dioxide từ máu sẽ khuếch tán vào phế nang và được đưa ra ngoài qua hoạt động thở ra.", answer:'Đ', options:null },
-
-  {id:31, text:"Cho các phát biểu sau: 1. Cơ quan trao đổi khí ở động vật không đa dạng. 2. Các loài động vật có thể trao đổi khí qua da, hệ thống ống khí, mang, phổi,… 3. Tất cả động vật đơn bào và đa bào đều trao đổi khí qua bề mặt cơ thể. 4. Các loài côn trùng trao đổi khí qua hệ thống ống khí. 5. Các loài sống dưới nước như cá, tôm, cua, trai, ... trao đổi khí qua mang. 6. Động vật thuộc lớp Bò sát, Chim, Thú trao đổi khí qua phổi. Có bao nhiêu phát biểu sai?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'B', explain:'Các phát biểu sai là 1 và 3 (theo đáp án: B)' },
-
-  {id:32, text:"Danh sách: Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua da?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'C', explain:'Các loài trao đổi qua da: thủy tức, sán lông, ếch' },
-
-  {id:33, text:"Danh sách: Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua phổi?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'D', explain:'Đáp án cung cấp là D: cá sấu, hươu cao cổ, chim bồ câu, ếch' },
-
-  {id:34, text:"Danh sách: Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua hệ thống ống khí?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'B', explain:'Đáp án: kiến, châu chấu' },
-
-  {id:35, text:"Danh sách: Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua mang?", options:[
-    {key:'A', text:'1'},
-    {key:'B', text:'2'},
-    {key:'C', text:'3'},
-    {key:'D', text:'4'}], answer:'B', explain:'Đáp án: cá, trai' },
-
-  {id:36, text:"Quá trình khuếch tán trong trao đổi khí ở sinh vật xảy ra tiêu tốn năng lượng.", answer:'S', options:null },
-
-  {id:37, text:"Nước là", options:[
-    {key:'A', text:'một dung môi'},
-    {key:'B', text:'một hỗn hợp'},
-    {key:'C', text:'một huyền phù'},
-    {key:'D', text:'một nhũ tương'}], answer:'A' },
-
-  {id:38, text:"Nước có khả năng hòa tan tốt được nhiều chất như: các muối tan, đường, …", answer:'Đ', options:null },
-
-  {id:39, text:"Nước có khả năng hòa tan tốt được nhiều khí như O2, CO2, …", answer:'S', options:null, explain:'Chú thích: chỉ hòa tan được 1 phần (không hòa tan tốt nhiều khí như chất rắn)' },
-
-  {id:40, text:"Nước có khả năng phản ứng với một số chất hóa học khác.", answer:'Đ', options:null },
-
-  {id:41, text:"Một phân tử nước được cấu tạo gồm", options:[
-    {key:'A', text:'một nguyên tử oxygen và hai nguyên tử hydrogen liên kết với nhau bằng liên kết cộng hóa trị.'},
-    {key:'B', text:'một nguyên tử oxygen và hai nguyên tử hydrogen liên kết với nhau bằng liên kết bổ sung.'},
-    {key:'C', text:'hai nguyên tử oxygen và một nguyên tử hydrogen liên kết với nhau bằng liên kết cộng hóa trị.'},
-    {key:'D', text:'hai nguyên tử oxygen và một nguyên tử hydrogen liên kết với nhau bằng liên kết bổ sung.'}], answer:'A' },
-
-  {id:42, text:"Phân tử nước có tính phân cực do", options:[
-    {key:'A', text:'nguyên tử oxygen có khả năng hút electron mạnh hơn nguyên tử hydrogen khiến đầu oxygen tích điện âm một phần còn đầu hydrogen tích điện dương một phần.'},
-    {key:'B', text:'nguyên tử oxygen có khả năng hút electron mạnh hơn nguyên tử hydrogen khiến đầu oxygen tích điện dương một phần còn đầu hydrogen tích điện âm một phần.'},
-    {key:'C', text:'nguyên tử hydrogen có khả năng hút electron mạnh hơn nguyên tử oxygen khiến đầu oxygen tích điện âm một phần còn đầu hydrogen tích điện dương một phần.'},
-    {key:'D', text:'nguyên tử hydrogen có khả năng hút electron mạnh hơn nguyên tử oxygen khiến đầu oxygen tích điện dương một phần còn đầu hydrogen tích điện âm một phần.'}], answer:'A' },
-
-  {id:43, text:"Nước có thể làm dung môi hòa tan nhiều chất là nhờ", options:[
-    {key:'A', text:'tính phân cực của nước.'},
-    {key:'B', text:'tính dẫn nhiệt của nước.'},
-    {key:'C', text:'tính dẫn điện của nước.'},
-    {key:'D', text:'tính chất lỏng của nước.'}], answer:'A' },
-
-  {id:44, text:"Cho đoạn thông tin sau: Nước chiếm hơn … (1)… khối lượng cơ thể sinh vật, một số loài sinh vật sống ở môi trường nước có hàm lượng nước trong cơ thể lên đến hơn … (2)… (các loài sứa biển). (1) và (2) lần lượt là", options:[
-    {key:'A', text:'(1) 70%; (2) 90%.'},
-    {key:'B', text:'(1) 60%; (2) 90%.'},
-    {key:'C', text:'(1) 70%; (2) 95%.'},
-    {key:'D', text:'(1) 75%; (2) 90%.'}], answer:'A' },
-
-  {id:45, text:"Cho các vai trò của nước: (1) Điều hòa thân nhiệt (2) Cung cấp năng lượng (3) Là dung môi hòa tan và vận chuyển các chất (4) Là nguyên liệu và môi trường cho phản ứng. Số vai trò của nước là", options:[
-    {key:'A', text:'1.'},
-    {key:'B', text:'2.'},
-    {key:'C', text:'3.'},
-    {key:'D', text:'4.'}], answer:'C' },
-
-  {id:46, text:"Các chất hóa học được cơ thể sinh vật hấp thụ từ môi trường bên ngoài (thức ăn, phân bón,…), có vai trò cung cấp nguyên liệu cấu tạo nên tế bào, tham gia các phản ứng hóa học trong tế bào và cung cấp năng lượng cho các hoạt động sống, sinh trưởng và phát triển của cơ thể sinh vật được gọi là", options:[
-    {key:'A', text:'chất dinh dưỡng.'},
-    {key:'B', text:'chất xúc tác sinh học.'},
-    {key:'C', text:'đại phân tử sinh học.'},
-    {key:'D', text:'chất điều hòa sinh trưởng.'}], answer:'A' },
-
-{id:47, text:"Cho bảng thông tin sau:<table class='question-table'><tr><th>Cột A</th><th>Cột B</th></tr><tr><td>(1) Các chất không cung cấp năng lượng</td><td>(a) Vitamin</td></tr><tr><td>(2) Các chất cung cấp năng lượng</td><td>(b) Carbohydrate<br>(c) Lipid<br>(d) Chất khoáng<br>(e) Protein</td></tr></table>Cách ghép nối cột A và cột B phù hợp là (Lưu ý: Chỉ cho động vật)", options:[
-  {key:'A', text:'1-a,b; 2-c,d,e.'},
-  {key:'B', text:'1-a,d; 2-b,c,e.'},
-  {key:'C', text:'1-a,c; 2-b,d,e.'},
-  {key:'D', text:'1-a,e; 2-b,c,d.'}], answer:'B' },
-
-{id:48, text:"Cho bảng sau:<table class='question-table'><tr><th>Nhóm chất</th><th>Vai trò</th></tr><tr><td>(1) Carbohydrate</td><td>(a) Tham gia cấu tạo màng sinh chất, dự trữ và cung cấp năng lượng cho cơ thể.</td></tr><tr><td>(2) Lipid</td><td>(b) Tham gia cấu tạo tế bào, cung cấp năng lượng, điều hóa các hoạt động của tế bào và cơ thể, vận chuyển các chất,...</td></tr><tr><td>(3) Protein</td><td>(c) Tham gia cấu tạo tế bào, cung cấp năng lượng.</td></tr><tr><td>(4) Vitamin và chất khoáng</td><td>(d) Tham gia cấu tạo tế bào, enzyme,... tham gia vào nhiều hoạt động chức năng sinh lí của tế bào và cơ thể (trao đổi chất, miễn dịch,...).</td></tr></table>Cách ghép nối nhóm chất với vai trò phù hợp là", options:[
-  {key:'A', text:'1-c, 2-a, 3-d, 4-b.'},
-  {key:'B', text:'1-c, 2-a, 3-b, 4-d.'},
-  {key:'C', text:'1-a, 2-b, 3-c, 4-d.'},
-  {key:'D', text:'1-a, 2-c, 3-b, 4-d.'}], answer:'B' },
-
-  {id:49, text:"Nitrogen có vai trò quan trọng vì", options:[
-    {key:'A', text:'nitrogen là thành phần cấu tạo protein, chất diệp lục,…'},
-    {key:'B', text:'nitrogen đảm bảo sự cân bằng nước và ion trong cây.'},
-    {key:'C', text:'nitrogen giữ vai trò chính trong việc đóng mở khí khổng.'},
-    {key:'D', text:'nitrogen giúp kích thích hấp thụ muối khoáng của rễ.'}], answer:'A' },
-
-  {id:50, text:"Chúng ta cần ăn nhiều loại thức ăn khác nhau chủ yếu để", options:[
-    {key:'A', text:'giúp hệ tiêu hóa hoạt động dễ dàng và hiệu quả hơn.'},
-    {key:'B', text:'đảm bảo cơ thể được cung cấp đủ lượng năng lượng cần thiết.'},
-    {key:'C', text:'cung cấp đầy đủ các chất dinh dưỡng cho sự sinh trưởng và phát triển.'},
-    {key:'D', text:'kích thích vị giác để dung nạp nhiều nhất có thể.'}], answer:'C' },
-
-  {id:51, text:"Chất dinh dưỡng của thực vật là muối khoáng được rễ hấp thụ từ đất. Đ/S", answer:'Đ', options:null },
-
-  {id:52, text:"Ở thực vật, dựa vào tỉ lệ có trong tế bào mà muối khoáng được chia thành: nhóm chiếm tỉ lệ lớn gồm có C, H, O, N, P, …, Đ/S", answer:'Đ', options:null },
-
-  {id:53, text:"Ở thực vật, N có vai trò quan trọng trong quá trình sinh trưởng và phát triển ở thực vật vì N là thành phần cấu tạo nên lipid và chất diệp lục Đ/S", answer:'S', options:null, explain:'Phải là protein, không phải lipid' },
-
-  {id:54, text:"Ở thực vật, dựa vào tỉ lệ có trong tế bào mà muối khoáng được chia thành: nhóm có tỉ lệ nhỏ gồm Fe, Zn, Cu, Mo, ... tham gia vào điều hoà quá trình trao đổi chất (ví dụ: Fe là thành phần của nhiều enzyme, ...) (Đ/S)", answer:'Đ', options:null },
-
-  {id:55, text:"Các chất dinh dưỡng sau khi được sinh vật hấp thụ vào cơ thể sẽ được sử dụng làm nguyên liệu cấu tạo nên các hợp chất đặc trưng cho tế bào và cơ thể. Các hợp chất đặc trưng này sẽ tham gia cấu tạo nên tế bào và cơ thể sinh vật. (Đ/S)", answer:'Đ', options:null },
-  {id:56, text:"Chì (Pb) là thành phần của nhiều enzyme ở thực vật", answer:'S', options:null, explain:'Pb thường ức chế hoạt động enzyme và gây ngộ độc, 1 lựa chọn đúng là Fe' }
+const QUESTIONS_GDCD = [
+  {id:1, text:"Hành vi nào sau đây thể hiện sự quan tâm, cảm thông và chia sẻ?", options:[{key:'A',text:'Chế giễu, mỉa mai những người khuyết tật.'},{key:'B',text:'Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.'},{key:'C',text:'Cười trên sự đau khổ của người khác.'},{key:'D',text:'Giúp đỡ người khác để được tiếng tốt và nổi danh.'}], answer:'B'},
+  {id:2, text:"Hành vi nào sau đây không thể hiện sự quan tâm, cảm thông và chia sẻ?", options:[{key:'A',text:'Giảng giúp bạn những bài chưa hiểu'},{key:'B',text:'Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.'},{key:'C',text:'Trò chuyện, giúp đỡ bạn khi bạn chưa quen nhiều bạn trong lớp'},{key:'D',text:'Giúp đỡ người khác để được khen và tặng quà.'}], answer:'D'},
+  {id:3, text:"Để cảm thông, quan tâm, chia sẻ với người khác mỗi chúng ta nên có biểu hiện nào sau đây?", options:[{key:'A',text:'Có lối sống ích kỷ, nhỏ nhen trước mọi người.'},{key:'B',text:'Sẵn sàng cho đi khi người khác gặp khó khăn, mất mát.'},{key:'C',text:'Quan tâm người khác khi bản thân thấy có lợi.'},{key:'D',text:'Sống khép mình, không quan tâm đến mọi quan hệ xung quanh.'}], answer:'B'},
+  {id:4, text:"Hành vi nào dưới đây không phải là biểu hiện của sự quan tâm, cảm thông và chia sẻ với người khác?", options:[{key:'A',text:'Thường xuyên hỏi thăm sức khỏe của người thân.'},{key:'B',text:'Giúp đỡ bố mẹ một số công việc trong nhà.'},{key:'C',text:'Thương cảm trước nỗi đau của người khác.'},{key:'D',text:'Bao che cho người thân khi họ mắc lỗi sai.'}], answer:'D'},
+  {id:5, text:"Câu tục ngữ nào nói về quan tâm, thông cảm, chia sẻ", options:[{key:'A',text:'Một miếng khi đói bằng một gói khi no'},{key:'B',text:'Đi một ngày đàng, học một sàng khôn'},{key:'C',text:'Một khó vàng không bằng một nang chữ'},{key:'D',text:'Muôn biết phải hỏi, muôn giỏi phải học'}], answer:'A'},
+  {id:6, text:"Câu tục ngữ nào dưới đây nói về sự quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Một con ngựa đau, cả tàu bỏ cỏ.'},{key:'B',text:'Chớ thấy sóng cả mà ngã tay chèo.'},{key:'C',text:'Uống nước nhớ nguồn.'},{key:'D',text:'Ở hiền gặp lành.'}], answer:'A'},
+  {id:7, text:"Gia đình P có hoàn cảnh khó khăn, bố mất sớm, mẹ P phải một mình làm lụng nuôi hai con. Gần đây, mẹ của P bị ốm nên P thường xuyên phải nghỉ học để chăm mẹ. Nếu là bạn cùng lớp, biết được hoàn cảnh của P em nên chọn cách ứng xử nào sau đây?", options:[{key:'A',text:'Kêu gọi các bạn cùng lớp quyên góp, hỗ trợ P.'},{key:'B',text:'Làm ngơ vì không liên quan đến bản thân mình.'},{key:'C',text:'Kêu gọi các bạn trong lớp xa lánh P vì nhà P nghèo.'},{key:'D',text:'Khuyên P nên nghỉ học để ở nhà làm việc giúp mẹ.'}], answer:'A'},
+  {id:8, text:"Cuối giờ học, M để nguyên cốc nhựa đựng nước ngọt trên bàn mà không đem bỏ vào thùng rác. Khi P nhắc nhở, M trả lời: \"Tại sao mình phải dọn dẹp, đó là việc của cô lao công cơ mà\". P giải thích và khuyên M nên cảm thông với sự vất vả của cô lao công, nhưng M không nghe và tỏ thái độ khó chịu. Trong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Cô lao công.'},{key:'B',text:'Bạn P.'},{key:'C',text:'Bạn M.'},{key:'D',text:'Hai bạn P và M.'}], answer:'C'},
+  {id:9, text:"A và N là bạn cùng lớp và ở gần nhà nhau. N bị ốm phải nghỉ học nhiều ngày. Hết giờ học, A sang nhà, đưa vở của mình cho N chép và giải thích những chỗ khó hiểu để N có thể theo kịp bào học trên lớp. H là bạn cùng lớp, thấy vậy, nên đã trách A làm thế là không đúng vì việc học là nhiệm vụ của học sinh, N phải tự tìm hiểu và hoàn thành nhiệm vụ học tập của mình. Trong trường hợp trên, bạn học sinh nào đã biết quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Bạn H.'},{key:'B',text:'Bạn A.'},{key:'C',text:'Bạn H và N.'},{key:'D',text:'Bạn A và H.'}], answer:'B'},
+  {id:10, text:"Nhà trường phát động phong trào quyên góp sách, báo, truyện… đánh tặng cho các bạn học sinh vùng cao. K và Q rất hào hứng tham gia, hai bạn còn tích cực vận động người thân, bạn bè cùng quyên góp. Trái lại, H tỏ thái độ khó chịu và chỉ rằng: \"Việc quan tâm, giáo dục và giúp đỡ trẻ em vùng cao đã có các cấp chính quyền lo, mình là học sinh, đóng góp được bao nhiêu đâu, tham gia làm gì cho mất thời gian\". Trong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Bạn K.'},{key:'B',text:'Bạn Q.'},{key:'C',text:'Bạn H.'},{key:'D',text:'Hai bạn K và Q.'}], answer:'C'},
+  {id:11, text:"Hành động nào sau đây là biểu hiện của học tập tự giác, tích cực?", options:[{key:'A',text:'Trước giờ đi học cần xoay sở, vội.'},{key:'B',text:'Luôn cố gắng, vượt khó, kiên trì trong học tập.'},{key:'C',text:'Luôn để bố mẹ gọi dậy đi học.'},{key:'D',text:'Trong giờ kiểm tra, nhìn bài bạn để đạt được điểm cao.'}], answer:'B'},
+  {id:12, text:"Biểu hiện nào sau đây đối lập với tinh tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chăm chỉ'},{key:'B',text:'Kiên trì'},{key:'C',text:'Cháy lười, ỷ lại'},{key:'D',text:'Siêng năng'}], answer:'C'},
+  {id:13, text:"Nhận định nào dưới đây đúng khi bàn về tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chỉ những bạn học kém mới cần tự giác, tích cực học tập.'},{key:'B',text:'Tự giác, tích cực học tập giúp chúng ta không ngừng tiến bộ.'},{key:'C',text:'Tự giác là lối sống vốn có của mỗi người, không cần rèn luyện.'},{key:'D',text:'Những người tự giác, tích cực học tập sẽ phải chịu nhiều thiệt thòi.'}], answer:'B'},
+  {id:14, text:"Nhận định nào dưới đây không đúng khi bàn về tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chỉ những bạn học sinh yếu kém mới cần tự giác, tích cực học tập.'},{key:'B',text:'Học tập tự giác, tích cực giúp ta có thêm kiến thức, mở rộng hiểu biết.'},{key:'C',text:'Người có đức tính tự giác, tích cực học tập sẽ được mọi người tôn trọng.'},{key:'D',text:'Học tập tự giác, tích cực giúp ta gặt hái nhiều thành công trong cuộc sống.'}], answer:'A'},
+  {id:15, text:"Học tập tự giác, tích cực là", options:[{key:'A',text:'chủ động nỗ lực học tập mỗi khi đến các kì thi quan trọng.'},{key:'B',text:'chủ động học tập khi có sự nhắc nhở của cha mẹ hoặc thầy cô.'},{key:'C',text:'chủ động nỗ lực khi được bố mẹ hứa thưởng sau đợt thi qua cao.'},{key:'D',text:'chủ động thực hiện đầy đủ, hiệu quả nhiệm vụ học tập đã đề ra.'}], answer:'D'},
+  {id:16, text:"Câu tục ngữ nào sau đây thể hiện học tập tự giác, tích cực?", options:[{key:'A',text:'Học không hay, cày không biết,'},{key:'B',text:'Đi cuộc đầu tay, đi cày mới gối.'},{key:'C',text:'Luyện mãi thành tài, miệt mãi tất giỏi.'},{key:'D',text:'Học trước quên sau.'}], answer:'C'},
+  {id:17, text:"Việc làm nào sau đây thể hiện tính tự giác, tích cực trong hoạt động học tập?", options:[{key:'A',text:'Hăng hái phát biểu xây dựng bài.'},{key:'B',text:'Dạy sớm tập thể dục thể thao.'},{key:'C',text:'Tôn trọng, quý mến mọi người.'},{key:'D',text:'Quan tâm, sẻ chia với mọi người.'}], answer:'A'},
+  {id:18, text:"Nội dung nào dưới đây không phải là biểu hiện của học tập tự giác, tích cực?", options:[{key:'A',text:'Lập thời gian biểu khoa học, hợp lí.'},{key:'B',text:'Quyết tâm thực hiện các mục tiêu học tập.'},{key:'C',text:'Xác định đúng mục tiêu học tập.'},{key:'D',text:'Luôn luôn chờ đợi vào sự giúp đỡ.'}], answer:'D'},
+  {id:19, text:"Câu tục ngữ nào sau đây nói lên học tập tự giác:", options:[{key:'A',text:'Kính lão đắc thọ'},{key:'B',text:'Nhà sạch thì mát, bát sạch ngon cơm'},{key:'C',text:'Buôn có bạn, bạn có phương'},{key:'D',text:'Học hành vất vả, kết quả ngọt bùi'}], answer:'D'},
+  {id:20, text:"Chủ thể nào dưới đây đã học tập tự giác, tích cực?", options:[{key:'A',text:'Bạn P thường xuyên trốn học để đi chơi game.'},{key:'B',text:'Mỗi khi gặp bài tập khó, T lại nhờ anh trai giải hộ.'},{key:'C',text:'Bạn K thường xuyên làm việc riêng trong giờ học.'},{key:'D',text:'Bạn C luôn hăng hái phát biểu, xây dựng bài học.'}], answer:'D'},
+  {id:21, text:"Trong giờ học trên lớp, nhóm em được giao một nhiệm vụ học tập. Trong khi các bạn khác đang tích cực thảo luận, H ngồi làm việc riêng. Khi các bạn nhắc nhở, H nói rằng chỉ cần đại diện một bạn trong nhóm thực hiện nhiệm vụ này, H hưởng trên cho nhanh thì bạn H thuộc tính nào?", options:[{key:'A',text:'Trung thực.'},{key:'B',text:'Tự giác, tích cực học tập.'},{key:'C',text:'Đoàn kết.'},{key:'D',text:'Cần cù lao động.'}], answer:'B'},
+  {id:22, text:"Hành vi nào dưới đây là biểu hiện của giờ chủ tín?", options:[{key:'A',text:'Hứa tất cả mọi việc để được khen của mọi người.'},{key:'B',text:'Luôn đến đúng giờ, giữ đúng lời hứa.'},{key:'C',text:'Mượn đồ của người khác nhưng không trả.'},{key:'D',text:'Lời nói không đi đôi với việc làm.'}], answer:'B'},
+  {id:23, text:"Hành vi nào sau đây là biểu hiện của giữ chữ tín?", options:[{key:'A',text:'Chỉ giữ lời hứa với những người lớn'},{key:'B',text:'Giữ lời hứa khi có điều kiện thực hiện'},{key:'C',text:'Chỉ thực hiện những lời hứa quan trọng'},{key:'D',text:'Giữ đúng lời hứa với mọi người'}], answer:'D'},
+  {id:24, text:"Câu ca dao \"Nói chín thì phải làm mười/ Nói mười làm chín kẻ cười người chê\" thể hiện đức tính nào sau đây?", options:[{key:'A',text:'Yêu thương con người'},{key:'B',text:'Giữ chữ tín'},{key:'C',text:'Tôn trọng người khác'},{key:'D',text:'Tự trọng'}], answer:'B'},
+  {id:25, text:"Hành động, việc làm nào sau đây không phải là biểu hiện của giữ chữ tín?", options:[{key:'A',text:'Giữ đúng lời hứa với mọi người.'},{key:'B',text:'Luôn đúng hẹn.'},{key:'C',text:'Làm tốt việc mình đã nhận.'},{key:'D',text:'Hứa suông cho xong việc.'}], answer:'D'},
+  {id:26, text:"Nhận định nào sau đây đúng khi bàn về vấn đề giữ chữ tín?", options:[{key:'A',text:'Chỉ những người buôn bán, kinh doanh mới cần giữ chữ tín.'},{key:'B',text:'Người trưởng thành mới cần giữ chữ tín, học sinh không cần.'},{key:'C',text:'Giữ chữ tín làm cho các mối quan hệ xã hội trở nên tốt đẹp.'},{key:'D',text:'Giữ chữ tín là lối sống gây gò bó, khó chịu cho mọi người.'}], answer:'C'},
+  {id:27, text:"Câu tục ngữ nào dưới đây phản ánh về việc giữ chữ tín?", options:[{key:'A',text:'Rao ngoạc, bán dá.'},{key:'B',text:'Treo đầu đê, bấn thịt chó.'},{key:'C',text:'Nói có sách, mách có chứng.'},{key:'D',text:'Chữ tín còn quý hơn vàng.'}], answer:'D'},
+  {id:28, text:"Câu ca dao \"Nói lời phải giữ lấy lời/ Đúng như con bướm đậu rồi lại bay\" khuyên chúng ta nên?", options:[{key:'A',text:'Tiết kiệm.'},{key:'B',text:'Dũng cảm.'},{key:'C',text:'Giữ chữ tín.'},{key:'D',text:'Tích cực học tập.'}], answer:'C'},
+  {id:29, text:"Chị L ở Long An, mua sách hàng ngày bằng nghề bán vé số. Một hôm, đã gần đến giờ xổ số mà chị vẫn còn nhiều vé. Chị lên gọi điện cho anh T mua 20 tờ vé số và nhờ chị L giữ hộ. Chiến thắng xổ số, khi có kết quả xổ số, anh T có những vé trúng giải đặc biệt, với tổng số tiền 6,6 tỉ đồng. Chị L đã trao tận tay anh T những tờ vé số trúng thưởng. Trường hợp này cho thấy chị L là người như thế nào?", options:[{key:'A',text:'Giả dối, không giữ chữ tín.'},{key:'B',text:'Biết giữ chữ tín trong kinh doanh.'},{key:'C',text:'Không có tâm nhìn xa trong kinh doanh.'},{key:'D',text:'Thông minh, nhạy bén trong buôn bán.'}], answer:'B'},
+  {id:30, text:"Bà M mở cửa hàng bán thực phẩm sạch. Để tăng lợi nhuận, bà M đã nhập thực phẩm ôi thiu được ngâm tẩm hóa chất độc hại, không rõ nguồn gốc xuất xứ về bán cho khách hàng. Trường hợp này cho thấy bà M là người như thế nào?", options:[{key:'A',text:'Trung thực, biết giữ chữ tín.'},{key:'B',text:'Nhạy bén trong kinh doanh.'},{key:'C',text:'Không giữ chữ tín với khách hàng.'},{key:'D',text:'Thông minh, sắp xếp công việc hiệu quả.'}], answer:'C'},
+  {id:31, text:"A và D là đôi bạn thân từ nhỏ, lại cùng học chung một lớp. Mấy hôm nay A bị ốm, D hứa với A buổi chiều sẽ mang vở đến cho bạn mượn để ghi lại bài và giúp bạn học. Nhưng đến chiều, do mải xem phim nên D đã không tới nhà A. Thấy vậy, mẹ D nhắc nhở, D bực bội nói: \"Ôi đào, chiều nay con không đến thì ngày mai cũng được mà, có sao đâu mẹ\". Trong trường hợp này, chủ thể nào không giữ chữ tín?", options:[{key:'A',text:'Bạn A.'},{key:'B',text:'Bạn D.'},{key:'C',text:'Mẹ bạn D.'},{key:'D',text:'Hai bạn A và D.'}], answer:'B'},
+  {id:32, text:"Chị X mở cửa hàng bán mĩ phẩm nhập khẩu Hàn Quốc. Để tăng lợi nhuận, chị X đã nhập hàng không rõ nguồn gốc xuất xứ về bán cho khách hàng. Trường hợp này cho thấy chị X là người như thế nào?", options:[{key:'A',text:'Trung thực, biết giữ chữ tín.'},{key:'B',text:'Nhạy bén trong kinh doanh.'},{key:'C',text:'Không giữ chữ tín với khách hàng.'},{key:'D',text:'Thông minh, sắp xếp công việc hiệu quả.'}], answer:'C'},
+  {id:33, text:"Di sản văn hóa bao gồm di sản văn hóa vật thể và", options:[{key:'A',text:'di sản văn hóa vật chất.'},{key:'B',text:'di sản văn hóa phi vật thể.'},{key:'C',text:'danh lam thắng cảnh,'},{key:'D',text:'di tích lịch sử - văn hóa.'}], answer:'B'},
+  {id:34, text:"Di sản văn hóa phi vật thể không bao gồm nội dung nào dưới đây?", options:[{key:'A',text:'Di vật, bảo vật quốc gia.'},{key:'B',text:'Lễu diễn dân ca truyền thống.'},{key:'C',text:'Trò chơi dân gian.'},{key:'D',text:'Lễ hội truyền thống.'}], answer:'A'},
+  {id:35, text:"Di sản nào dưới đây là di sản văn hóa vật thể?", options:[{key:'A',text:'Nhã nhạc cung đình Huế.'},{key:'B',text:'Dân ca Quan họ.'},{key:'C',text:'Văn Miếu – Quốc Tử Giám.'},{key:'D',text:'Không gian văn hóa cồng chiêng Tây Nguyên'}], answer:'C'},
+  {id:36, text:"Nhận định nào dưới đây không đúng về di sản văn hóa?", options:[{key:'A',text:'Chỉ những sản phẩm vật chất mới được coi là di sản văn hóa.'},{key:'B',text:'Di sản văn hóa là tài sản và niềm tự hào của toàn dân tộc.'},{key:'C',text:'Di sản văn hóa gồm: di sản vật thể và di sản phi vật thể.'},{key:'D',text:'Góp phần phát triển văn hóa Việt Nam tiến tiến, đậm đà bản sắc.'}], answer:'A'},
+  {id:37, text:"Hành vi nào sau đây thể hiện việc giữ gìn và phát huy di sản văn hóa?", options:[{key:'A',text:'Ông P tuyên truyền sai lệch về di sản văn hóa của địa phương.'},{key:'B',text:'Nhóm anh C tuyên bá làm điều dần ca quan họ cho thế hệ trẻ.'},{key:'C',text:'Anh K tổ chức văn chuyến trái phép cổ vật ra nước ngoài.'},{key:'D',text:'Bạn X có hành vi xả rác bừa bãi tại khu di tích lịch sử - văn hóa.'}], answer:'B'},
+  {id:38, text:"Hành vi nào sau đây không phù hợp với việc giữ gìn và phát huy di sản văn hóa?", options:[{key:'A',text:'Ông B cải giảu số cổ vật mà mình tìm được khi đào móng nhà.'},{key:'B',text:'Chị M tích cực quảng bá di sản văn hóa quê hương tới bạn bè quốc tế.'},{key:'C',text:'Tập thể lớp 7A tham gia quét dọn khu di tích lịch sử tại địa phương.'},{key:'D',text:'Nghệ nhân K mở lớp học để truyền lại kĩ thuật hát ca trù cho thế hệ trẻ.'}], answer:'A'},
+  {id:39, text:"Trong quá trình đào móng để làm lại nhà, ông K đã phát hiện ra một số chén đĩa, bình hoa bằng gốm sứ có hoa văn đẹp mắt. Hoa văn và màu men gốm trên sồ chén đĩa, bình hoa đó mang nét đặc trưng của triều đại thời Trần. Chuyền ông K đào được cổ vật truyền ra ngoại, có nhiều người tới hỏi mua và trả giá cao. Trong trường hợp trên, theo em, ông K nên lựa chọn cách ứng xử nào dưới đây?", options:[{key:'A',text:'Tổ chức đấu giá để bán số cổ vật vừa tìm được.'},{key:'B',text:'Cất giữ số cổ vật đó và coi đó là \"báo vật gia truyền\".'},{key:'C',text:'Cất giữ một nửa, còn một nửa thì nộp lại cho chính quyền địa phương.'},{key:'D',text:'Nhanh chóng báo cáo và giao nộp toàn bộ cổ vật cho cơ quan chức năng.'}], answer:'D'},
+  {id:40, text:"Trong một lần đi tham quan di tích Cột cờ Hà Nội, thấy trên bức tường, bìa di tích có những nét khắc, nét vẽ chứng chịt tên, ngày tháng của những người đên tham quan. Bạn T tỏ thái độ phê phán những việc làm đó. Ngược lại, bạn Q cho rằng việc khắc tên lên bìa đã là một cách lưu lại dấu ấn của du khách. Bạn P cũng đồng tình ý kiến của Q, bên cạnh đó, P còn rủ Q cùng khắc tên lên tường thành cổ. Trong trường hợp trên, bạn học sinh nào chưa có ý thức bảo vệ di sản văn hóa?", options:[{key:'A',text:'Bạn P.'},{key:'B',text:'Bạn Q.'},{key:'C',text:'Bạn P và Q.'},{key:'D',text:'Bạn T.'}], answer:'C'},
+  {id:41, text:"Một tấm bia Di tích lịch sử – văn hóa quốc gia đường Hồ Chí Minh đã bị các quẩn ấn, nhà hàng lấn chiếm đất, tiến sát đến chân công trình. Hơn nữa, các thông tin trên tấm bia đã bị xóa xóa, hủy hoại. Điều này đã làm ảnh hưởng đến an toàn giao thông, làm mất vẻ trang nghiêm, biến dạng hoàn toàn di tích lịch sử – văn hóa quốc gia này. Theo em, hành vi lẫn chiếm đất trên sẽ bị xử phạt như thế nào theo quy định của pháp luật?", options:[{key:'A',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi lẫn chiếm đất đai thuộc di tích lịch sử – văn hóa, danh lam thắng cảnh; '},{key:'B',text:'Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng đối với hành vi làm tư hại hiện vật trong di tích lịch sử - văn hóa đã được xếp hạng hoặc được đưa vào Danh mục kiểm kê di tích của địa phương.'},{key:'C',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với hành vi hủy hoại, làm thay đối yếu tố góc nhìn thành di tích lịch sử - văn hóa, danh lam thắng cảnh; '},{key:'D',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi sử dụng trái phép di tích lịch sử - văn hóa, danh lam thắng cảnh;'}], answer:'A'},
+  {id:42, text:"Trong lúc tham quan một di tích lịch sử – văn hóa cấp quốc gia, A dùng bút xóa để viết tên mình lên tường di tích khiến bề mặt di tích bị bẩn và phải mất nhiều thời gian để vệ sinh. Theo Nghị định 38/2021/NĐ-CP, hành vi của A có thể bị xử phạt bao nhiêu?", options:[{key:'A',text:'Phạt cảnh cáo'},{key:'B',text:'Phạt tiền từ 500.000 đồng đến 1.000.000 đồng'},{key:'C',text:'Phạt tiền từ 1.000.000 đồng đến 3.000.000 đồng'},{key:'D',text:'Phạt tiền từ 5.000.000 đồng đến 10.000.000 đồng'}], answer:'C'},
+  {id:43, text:"Một cơ sở sản xuất đồ lưu niệm từ ý lâm bán sao một cổ vật thuộc báo vật quốc gia để bán cho khách du lịch mà không xin giấy phép của cơ quan quản lý có thẩm quyền. Theo Nghị định 38/2021/NĐ-CP, cơ sở này có thể bị xử phạt ở mức nào?", options:[{key:'A',text:'Phạt tiền từ 10.000.000 đồng đến 20.000.000 đồng'},{key:'B',text:'Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng'},{key:'C',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng'},{key:'D',text:'Phạt tiền từ 50.000.000 đồng đến 70.000.000 đồng'}], answer:'C'},
+  {id:44, text:"Ngày Di sản văn hóa Việt Nam là ngày nào hằng năm?", options:[{key:'A',text:'Ngày 23 tháng 11.'},{key:'B',text:'Ngày 24 tháng 11.'},{key:'C',text:'Ngày 25 tháng 11.'},{key:'D',text:'Ngày 26 tháng 11.'}], answer:'A'}
 ];
 
-/* --- Helpers --- */
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+const QUESTIONS_HOA = [
+  {id:1, text:"Thành phần cấu tạo của hầu hết các loại nguyên tử gồm", options:[{key:'A',text:'Proton và electron.'},{key:'B',text:'Neutron và electron.'},{key:'C',text:'Proton và neutron.'},{key:'D',text:'Proton, neutron và electron.'}], answer:'D'},
+  {id:2, text:"Trong nguyên tử hạt nào có khối lượng xấp xỉ gần bằng nhau?", options:[{key:'A',text:'Electron và neutron.'},{key:'B',text:'Neutron và proton.'},{key:'C',text:'Electron và proton.'},{key:'D',text:'Electron, neutron và proton.'}], answer:'B'},
+  {id:3, text:"Trong nguyên tử, loại hạt có khối lượng không đáng kể so với các hạt còn lại là", options:[{key:'A',text:'proton.'},{key:'B',text:'neutron.'},{key:'C',text:'electron.'},{key:'D',text:'neutron và electron.'}], answer:'C'},
+  {id:4, text:"Trừ hạt nhân của nguyên tử hydrogen, hạt nhân các nguyên tử còn lại được tạo thành từ hạt", options:[{key:'A',text:'electron và proton.'},{key:'B',text:'electron, proton và neutron.'},{key:'C',text:'neutron và electron.'},{key:'D',text:'proton và neutron.'}], answer:'D'},
+  {id:5, text:"Các hạt cấu tạo nên hầu hết các nguyên tử là", options:[{key:'A',text:'electron và neutron.'},{key:'B',text:'proton và neutron.'},{key:'C',text:'neutron và electron.'},{key:'D',text:'electron, proton và neutron.'}], answer:'D'},
+  {id:6, text:"Trong nguyên tử, hạt mang điện là", options:[{key:'A',text:'electron.'},{key:'B',text:'electron và neutron.'},{key:'C',text:'proton và neutron.'},{key:'D',text:'proton và electron.'}], answer:'D'},
+  {id:7, text:"Thông tin nào sau đây không đúng?", options:[{key:'A',text:'Proton mang điện tích dương, nằm trong hạt nhân, khối lượng gần bằng 1 amu.'},{key:'B',text:'Electron mang điện tích âm, nằm trong hạt nhân, khối lượng gần bằng 0 amu.'},{key:'C',text:'Neutron không mang điện, khối lượng gần bằng 1 amu.'},{key:'D',text:'Nguyên tử trung hòa điện, có kích thước lớn hơn nhiều so với hạt nhân, nhưng có khối lượng gần bằng khối lượng hạt nhân.'}], answer:'B'},
+  {id:8, text:"Phát biểu nào dưới đây không đúng?", options:[{key:'A',text:'Nguyên tử được cấu thành từ các hạt cơ bản là proton, neutron và electron.'},{key:'B',text:'Hầu hết hạt nhân nguyên tử được cấu thành từ các hạt proton và neutron.'},{key:'C',text:'Vỏ nguyên tử được cấu thành bởi các hạt electron.'},{key:'D',text:'Nguyên tử có cấu trúc đặc khít, gồm vỏ nguyên tử và hạt nhân nguyên tử.'}], answer:'D'},
+  {id:9, text:"Hạt nhân của nguyên tử Sodium (Na) có 11 proton. Số hạt electron của nguyên tử Sodium (Na) là bao nhiêu?", options:[{key:'A',text:'9.'},{key:'B',text:'10.'},{key:'C',text:'11.'},{key:'D',text:'12.'}], answer:'C'},
+  {id:10, text:"Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron của nguyên tử calcium là bao nhiêu?", options:[{key:'A',text:'5.'},{key:'B',text:'10.'},{key:'C',text:'15.'},{key:'D',text:'20.'}], answer:'D'},
+  {id:11, text:"Phát biểu nào sau đây không mô tả đúng mô hình nguyên tử của Ro-đơ-pho - Bo?", options:[{key:'A',text:'Nguyên tử có cấu tạo rỗng, gồm hạt nhân ở tâm nguyên tử và các electron ở vỏ nguyên tử.'},{key:'B',text:'Nguyên tử có cấu tạo đặc khít, gồm hạt nhân nguyên tử và các electron.'},{key:'C',text:'Electron chuyển động xung quanh hạt nhân theo những quỹ đạo xác định tạo thành các lớp electron.'},{key:'D',text:'Hạt nhân nguyên tử mang điện tích dương, electron mang điện tích âm.'}], answer:'B'},
+  {id:12, text:"Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron ở lớp ngoài cùng của nguyên tử calcium là bao nhiêu?", options:[{key:'A',text:'2.'},{key:'B',text:'8.'},{key:'C',text:'10.'},{key:'D',text:'20.'}], answer:'A'},
+  {id:13, text:"Phát biểu nào sau đây không mô tả đúng vỏ nguyên tử theo mô hình nguyên tử của Ro-đơ-pho - Bo?", options:[{key:'A',text:'Electron chuyển động xung quanh hạt nhân theo từng lớp khác nhau tạo thành các lớp electron.'},{key:'B',text:'Lớp electron trong cùng gần hạt nhân nhất có tối đa 2 electron, các lớp electron khác có chứa tối đa 8 electron hoặc nhiều hơn.'},{key:'C',text:'Lớp electron trong cùng gần hạt nhân nhất có tối đa 8 electron, các lớp electron khác có chứa tối đa nhiều hơn 8 electron.'},{key:'D',text:'Các electron sắp xếp vào các lớp theo thứ tự từ trong ra ngoài cho đến hết.'}], answer:'C'},
+  {id:14, text:"Trong một nguyên tử có số proton bằng 5, số electron trong các lớp của vỏ nguyên tử, viết từ lớp trong ra lớp ngoài, lần lượt là", options:[{key:'A',text:'1, 8, 2.'},{key:'B',text:'2, 8, 1.'},{key:'C',text:'2, 3.'},{key:'D',text:'3, 2.'}], answer:'C'},
+  {id:15, text:"Nito (nitrogen) là nguyên tố hóa học phổ biến trong không khí. Trong hạt nhân nguyên tử nitơ có 7 proton. Số lớp electron của nguyên tử nitơ là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'5.'}], answer:'B'},
+  {id:16, text:"Trong hạt nhân nguyên tử fluorine có 9 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử fluorine là", options:[{key:'A',text:'2.'},{key:'B',text:'5.'},{key:'C',text:'7.'},{key:'D',text:'8.'}], answer:'C'},
+  {id:17, text:"Nguyên tử sulfur có 16 electron ở vỏ nguyên tử. Số electron ở lớp thứ 3 của nguyên tử sulfur là", options:[{key:'A',text:'2.'},{key:'B',text:'6.'},{key:'C',text:'8.'},{key:'D',text:'16.'}], answer:'B'},
+  {id:18, text:"Nguyên tử nhôm (aluminium) có 13 electron ở vỏ. Số electron ở lớp trong cùng của nguyên tử nhôm là", options:[{key:'A',text:'2.'},{key:'B',text:'8.'},{key:'C',text:'10.'},{key:'D',text:'18.'}], answer:'A'},
+  {id:19, text:"Cho các phát biểu: 1. Nguyên tử trung hòa về điện. 2. Khối lượng của nguyên tử tập trung chủ yếu ở hạt nhân. 3. Trong nguyên tử, số hạt mang điện tích dương bằng số hạt mang điện tích âm nên số hạt electron bằng số hạt neutron. 4. Vỏ nguyên tử, gồm các lớp electron có khoảng cách khác nhau đối với hạt nhân. Trong các phát biểu trên, số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
+  {id:20, text:"Hạt nhân một nguyên tử fluorine có 9 proton và 10 neutron. Khối lượng của nguyên tử fluorine xấp xỉ bằng", options:[{key:'A',text:'9 amu.'},{key:'B',text:'10 amu.'},{key:'C',text:'19 amu.'},{key:'D',text:'28 amu.'}], answer:'C'},
+  {id:21, text:"Muối ăn chứa hai nguyên tố hóa học là natri (sodium) và chlorine. Trong hạt nhân nguyên tử của natri và chlorine có lần lượt 11 và 17 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử", options:[{key:'A',text:'1 và 7.'},{key:'B',text:'3 và 9.'},{key:'C',text:'9 và 15.'},{key:'D',text:'3 và 7.'}], answer:'A'},
+  {id:22, text:"Trong hạt nhân nguyên tử lưu huỳnh (sulfur) có 16 proton. Số electron trong các lớp của vỏ nguyên tử sulfur, viết từ lớp trong ra lớp ngoài, lần lượt là", options:[{key:'A',text:'2, 10, 6.'},{key:'B',text:'2, 6, 8.'},{key:'C',text:'2, 8, 6.'},{key:'D',text:'2, 9, 5.'}], answer:'C'},
+  {id:23, text:"Cho các phát biểu sau: 1. Trong nguyên tử, hạt không mang điện là hạt electron. 2. Lớp vỏ của tất cả các nguyên tử đều chứa electron. 3. Tất cả các nguyên tử đều trung hòa về điện. 4. Trong nguyên tử, hạt mang điện là neutron và electron. 5. Khối lượng của hạt proton gấp hạt electron khoảng 1818 lần. Số phát biểu không đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'D'},
+  {id:24, text:"X là nguyên tố phổ biến thứ 4 trong vỏ trái đất, X có trong hemoglobin của máu làm nhiệm vụ vận chuyển oxygen, duy trì sự sống. Nguyên tử X có 26 proton trong hạt nhân. Cho các phát biểu sau về X: 1. X có 26 neutron trong hạt nhân. 2. X có 26 electron ở vỏ nguyên tử. 3. X có điện tích hạt nhân là +26. 4. Khối lượng nguyên tử X là 26 amu. Trong các phát biểu trên, số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'B'},
+  {id:25, text:"Cho các phát biểu sau: 1. Tất cả các hạt nhân nguyên tử đều chứa proton và neutron. 2. Khối lượng nguyên tử tập trung phần lớn ở lớp vỏ. 3. Trong nguyên tử, số electron bằng số proton. 4. Trong hạt nhân nguyên tử, hạt mang điện là proton và electron. 5. Trong nguyên tử, hạt electron có khối lượng không đáng kể so với các hạt còn lại. Số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'B'},
+  {id:26, text:"Nguyên tố hóa học là tập hợp các nguyên tử cùng loại có ...", options:[{key:'A',text:'cùng số neutron trong hạt nhân.'},{key:'B',text:'cùng số proton trong hạt nhân.'},{key:'C',text:'cùng số electron trong hạt nhân.'},{key:'D',text:'cùng số proton và neutron trong hạt nhân.'}], answer:'B'},
+  {id:27, text:"Nhận định đúng nhất là", options:[{key:'A',text:'Các nguyên tử thuộc cùng một nguyên tố hóa học thì có tính chất giống nhau.'},{key:'B',text:'Tập hợp các nguyên tử có cùng số proton đều thuộc cùng một nguyên tố hóa học.'},{key:'C',text:'Nguyên tố hóa học là những nguyên tử có cùng số neutron khác nhau số proton.'},{key:'D',text:'Nguyên tố hóa học là những nguyên tố có cùng điện tích hạt nhân.'}], answer:'B'},
+  {id:28, text:"Cho thành phần các nguyên tử sau: X (17p, 17e, 18n), Y (20p, 20e, 20n), Z (17p, 17e, 20n), T (19p,19e, 20n). Trong số các nguyên tử trên có bao nhiêu nguyên tố hóa học?", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
+  {id:29, text:"Cho các kí hiệu hóa học sau: H, Li, NA, O, Ne, AL, CA, K, N. Số kí hiệu hóa học viết đúng là", options:[{key:'A',text:'5.'},{key:'B',text:'6.'},{key:'C',text:'7.'},{key:'D',text:'4.'}], answer:'B'},
+  {id:30, text:"Đến nay con người đã tìm ra bao nhiêu nguyên tố hóa học?", options:[{key:'A',text:'118.'},{key:'B',text:'94.'},{key:'C',text:'20.'},{key:'D',text:'1 000'}], answer:'A'},
+  {id:31, text:"Điền từ thích hợp vào chỗ trống: \"Số ... là số đặc trung của một nguyên tố hóa học\".", options:[{key:'A',text:'electron.'},{key:'B',text:'proton.'},{key:'C',text:'neutron.'},{key:'D',text:'neutron và electron.'}], answer:'B'},
+  {id:32, text:"Kí hiệu hóa học của kim loại sodium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Na.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'B'},
+  {id:33, text:"Nguyên tử nào sau đây là nhẹ nhất?", options:[{key:'A',text:'Hydrogen.'},{key:'B',text:'Oxygen.'},{key:'C',text:'Carbon.'},{key:'D',text:'Iron.'}], answer:'A'},
+  {id:34, text:"Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây?", options:[{key:'A',text:'Ca.'},{key:'B',text:'S.'},{key:'C',text:'Na.'},{key:'D',text:'Mg.'}], answer:'B'},
+  {id:35, text:"Nguyên tử Ca nặng hơn hay nhẹ hơn so với nguyên tử O?", options:[{key:'A',text:'Nặng hơn 0,4 lần.'},{key:'B',text:'Nhẹ hơn 2,5 lần.'},{key:'C',text:'Nhẹ hơn 0,4 lần.'},{key:'D',text:'Nặng hơn 2,5 lần.'}], answer:'D'},
+  {id:36, text:"Cho các ký hiệu hóa học sau: Na, ZN, CA, Al, Ba, CU. Các ký hiệu hóa học nào viết sai?", options:[{key:'A',text:'Na, ZN, CA.'},{key:'B',text:'Al, Ba, CU.'},{key:'C',text:'ZN, CA, Al.'},{key:'D',text:'ZN, CA, CU.'}], answer:'D'},
+  {id:37, text:"Bốn nguyên tố thiết yếu nhất cho sinh vật là:", options:[{key:'A',text:'C, H, Na, Ca.'},{key:'B',text:'C, H, O, N.'},{key:'C',text:'C, H, O, Na.'},{key:'D',text:'C, H, O, Ca.'}], answer:'B'},
+  {id:38, text:"Kí hiệu hóa học của nguyên tố magnesium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'B'},
+  {id:39, text:"Kí hiệu hóa học của nguyên tố aluminium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'C'},
+  {id:40, text:"Kí hiệu hóa học của nguyên tố carbon là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'D'},
+  {id:41, text:"Kí hiệu hóa học của nguyên tố calcium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'A'},
+  {id:42, text:"Kí hiệu hóa học của nguyên tố oxygen là", options:[{key:'A',text:'Ox.'},{key:'B',text:'O.'},{key:'C',text:'Og.'},{key:'D',text:'Oxy.'}], answer:'B'},
+  {id:43, text:"Kí hiệu hóa học của nguyên tố nitrogen là", options:[{key:'A',text:'Ni.'},{key:'B',text:'No.'},{key:'C',text:'N.'},{key:'D',text:'Na.'}], answer:'C'},
+  {id:44, text:"Kí hiệu hóa học của nguyên tố chlorine là", options:[{key:'A',text:'Cl.'},{key:'B',text:'C.'},{key:'C',text:'Ch.'},{key:'D',text:'Cr.'}], answer:'A'},
+  {id:45, text:"Kí hiệu hóa học của nguyên tố potassium là", options:[{key:'A',text:'Po.'},{key:'B',text:'P.'},{key:'C',text:'K.'},{key:'D',text:'Ka.'}], answer:'C'},
+  {id:46, text:"Kí hiệu hóa học của nguyên tố sulfur là", options:[{key:'A',text:'S.'},{key:'B',text:'Su.'},{key:'C',text:'Sl.'},{key:'D',text:'Sf.'}], answer:'A'},
+  {id:47, text:"Kí hiệu hóa học của nguyên tố phosphorus là", options:[{key:'A',text:'Ph.'},{key:'B',text:'Po.'},{key:'C',text:'Ps.'},{key:'D',text:'P.'}], answer:'D'},
+  {id:48, text:"Kí hiệu hóa học của nguyên tố bạc (silver) là", options:[{key:'A',text:'Ag.'},{key:'B',text:'Ba.'},{key:'C',text:'Hg.'},{key:'D',text:'O.'}], answer:'A'},
+  {id:49, text:"Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây? (O=16; Ca=40; S=32; Na=23; Mg=12)", options:[{key:'A',text:'Ca.'},{key:'B',text:'S.'},{key:'C',text:'Na.'},{key:'D',text:'Mg.'}], answer:'B'},
+  {id:50, text:"Biết rằng 4 nguyên tử magnesium nặng bằng 3 nguyên tử nguyên tố X. X là nguyên tố nào? (C=12; Mg=24; O=16; Si=28; S=32)", options:[{key:'A',text:'C.'},{key:'B',text:'Si.'},{key:'C',text:'S.'},{key:'D',text:'O.'}], answer:'C'},
+  {id:51, text:"Biết nguyên tố Y có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của silicon. Y là nguyên tố nào sau đây? (O=16; Ca=40; S=32; Si=28; Fe=56; Cu=64; N=14)", options:[{key:'A',text:'Cu.'},{key:'B',text:'Fe.'},{key:'C',text:'Ca.'},{key:'D',text:'N.'}], answer:'B'},
+  {id:52, text:"Kí hiệu hóa học của nguyên tố barium là", options:[{key:'A',text:'Ag.'},{key:'B',text:'Ba.'},{key:'C',text:'Hg.'},{key:'D',text:'O.'}], answer:'B'},
+  {id:53, text:"Kí hiệu biểu diễn hai nguyên tử oxygen là", options:[{key:'A',text:'2O.'},{key:'B',text:'O₂.'},{key:'C',text:'2O₂.'},{key:'D',text:'-O.'}], answer:'A'},
+  {id:54, text:"Các nguyên tố nào sau đây thuộc nhóm VIA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Na, H, Mg, Ca.'},{key:'B',text:'F, Cl, Br, I.'},{key:'C',text:'O, S, Se, Te.'},{key:'D',text:'He, Ne, Ar, Kr.'}], answer:'C'},
+  {id:55, text:"Chu kì là tập hợp các nguyên tố hóa học có cùng .... trong nguyên tử theo hàng ngang.", options:[{key:'A',text:'số neutron trong hạt nhân.'},{key:'B',text:'số proton trong hạt nhân.'},{key:'C',text:'số electron.'},{key:'D',text:'số lớp electron.'}], answer:'D'},
+  {id:56, text:"Số thứ tự của chu kì trong bảng tuần hoàn nguyên tố hóa học cho ta biết thông tin nào?", options:[{key:'A',text:'Số lớp electron trong nguyên tử.'},{key:'B',text:'Số electron lớp ngoài cùng của nguyên tử.'},{key:'C',text:'Số điện tích của nguyên tử.'},{key:'D',text:'Số hạt proton trong hạt nhân nguyên tử.'}], answer:'A'},
+  {id:57, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì?", options:[{key:'A',text:'1 chu kì.'},{key:'B',text:'3 chu kì.'},{key:'C',text:'5 chu kì.'},{key:'D',text:'7 chu kì.'}], answer:'D'},
+  {id:58, text:"Nguyên tố Sodium (Na) có 3 lớp electron và lớp ngoài cùng có 1 electron, nguyên tố Na thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IIIA.'},{key:'B',text:'Nhóm IA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIA.'}], answer:'B'},
+  {id:59, text:"Nguyên tố potassium (K) có 4 lớp electron trong nguyên tử, nguyên tố K thuộc chu kì nào?", options:[{key:'A',text:'Chu kì 2.'},{key:'B',text:'Chu kì 3.'},{key:'C',text:'Chu kì 4.'},{key:'D',text:'Chu kì 5.'}], answer:'C'},
+  {id:60, text:"Cho các dãy nguyên tố hóa học sau: Li, Na, ?, Rb, Ce, Fr. Nguyên tố còn thiếu là", options:[{key:'A',text:'C.'},{key:'B',text:'Cl.'},{key:'C',text:'K.'},{key:'D',text:'Na.'}], answer:'C'},
+  {id:61, text:"Cho sơ đồ nguyên tử Na (sodium) như sau. [hình sẽ được update] Số hạt proton, số hạt electron và số lớp electron của nguyên tử Na là bao nhiêu?", options:[{key:'A',text:'Số p = 11, số e = 12; 3 lớp electron.'},{key:'B',text:'Số p = 11, số e = 11; 3 lớp electron.'},{key:'C',text:'Số p = 11, số e = 12; 4 lớp electron.'},{key:'D',text:'Số p = 11, số e = 11; 4 lớp electron.'}], answer:'B'},
+  {id:62, text:"Nguyên tố nào sau đây thuộc nhóm IA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Li.'},{key:'B',text:'Al.'},{key:'C',text:'N.'},{key:'D',text:'Cl.'}], answer:'A'},
+  {id:63, text:"Nguyên tố nitrogen thuộc nhóm nào trong bảng tuần hoàn nguyên tố hóa học?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIA.'},{key:'C',text:'Nhóm VA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'C'},
+  {id:64, text:"Nguyên tử chlorine (Cl) có 7 electron ở lớp ngoài cùng, nguyên tố Cl thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IVA.'},{key:'B',text:'Nhóm VIIA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIIIA.'}], answer:'B'},
+  {id:65, text:"Trong bảng tuần hoàn nguyên tố hóa học có bao nhiêu chu kì lớn và nhỏ?", options:[{key:'A',text:'3 chu kì lớn, 4 chu kì nhỏ.'},{key:'B',text:'1 chu kì lớn, 6 chu kì nhỏ.'},{key:'C',text:'5 chu kì lớn, 2 chu kì nhỏ.'},{key:'D',text:'4 chu kì lớn, 3 chu kì nhỏ.'}], answer:'D'},
+  {id:66, text:"Các nguyên tố nào sau đây thuộc nhóm VIIA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'C, H, Na, Ca.'},{key:'B',text:'F, Cl, Br, I.'},{key:'C',text:'Na, H, S, O.'},{key:'D',text:'He, Ne, Ar, Kr.'}], answer:'B'},
+  {id:67, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu nhóm A?", options:[{key:'A',text:'2 nhóm.'},{key:'B',text:'4 nhóm.'},{key:'C',text:'6 nhóm.'},{key:'D',text:'8 nhóm.'}], answer:'D'},
+  {id:68, text:"Nguyên tố Magnesium (Mg) có 3 electron trong nguyên tử, nguyên tố Mg thuộc chu kì nào?", options:[{key:'A',text:'Chu kì 1.'},{key:'B',text:'Chu kì 2.'},{key:'C',text:'Chu kì 3.'},{key:'D',text:'Chu kì 4.'}], answer:'C'},
+  {id:69, text:"Nguyên tố oxygen (O) có 6 electron ở lớp ngoài cùng, nguyên tố O thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IVA.'},{key:'B',text:'Nhóm VIIIA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIA.'}], answer:'D'},
+  {id:70, text:"Nguyên tố phosphorus (P) thuộc nhóm nào trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIIA.'},{key:'C',text:'Nhóm VA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'C'},
+  {id:71, text:"Số thứ tự của nhóm A trong bảng tuần hoàn các nguyên tố hóa học cho ta biết", options:[{key:'A',text:'Số lớp electron trong nguyên tử.'},{key:'B',text:'Số electron lớp ngoài cùng của nguyên tử.'},{key:'C',text:'Số điện tích hạt nhân của nguyên tử.'},{key:'D',text:'Số hạt proton trong hạt nhân nguyên tử.'}], answer:'B'},
+  {id:72, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì lớn?", options:[{key:'A',text:'3 chu kì lớn.'},{key:'B',text:'1 chu kì lớn.'},{key:'C',text:'5 chu kì lớn.'},{key:'D',text:'4 chu kì lớn.'}], answer:'D'},
+  {id:73, text:"Nhóm nguyên tố nào sau đây được gọi là nhóm halogen?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIA.'},{key:'C',text:'Nhóm IVA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'D'},
+  {id:74, text:"Cho sơ đồ nguyên tử Ca (calcium) như sau. [hình sẽ được update] Số hạt proton, số hạt electron và số lớp electron của nguyên tử Ca là bao nhiêu?", options:[{key:'A',text:'Số p = 20, số e = 20; 3 lớp electron.'},{key:'B',text:'Số p = 20, số e = 20; 4 lớp electron.'},{key:'C',text:'Số p = 20, số e = 21; 4 lớp electron.'},{key:'D',text:'Số p = 21, số e = 20; 3 lớp electron.'}], answer:'B'},
+  {id:75, text:"Bảng tuần hoàn các nguyên tố hóa học được sắp xếp theo nguyên tắc", options:[{key:'A',text:'nguyên tử khối tăng dần.'},{key:'B',text:'tính kim loại tăng dần.'},{key:'C',text:'điện tích hạt nhân tăng dần'},{key:'D',text:'tính phi kim tăng dần.'}], answer:'C'},
+  {id:76, text:"Số thứ tự chu kì trong bảng hệ thống tuần hoàn cho biết", options:[{key:'A',text:'Số thứ tự của nguyên tố.'},{key:'B',text:'Số hiệu nguyên tử.'},{key:'C',text:'Số electron lớp ngoài cùng.'},{key:'D',text:'Số lớp electron.'}], answer:'D'},
+  {id:77, text:"Số thứ tự nhóm A trong bảng hệ thống tuần hoàn cho biết:", options:[{key:'A',text:'Số electron lớp ngoài cùng.'},{key:'B',text:'Số lớp electron.'},{key:'C',text:'Số hiệu nguyên tử.'},{key:'D',text:'Số thứ tự của nguyên tố.'}], answer:'A'},
+  {id:78, text:"Trong bảng hệ thống tuần hoàn các nguyên tố hóa học, số chu kì nhỏ và chu kì lớn là", options:[{key:'A',text:'3 và 3.'},{key:'B',text:'4 và 3.'},{key:'C',text:'3 và 4.'},{key:'D',text:'4 và 4.'}], answer:'B'},
+  {id:79, text:"Chu kì 3 của bảng hệ thống tuần hoàn có", options:[{key:'A',text:'2 nguyên tố.'},{key:'B',text:'8 nguyên tố.'},{key:'C',text:'10 nguyên tố.'},{key:'D',text:'18 nguyên tố.'}], answer:'B'},
+  {id:80, text:"Chu kì 4 của bảng hệ thống tuần hoàn có", options:[{key:'A',text:'2 nguyên tố.'},{key:'B',text:'18 nguyên tố.'},{key:'C',text:'36 nguyên tố.'},{key:'D',text:'20 nguyên tố.'}], answer:'B'},
+  {id:81, text:"Nguyên tố X ở chu kì 3 nhóm IA, số đơn vị điện tích hạt nhân của nguyên tố X là", options:[{key:'A',text:'Z = 13.'},{key:'B',text:'Z = 10.'},{key:'C',text:'Z = 12.'},{key:'D',text:'Z = 11.'}], answer:'D'},
+  {id:82, text:"Biết cấu tạo nguyên tử X như sau: có 3 lớp electron, lớp ngoài cùng có 6 electron. Dựa vào bảng tuần hoàn thì nguyên tố X là", options:[{key:'A',text:'Chlorine (Z=17).'},{key:'B',text:'Phosphorus (Z=15).'},{key:'C',text:'Nitrogen (Z=7).'},{key:'D',text:'Sulfur (Z=16).'}], answer:'D'},
+  {id:83, text:"Nguyên tử của nguyên tố X có 3 lớp electron, lớp electron ngoài cùng có 7 electron. Vị trí của nguyên tố X trong bảng tuần hoàn là", options:[{key:'A',text:'chu kỳ 3, nhóm VI.'},{key:'B',text:'chu kỳ 7, nhóm III.'},{key:'C',text:'chu kỳ 3, nhóm VII.'},{key:'D',text:'chu kỳ 7, nhóm VI.'}], answer:'C'},
+  {id:84, text:"Nguyên tử của nguyên tố Y có 2 lớp electron, trong đó lớp ngoài cùng có 4 electron. Vị trí của Y trong bảng tuần hoàn là", options:[{key:'A',text:'chu kỳ 2, nhóm IVA.'},{key:'B',text:'chu kỳ 4, nhóm IIA.'},{key:'C',text:'chu kỳ 2, nhóm IIA.'},{key:'D',text:'chu kỳ 4, nhóm IVA.'}], answer:'A'},
+  {id:85, text:"Hạt nhân nguyên tử X có 15 proton. Vị trí của X trong bảng tuần hoàn là", options:[{key:'A',text:'số thứ tự 15, chu kì 3, nhóm VIIA.'},{key:'B',text:'số thứ tự 15, chu kì 2, nhóm VA.'},{key:'C',text:'số thứ tự 15, chu kì 3, nhóm VA.'},{key:'D',text:'số thứ tự 15, chu kì 4, nhóm VA.'}], answer:'C'},
+  {id:86, text:"Số hiệu nguyên tử của nguyên tố Y là 19. Vị trí của Y trong bảng tuần hoàn là", options:[{key:'A',text:'số thứ tự 19, chu kì 3, nhóm VIIA.'},{key:'B',text:'số thứ tự 19, chu kì 4, nhóm IA.'},{key:'C',text:'số thứ tự 19, chu kì 4, nhóm IIA.'},{key:'D',text:'số thứ tự 19, chu kì 3, nhóm IA.'}], answer:'B'},
+  {id:87, text:"Cho các nguyên tố sau: Ge, S, Br, Pb, C, Mo, Ba, Ar, Hg. Số nguyên tố kim loại, phi kim, khí hiếm lần lượt là", options:[{key:'A',text:'4, 4, 1.'},{key:'B',text:'4, 3, 2.'},{key:'C',text:'5, 2, 2.'},{key:'D',text:'5, 3, 1.'}], answer:'D'},
+  {id:88, text:"Cho các phát biểu sau: 1. Bảng tuần hoàn hiện nay sắp xếp theo chiều tăng dần khối lượng nguyên tử. 2. Nguyên tử các nguyên tố trong cùng một hàng có cùng số lớp electron. 3. Số thứ tự của nhóm A luôn luôn bằng số electron ở lớp vỏ ngoài cùng của nguyên tử nguyên tố thuộc nhóm đó. 4. Các nguyên tố nhóm halogen hầu hết là các nguyên tố kim loại. 5. Tất cả các nguyên tố nhóm VIIIA đều là khí hiếm. Số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
+  {id:89, text:"Phát biểu nào sau đây là đúng?", options:[{key:'A',text:'Bảng tuần hoàn gồm 116 nguyên tố hóa học.'},{key:'B',text:'Bảng tuần hoàn gồm 6 chu kì.'},{key:'C',text:'Bảng tuần hoàn gồm 8 nhóm A và 8 nhóm B.'},{key:'D',text:'Các nguyên tố trong bảng tuần hoàn được xếp theo chiều tăng dần khối lượng nguyên tử.'}], answer:'C'},
+  {id:90, text:"Vị trí kim loại kiềm trong bảng tuần hoàn các nguyên tố hóa học thường", options:[{key:'A',text:'ở đầu nhóm.'},{key:'B',text:'ở cuối nhóm.'},{key:'C',text:'ở đầu chu kì.'},{key:'D',text:'ở cuối chu kì.'}], answer:'A'}
+];
+
+const QUESTIONS_TIN = [
+  {id:1, text:"Micro là loại thiết bị nào?", options:[{key:'A',text:'Thiết bị vào.'},{key:'B',text:'Thiết bị ra.'},{key:'C',text:'Thiết bị vừa vào vừa ra.'},{key:'D',text:'Thiết bị lưu trữ.'}], answer:'A'},
+  {id:2, text:"Máy tính để bàn là một bộ gồm có các thành phần nào:", options:[{key:'A',text:'Hộp thân máy - Màn hình – Loa'},{key:'B',text:'Màn hình - Bàn phím và chuột – Máy chiếu'},{key:'C',text:'Bàn phím và chuột - Hộp thân máy - Màn hình'},{key:'D',text:'Máy in - Màn hình – Micro – Máy chiếu'}], answer:'C'},
+  {id:3, text:"Bàn phím và chuột thuộc nhóm thiết bị nào của máy tính?", options:[{key:'A',text:'Thiết bị vào/nhập'},{key:'B',text:'Thiết bị ra/xuất'},{key:'C',text:'Thiết bị lưu trữ'},{key:'D',text:'Thiết bị in ấn.'}], answer:'A'},
+  {id:4, text:"Hộp thân máy của máy tính để bàn chứa thành phần quan trọng nhất của máy tính, đó chính là:", options:[{key:'A',text:'Bộ trung tâm, bộ nguồn'},{key:'B',text:'Bộ xử lý, bộ tản nhiệt'},{key:'C',text:'Bộ xử lý trung tâm, bộ nhớ.'},{key:'D',text:'Các ổ đĩa.'}], answer:'C'},
+  {id:5, text:"CPU là viết tắt của cụm từ?", options:[{key:'A',text:'Processing Unit.'},{key:'B',text:'Central Unit.'},{key:'C',text:'Central Processing'},{key:'D',text:'Central Processing Unit.'}], answer:'D'},
+  {id:6, text:"Dữ liệu được lưu trữ lâu dài trong máy tính ngay cả khi tắt máy được chứa tại:", options:[{key:'A',text:'Bộ nhớ trong.'},{key:'B',text:'Bộ nhớ ngoài.'},{key:'C',text:'Bộ nguồn.'},{key:'D',text:'Bộ phận khác.'}], answer:'B'},
+  {id:7, text:"Thiết bị nào vừa giúp nhập và xuất của máy tính bảng hoặc điện thoại thông minh?", options:[{key:'A',text:'Màn hình.'},{key:'B',text:'Bàn phím'},{key:'C',text:'Màn hình cảm ứng.'},{key:'D',text:'Camera.'}], answer:'C'},
+  {id:8, text:"Bộ phận nào của máy tính để bàn có chức năng hiển thị kết quả xử lí thông tin hoặc thông báo tới người dùng máy tính?", options:[{key:'A',text:'Bộ nhớ.'},{key:'B',text:'Bàn phím.'},{key:'C',text:'Màn chiếu'},{key:'D',text:'Màn hình.'}], answer:'D'},
+  {id:9, text:"Chọn phát biểu đúng?", options:[{key:'A',text:'Điện thoại thông minh không thể coi là một loại máy tính.'},{key:'B',text:'Tất cả máy tính bảng đều không thể nghe, gọi điện thoại được.'},{key:'C',text:'Máy tính để bàn thường không dùng màn hình để nhập dữ liệu vào.'},{key:'D',text:'Màn hình cảm ứng chỉ là thiết bị ra.'}], answer:'C'},
+  {id:10, text:"Màn hình, Loa, Máy in, Máy chiếu được gọi tên chung là gì trên máy tính?", options:[{key:'A',text:'Thiết bị vào/nhập'},{key:'B',text:'Thiết bị ra/xuất'},{key:'C',text:'Thiết bị vừa nhập vừa xuất'},{key:'D',text:'Thiết bị lưu trữ dữ liệu.'}], answer:'B'},
+  {id:11, text:"Đâu là thiết bị xuất thông tin dạng văn bản và hình ảnh trên máy tính?", options:[{key:'A',text:'Bàn phím và máy in'},{key:'B',text:'Màn hình và máy in'},{key:'C',text:'Loa và Micro'},{key:'D',text:'Micro và máy chiếu'}], answer:'B'},
+  {id:12, text:"Chọn cụm từ còn thiếu trong dấu “…” của đoạn văn sau: “… là tên gọi chung của các thiết bị để khi hoạt động, máy tính giao tiếp với thế giới bên ngoài”.  (giao tiếp: tiếp nhận và xuất thông tin ra thế giới bên ngoài )", options:[{key:'A',text:'Màn hình cảm ứng.'},{key:'B',text:'Thiết bị vào.'},{key:'C',text:'Thiết bị ra.'},{key:'D',text:'Thiết bị vào – ra.'}], answer:'D'},
+  {id:13, text:"Thành phần nào của máy tính được coi là bộ não của máy tính?", options:[{key:'A',text:'CPU'},{key:'B',text:'RAM'},{key:'C',text:'ROM'},{key:'D',text:'Đĩa cứng.'}], answer:'A'},
+  {id:14, text:"Đâu là thiết bị ra xuất thông tin dạng âm thanh của máy tính?", options:[{key:'A',text:'Máy in'},{key:'B',text:'Loa của máy tính'},{key:'C',text:'Máy quét'},{key:'D',text:'Máy tính có camera.'}], answer:'B'},
+  {id:15, text:"Đâu là nhận định đúng?", options:[{key:'A',text:'Thiết bị vào – ra có thể thu nhận thông tin đưa vào máy tính.'},{key:'B',text:'Thiết bị vào – ra không thể xuất thông tin ra khỏi máy tính dưới dạng quen thuộc với con người.'},{key:'C',text:'Không thể đọc hay lưu trữ dữ liệu số từ máy tính vào vật lưu trữ hoặc gửi lên mạng.'},{key:'D',text:'Thiết bị vào – ra không phải là tên gọi chung của các thiết bị như chuột, màn hình, bàn phím, loa…'}], answer:'A'},
+  {id:16, text:"Nếu muốn trò chuyện video với bạn thì máy tính để bàn của em thường cần có những thiết bị nào?", options:[{key:'A',text:'Camera và micro'},{key:'B',text:'Camera'},{key:'C',text:'Không cần gì thêm.'},{key:'D',text:'Micro'}], answer:'A'},
+  {id:17, text:"Chuột của máy tính để bàn có thể được kết nối bằng cổng nào?", options:[{key:'A',text:'HDMI'},{key:'B',text:'VGA'},{key:'C',text:'USB (PS/2)'},{key:'D',text:'LAN'}], answer:'C'},
+  {id:18, text:"Máy tính đang mở một tệp trên USB. Hãy chọn cách sắp xếp lại thứ tự các thao tác sau để tắt máy tính an toàn, không làm mất dữ liệu. 1. Chọn nút lệnh Shutdown (turn off) để tắt máy tính. 2. Đóng tệp đang mở trên USB. 3. Chọn “Safe To Remove Hardware” để ngắt kết nối với USB. 4. Lưu lại nội dung của tệp.", options:[{key:'A',text:'4 – 3 – 2 – 1'},{key:'B',text:'4 – 2 – 3 – 1'},{key:'C',text:'2 – 3 –1 – 4'},{key:'D',text:'1 – 4 – 2 – 3'}], answer:'B'},
+  {id:19, text:"Thao tác nào sau đây tắt máy tính 1 cách an toàn.", options:[{key:'A',text:'Sử dụng nút lệnh Restart của Windows.'},{key:'B',text:'Chọn lệnh Shutdown của Windows.'},{key:'C',text:'Nhấn giữ công tắc nguồn.'},{key:'D',text:'Rút dây nguồn khỏi ổ cắm.'}], answer:'B'},
+  {id:20, text:"Cổng bên có tên gì: [hình sẽ được update]", options:[{key:'A',text:'VGA'},{key:'B',text:'HDMI'},{key:'C',text:'PS/2'},{key:'D',text:'LAN'}], answer:'B'},
+  {id:21, text:"Chuột và bàn phím hiện nay phổ biến sử dụng đầu cắm nào:", options:[{key:'A',text:'USB'},{key:'B',text:'HDMI'},{key:'C',text:'VGA.'},{key:'D',text:'LAN'}], answer:'A'},
+  {id:22, text:"Khi bạn sử dụng đầu cắm VGA thì bạn cần cắm vào cổng nào trong các hình sau đây: [hình sẽ được update]", options:[{key:'A',text:'HDMI'},{key:'B',text:'VGA'},{key:'C',text:'LAN'},{key:'D',text:'DVI'}], answer:'B'},
+  {id:23, text:"Việc làm nào không nên khi làm việc với các thiết bị vào-ra trong máy tính.", options:[{key:'A',text:'Dịch chuyển màn hình làm cáp màn hình kéo căng.'},{key:'B',text:'Cắm sai cổng cho các thiết bị vào- ra với máy tính.'},{key:'C',text:'Đập vào thùng máy khi nó không hoạt động.'},{key:'D',text:'Tất cả các việc làm được nêu.'}], answer:'D'},
+  {id:24, text:"Phát biểu nào sau đây đúng?", options:[{key:'A',text:'On-screen Keyboard là phần cứng máy tính.'},{key:'B',text:'On-screen Keyboard là phần mềm máy tính'},{key:'C',text:'On-screen Keyboard là hệ điều hành.'},{key:'D',text:'On-screen Keyboard là tên của thiết bị xuất.'}], answer:'B'},
+  {id:25, text:"Chức năng nào sau đây KHÔNG phải là của Hệ điều hành?", options:[{key:'A',text:'Quản lí các tệp dữ liệu trên đĩa.'},{key:'B',text:'Tạo và chỉnh sửa nội dung một tệp văn bản.'},{key:'C',text:'Điều khiển các thiết bị vào ra.'},{key:'D',text:'Quản lí giao diện giữa người sử dụng và máy tính.'}], answer:'B'},
+  {id:26, text:"Phát biểu nào sau đây là SAI?", options:[{key:'A',text:'Người sử dụng xử lí những yêu cầu cụ thể bằng phần mềm ứng dụng.'},{key:'B',text:'Để phần mềm ứng dụng chạy được trên máy tính phải có Hệ điều hành.'},{key:'C',text:'Để máy tính hoạt động được phải có phần mềm ứng dụng.'},{key:'D',text:'Để máy tính hoạt động được phải có hệ điều hành.'}], answer:'C'},
+  {id:27, text:"Hệ điều hành phổ biến cho điện thoại di động là?", options:[{key:'A',text:'Android'},{key:'B',text:'BIOS'},{key:'C',text:'Windows'},{key:'D',text:'ChromeOS'}], answer:'A'},
+  {id:28, text:"Đối tượng quản lý chính trên máy tính là gì?", options:[{key:'A',text:'Phần cứng và phần mềm'},{key:'B',text:'Đương dẫn và thư mục'},{key:'C',text:'Thư mục và tập tin'},{key:'D',text:'Tập tin và hệ điều hành.'}], answer:'C'},
+  {id:29, text:"Khi tạo mới một đối tượng trên máy tính, cần xác định điều gì?", options:[{key:'A',text:'Tên và người tạo'},{key:'B',text:'Tên và kích thước'},{key:'C',text:'Tên và thời gian tạo'},{key:'D',text:'Tên và vị trí'}], answer:'D'},
+  {id:30, text:"Phần mở rộng của tệp cho biết điều gì?", options:[{key:'A',text:'Dữ liệu của tệp thuộc loại nào'},{key:'B',text:'Tệp tạo khi nào'},{key:'C',text:'Tệp ở vị trí nào'},{key:'D',text:'Không có cũng không sao'}], answer:'A'},
+  {id:31, text:"Tập tin là gì?", options:[{key:'A',text:'Đối tượng quản lý đối tượng khác.'},{key:'B',text:'Đối tượng chứa đựng đối tượng khác.'},{key:'C',text:'Đối tượng lưu trữ dữ liệu.'},{key:'D',text:'Đối tượng lưu trữ đối tượng khác'}], answer:'C'},
+  {id:32, text:"Cặp lệnh thực hiện việc di chuyển trên máy tính là gì?", options:[{key:'A',text:'Move và Paste'},{key:'B',text:'Cut và Paste'},{key:'C',text:'Copy và Delete'},{key:'D',text:'Paste và Rename'}], answer:'B'},
+  {id:33, text:"Công việc nào sau đây có thể thay đổi nội dung tệp", options:[{key:'A',text:'Xem'},{key:'B',text:'Sao chép'},{key:'C',text:'Di chuyển'},{key:'D',text:'Đổi phần mở rộng'}], answer:'D'},
+  {id:34, text:"Trên cửa sổ File Explorer, em có thể xác định vị trí hiện hành qua thành phần nào?", options:[{key:'A',text:'Thanh tiêu đề'},{key:'B',text:'Thanh đường dẫn'},{key:'C',text:'Vùng nội dung'},{key:'D',text:'Thanh trạng thái'}], answer:'B'},
+  {id:35, text:"Những phần mềm dưới đây được gọi chung là phần mềm gì? [hình sẽ được update]", options:[{key:'A',text:'Phần mềm ứng dụng'},{key:'B',text:'Phần mềm hệ thống'},{key:'C',text:'Phần mềm soạn thảo văn bản'},{key:'D',text:'Phần mềm trình chiếu'}], answer:'A'},
+  {id:36, text:"Tiện ích nào sau đây của HDH Windows cho phép mở tập tin văn bản để đọc dữ liệu", options:[{key:'A',text:'Calculator'},{key:'B',text:'MS Paint'},{key:'C',text:'WordPad'},{key:'D',text:'OnScreen Keyboard'}], answer:'C'},
+  {id:37, text:"Phần mềm nào sau đây không phải là hệ điều hành", options:[{key:'A',text:'Windows 7.'},{key:'B',text:'Windows 10.'},{key:'C',text:'File Explorer.'},{key:'D',text:'iOS.'}], answer:'C'},
+  {id:38, text:"Tệp có phần mở rộng .docx/.doc thuộc loại tệp gì?", options:[{key:'A',text:'Tệp dữ liệu của phần mềm Microsoft Word.'},{key:'B',text:'Tệp hình ảnh. Pjg png'},{key:'C',text:'Tệp dữ liệu của phần mềm Microsoft Powerpoint. (ppt/pptx)/(xlsx/xls)excel'},{key:'D',text:'Tệp dữ liệu video. Mp4'}], answer:'A'},
+  {id:39, text:"Đâu là chương trình máy tính giúp em quản lí tệp và thư mục.", options:[{key:'A',text:'Internet Explore.'},{key:'B',text:'Help.'},{key:'C',text:'Microsoft Windows.'},{key:'D',text:'File Explorer.'}], answer:'D'},
+  {id:40, text:"Chọn ra hệ điều hành ở trong các tên dưới đây", options:[{key:'A',text:'Firefox'},{key:'B',text:'Windows'},{key:'C',text:'Google'},{key:'D',text:'MacBook'}], answer:'B'},
+  {id:41, text:"Công cụ nào sau đây dùng để trao đổi thông tin trên Internet?", options:[{key:'A',text:'Thư điện tử'},{key:'B',text:'Mạng xã hội'},{key:'C',text:'Diễn đàn trực tuyến'},{key:'D',text:'Tất cả các đáp án trên'}], answer:'D'},
+  {id:42, text:"Trong các website dưới đây, website nào là mạng xã hội?", options:[{key:'A',text:'https://dantri.com'},{key:'B',text:'https://vietnamnet.vn'},{key:'C',text:'https://facebook.com'},{key:'D',text:'http://trandainghia.edu.vn/'}], answer:'C'},
+  {id:43, text:"Chọn cụm từ còn thiếu: “Mạng xã hội là một … web kết nối các … có cùng đặc điểm cá nhân như sở thích, lứa tuổi, nghề nghiệp hay lĩnh vực quan tâm”.", options:[{key:'A',text:'phần mềm ứng dụng – tài khoản.'},{key:'B',text:'ứng dụng phần mềm – thành viên.'},{key:'C',text:'phần mềm – tài khoản.'},{key:'D',text:'ứng dụng – thành viên.'}], answer:'D'},
+  {id:44, text:"Phát biểu nào sau đây đúng?", options:[{key:'A',text:'Mạng xã hội là một ứng dụng web.'},{key:'B',text:'Người dùng không thể đưa thông tin lên mạng xã hội.'},{key:'C',text:'Số lượng người tham gia kết bạn trên mạng xã hội được giới hạn dưới 10 người.'},{key:'D',text:'Người dùng chỉ có thể chia sẻ bài viết dưới dạng văn bản cho bạn bè trên mạng xã hội.'}], answer:'A'},
+  {id:45, text:"Nội dung trên mạng xã hội là do ai tạo ra?", options:[{key:'A',text:'Do nhà quản lý tạo ra.'},{key:'B',text:'Do mạng Internet tạo ra.'},{key:'C',text:'Do người dùng tạo ra.'},{key:'D',text:'Do máy tính tạo ra.'}], answer:'C'},
+  {id:46, text:"Đâu là nhận định đúng khi đưa thông tin lên mạng xã hội?", options:[{key:'A',text:'Em có thể đưa thông tin cá nhân lên mạng bất cứ khi nào mà không cần suy nghĩ, lo lắng.'},{key:'B',text:'Không đưa thông tin cá nhân lên mạng xã hội. Kẻ xấu có thể lợi dụng các thông tin này để tống tiền, hăm dọa…'},{key:'C',text:'Khi có người yêu cầu thì em ngay lập tức đưa thông tin cá nhân.'},{key:'D',text:'Chỉ đưa thông tin cá nhân lên khi cảm thấy tinh thần vui vẻ.'}], answer:'B'},
+  {id:47, text:"Đâu là nhận định đúng khi đăng bài hay chia sẻ, bình luận trên mạng xã hội.", options:[{key:'A',text:'Đăng bài với những câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'B',text:'Chia sẻ với những nội dung có câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'C',text:'Không đăng bài hay chia sẻ, bình luận với những câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'D',text:'Bình luận hùa theo những nội dung có câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'}], answer:'C'},
+  {id:48, text:"Đâu là nhận định đúng khi tiếp cận với mọi thông tin trên mạng xã hội?", options:[{key:'A',text:'Tin vào mọi thông tin trên mạng xã hội.'},{key:'B',text:'Mọi thông tin trên mạng xã hội đều đúng.'},{key:'C',text:'Chỉ tin vào những nội dung được chia sẻ nhiều trên mạng xã hội.'},{key:'D',text:'Không hoàn toàn tin vào mọi thông tin trên mạng xã hội, vì 1 số thông tin trên đó có độ chính xác không cao.'}], answer:'D'},
+  {id:49, text:"Trong các câu sau, câu nào đúng?", options:[{key:'A',text:'Sử dụng mạng xã hội quá nhiều dễ dẫn đến xao nhãng việc học.'},{key:'B',text:'Mạng xã hội là nơi tuyệt đối an toàn, không ai bị lừa hay lôi kéo vào những việc phạm pháp.'},{key:'C',text:'Mạng xã hội làm tăng nguy cơ bị lừa đảo, bắt nạt, xâm hại.'},{key:'D',text:'Tất cả các câu trên đều đúng.'}], answer:'A'},
+  {id:50, text:"Để sử dụng mạng xã hội an toàn, chúng ta cần:", options:[{key:'A',text:'Cài đặt quyền riêng tư.'},{key:'B',text:'Không chia sẻ thông tin cá nhân.'},{key:'C',text:'Không tin vào mọi thông tin trên mạng.'},{key:'D',text:'Tất cả các câu trên đều đúng.'}], answer:'D'},
+  {id:51, text:"Mạng xã hội có lợi ích gì?", options:[{key:'A',text:'Kết nối bạn bè, chia sẻ thông tin.'},{key:'B',text:'Học tập, giải trí.'},{key:'C',text:'Cả A và B đều đúng.'},{key:'D',text:'Không có lợi ích nào.'}], answer:'C'},
+  {id:52, text:"Mạng xã hội nào phổ biến ở Việt Nam?", options:[{key:'A',text:'Facebook'},{key:'B',text:'Zalo'},{key:'C',text:'YouTube'},{key:'D',text:'Tất cả các đáp án trên'}], answer:'D'},
+  {id:53, text:"Để tạo tài khoản mạng xã hội, em cần:", options:[{key:'A',text:'Email hoặc số điện thoại.'},{key:'B',text:'Mật khẩu.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Không cần gì.'}], answer:'C'},
+  {id:54, text:"Hành vi nào sau đây là bắt nạt trên mạng?", options:[{key:'A',text:'Chia sẻ hình ảnh xấu của bạn bè.'},{key:'B',text:'Nhắn tin đe dọa.'},{key:'C',text:'Bình luận tiêu cực.'},{key:'D',text:'Tất cả các đáp án trên.'}], answer:'D'},
+  {id:55, text:"Nếu bị bắt nạt trên mạng, em nên:", options:[{key:'A',text:'Báo cho bố mẹ hoặc thầy cô.'},{key:'B',text:'Chặn người bắt nạt.'},{key:'C',text:'Báo cáo với mạng xã hội.'},{key:'D',text:'Tất cả các đáp án trên.'}], answer:'D'},
+  {id:56, text:"Nghiện mạng xã hội có thể dẫn đến:", options:[{key:'A',text:'Giảm sút sức khỏe.'},{key:'B',text:'Xao nhãng học tập.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Không có hậu quả.'}], answer:'C'},
+  {id:57, text:"Để tránh nghiện mạng xã hội, em nên:", options:[{key:'A',text:'Giới hạn thời gian sử dụng.'},{key:'B',text:'Tham gia hoạt động ngoại khóa.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Sử dụng càng nhiều càng tốt.'}], answer:'C'},
+  {id:58, text:"Tin giả trên mạng xã hội là:", options:[{key:'A',text:'Thông tin sai sự thật.'},{key:'B',text:'Thông tin được chia sẻ nhiều.'},{key:'C',text:'Thông tin từ bạn bè.'},{key:'D',text:'Tất cả đều đúng.'}], answer:'A'},
+  {id:59, text:"Để kiểm tra tin giả, em nên:", options:[{key:'A',text:'Kiểm chứng nguồn tin.'},{key:'B',text:'Không chia sẻ nếu nghi ngờ.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Chia sẻ ngay.'}], answer:'C'},
+  {id:60, text:"Văn hóa ứng xử trên mạng xã hội bao gồm:", options:[{key:'A',text:'Lịch sự, tôn trọng.'},{key:'B',text:'Không bình luận tiêu cực.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Không cần quan tâm.'}], answer:'C'},
+  {id:61, text:"Khi gọi video, em nên:", options:[{key:'A',text:'Nói to.'},{key:'B',text:'Chọn nơi yên tĩnh.'},{key:'C',text:'Bật nhạc nền.'},{key:'D',text:'Không cần chuẩn bị.'}], answer:'B'},
+  {id:62, text:"Khi nhắn tin, em nên:", options:[{key:'A',text:'Sử dụng ngôn ngữ lịch sự.'},{key:'B',text:'Trả lời nhanh.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Gửi tin nhắn dài.'}], answer:'C'},
+  {id:63, text:"Nếu thấy tin giả, em nên:", options:[{key:'A',text:'Báo cáo.'},{key:'B',text:'Không chia sẻ.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Chia sẻ để cảnh báo.'}], answer:'C'},
+  {id:64, text:"Mạng xã hội giúp em học tập bằng cách:", options:[{key:'A',text:'Tham gia nhóm học.'},{key:'B',text:'Xem video giáo dục.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Chỉ chơi game.'}], answer:'C'},
+  {id:65, text:"Rủi ro trên mạng xã hội là:", options:[{key:'A',text:'Lừa đảo.'},{key:'B',text:'Bắt nạt.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Không có rủi ro.'}], answer:'C'},
+  {id:66, text:"Để bảo vệ tài khoản, em nên:", options:[{key:'A',text:'Mật khẩu mạnh.'},{key:'B',text:'Không chia sẻ mật khẩu.'},{key:'C',text:'Cả A và B.'},{key:'D',text:'Mật khẩu đơn giản.'}], answer:'C'},
+  {id:67, text:"Khi gọi điện video ở nơi công cộng, em nên:", options:[{key:'A',text:'Nói to.'},{key:'B',text:'Đi ra nơi riêng.'},{key:'C',text:'Bật loa ngoài.'},{key:'D',text:'Nhắn tin bình phẩm.'}], answer:'B'},
+  {id:68, text:"Hoa vừa phát hiện tài khoản mạng xã hội của một bạn khác đã đăng tải hình ảnh riêng tư của Hoa mà cô ấy không muốn công khai. Bạn bè khuyên Hoa nên dùng tài khoản giả mạo để lăng mạ và đe dọa người kia. Hoa có nên làm theo không?", options:[{key:'A',text:'Có, vì người kia đã sai trước.'},{key:'B',text:'Không, vì trên mạng xã hội không ai biết Hoa là ai nên Hoa sẽ không thể lấy lại được danh dự khi dùng tài khoản ẩn danh. Hoa nên dùng tài khoản chính của bạn ấy.'},{key:'C',text:'Không, Hoa nên dũng cảm nói ra và nhờ bố mẹ, thầy cô hoặc người thân giúp đỡ.'},{key:'D',text:'Có, vì đó là cách duy nhất để lấy lại danh dự.'}], answer:'C'},
+  {id:69, text:"Bạn A gửi cho bạn B một tin nhắn rất dài hỏi về một vấn đề gấp và có 1 phần riêng tư vềA. Bạn B đang lái xe máy trên đường nên chưa thể đọc và trả lời chi tiết. Để thể hiện sự lịch sự và có văn hóa, B nên phản hồi A như thế nào? (Chọn ý đúng nhất)", options:[{key:'A',text:'Đọc và trả lời chi tiết ngay khi đang lái xe.'},{key:'B',text:'Bỏ qua tin nhắn và trả lời sau một tuần.'},{key:'C',text:'Nhắn với A là hẹn trả lời sau khi về đến nhà.'},{key:'D',text:'Nhắn tin nhờ người khác trả lời ngay vì vấn đề này rất gấp.'}], answer:'C'},
+  {id:70, text:"Sau khi chơi game liên tục nhiều ngày, sức khỏe của Hải giảm sút và Hải bỏ bê học hành. Để thoát khỏi nguy cơ nghiện game, Hải cần phải làm gì ngay lập tức?", options:[{key:'A',text:'Tìm kiếm một trò chơi mới hấp dẫn hơn.'},{key:'B',text:'Kể về trải nghiệm chơi game thú vị của mình trên mạng xã hội.'},{key:'C',text:'Tự ý thức hoặc nhờ bố mẹ đặt ra một khung giờ hạn chế mỗi ngày dành cho chơi game hay lên mạng.'},{key:'D',text:'Chỉ chơi game khi không có ai nhìn thấy.'}], answer:'C'},
+  {id:71, type:'multiple', text:"Mạng xã hội là một cộng đồng trực tuyến giúp mọi người kết nối, tương tác và chia sẻ thông tin với nhau bất kể khoảng cách địa lý. Các nền tảng phổ biến bao gồm Facebook, Zalo, YouTube, Instagram,... Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Mạng xã hội chỉ cho phép người dùng chia sẻ thông tin dưới dạng văn bản (text), không hỗ trợ hình ảnh hay video.'},{key:'b',text:'Người dùng cần tạo tài khoản và hồ sơ cá nhân (profile) như ảnh bìa, ảnh đại diện và một số thông tin các nhân để có thể tham gia đầy đủ các hoạt động trên mạng xã hội.'},{key:'c',text:'Mạng xã hội giúp người dùng dễ dàng tìm kiếm, kết bạn và duy trì liên lạc với người thân, bạn bè.'},{key:'d',text:'Tất cả các mạng xã hội đều không có quy định về độ tuổi, trẻ em ở bất kỳ độ tuổi nào cũng có thể tự do đăng ký.'}], answer:['b','c']},
+  {id:72, type:'multiple', text:"Khi sử dụng mạng xã hội, người dùng có thể thực hiện nhiều hoạt động tương tác như gửi lời mời kết bạn, theo dõi (follow), nhắn tin trò chuyện và tham gia các hội nhóm. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chức năng \"Hủy kết bạn\" (Unfriend) cho phép người dùng ngắt kết nối với một người trong danh sách bạn bè nếu không muốn liên lạc nữa.'},{key:'b',text:'Người dùng có thể tạo hoặc tham gia các nhóm (Group) để thảo luận về các chủ đề chung như học tập, sở thích, thể thao.'},{key:'c',text:'Trên Zalo hoặc Facebook, tin nhắn cá nhân (Messenger) là chế độ công khai, tất cả mọi người trên mạng đều có thể đọc được nội dung cuộc trò chuyện.'},{key:'d',text:'Người dùng có thể thay đổi ảnh đại diện (Avatar) và ảnh bìa để thể hiện cá tính của mình trên trang cá nhân.'}], answer:['a','b','d']},
+  {id:73, type:'multiple', text:"Trao đổi thông tin trên mạng xã hội rất nhanh chóng và thuận tiện, tuy nhiên người dùng cần biết cách chọn lọc và chia sẻ thông tin một cách có trách nhiệm. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chức năng \"Bình luận\" (Comment) và \"Thích\" (Like) giúp người dùng bày tỏ cảm xúc và ý kiến đối với bài đăng của người khác.'},{key:'b',text:'Mọi thông tin được chia sẻ trên mạng xã hội đều là thông tin chính xác và đã được kiểm chứng, người dùng có thể tin tưởng tuyệt đối.'},{key:'c',text:'Chia sẻ (Share) là hành động lan truyền một bài viết hoặc thông tin từ trang của người khác về trang cá nhân của mình hoặc vào các hội nhóm.'},{key:'d',text:'Việc phát tán, chia sẻ các thông tin sai sự thật, tin giả (fake news) trên mạng xã hội có thể gây hậu quả xấu và vi phạm pháp luật.'}], answer:['a','c','d']},
+  {id:74, type:'multiple', text:"Bắt nạt qua mạng là hành vi sử dụng công nghệ để quấy rối, đe dọa hoặc làm xấu mặt người khác. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chỉ những hành động đánh nhau ngoài đời thực mới bị coi là bắt nạt, còn nhắn tin trêu chọc trên mạng là vô hại.'},{key:'b',text:'Nếu thấy bạn bè bị bắt nạt trên mạng, em nên hùa theo hoặc chia sẻ bài viết đó để mọi người cùng biết.'},{key:'c',text:'Em cần thông báo ngay cho cha mẹ, thầy cô hoặc người lớn tin cậy nếu bản thân hoặc bạn bè bị đe dọa qua mạng.'},{key:'d',text:'Hành vi bịa đặt thông tin, tung tin đồn thất thiệt nhằm bôi nhọ danh dự người khác trên mạng xã hội là vi phạm pháp luật.'}], answer:['c','d']},
+  {id:75, type:'multiple', text:"Để đảm bảo an toàn khi tham gia mạng xã hội, người dùng cần biết cách bảo vệ thông tin cá nhân và tránh các rủi ro từ người lạ. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Nên công khai địa chỉ nhà, số điện thoại và lịch trình đi học hàng ngày lên mạng để bạn bè dễ tìm.'},{key:'b',text:'Không nên chấp nhận lời mời kết bạn từ những người lạ mà em không biết rõ nguồn gốc.'},{key:'c',text:'Mật khẩu tài khoản nên đặt đơn giản (như 123456 hoặc ngày sinh) để dễ nhớ và nên chia sẻ cho bạn thân biết.'},{key:'d',text:'Luôn đăng xuất tài khoản sau khi sử dụng máy tính ở nơi công cộng.'}], answer:['b','d']},
+{id:76, type:'multiple', text:"\"Nghiện\" Internet và mạng xã hội có thể gây ra nhiều hậu quả tiêu cực đến sức khỏe và việc học tập. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Sử dụng mạng xã hội liên tục 5-6 tiếng mỗi ngày giúp cập nhật thông tin nhanh và giải trí hiệu quả hơn.'},{key:'b',text:'Việc thức quá khuya để lướt mạng có thể gây mệt mỏi, giảm khả năng tập trung vào ngày hôm sau.'},{key:'c',text:'Nên cân đối, điều chỉnh thời gian sử dụng thiết bị số phù hợp với các hoạt động thể chất, giao tiếp trực tiếp với gia đình.'},{key:'d',text:'Chỉ có trẻ em mới dễ bị nghiện game hay mạng xã hội, còn người lớn thì không.'}], answer:['b','c']},
+  {id:77, type:'multiple', text:"Khi tiếp nhận thông tin trên môi trường số, việc có tư duy phản biện và kiểm chứng nguồn tin là rất quan trọng để tránh tin giả (fake news). Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Mọi thông tin, bài viết được chia sẻ nhiều (viral) trên mạng xã hội đều là sự thật.'},{key:'b',text:'Trước khi chia sẻ (share) một bài viết, nên kiểm tra xem nguồn tin đó có uy tín và chính thống hay không.'},{key:'c',text:'Hành vi lan truyền tin giả về dịch bệnh hoặc thiên tai có thể bị xử phạt theo quy định của pháp luật.'},{key:'d',text:'Nếu thấy một tiêu đề bài báo rất \"sốc\" và lạ, em nên chia sẻ ngay lập tức để cảnh báo mọi người mà không cần đọc nội dung.'}], answer:['b','c']},
+  {id:78, type:'multiple', text:"Máy tính là một hệ thống gồm nhiều thiết bị phối hợp hoạt động. Hãy đánh giá các nhận định sau về các thành phần cơ bản của máy tính:", options:[{key:'a',text:'CPU (Bộ xử lý trung tâm) chịu trách nhiệm thực hiện các tính toán và điều khiển hoạt động của máy tính.'},{key:'b',text:'RAM là bộ nhớ ngoài, dùng để lưu trữ dữ liệu lâu dài ngay cả khi tắt máy.'},{key:'c',text:'Thân máy (Case) chứa các thành phần quan trọng như CPU, RAM và ổ cứng.'},{key:'d',text:'Người dùng khó có thể sử dụng máy tính để bàn nếu thiếu bàn phím và chuột.'}], answer:['a','c','d']},
+  {id:79, type:'multiple', text:"Các thiết bị ngoại vi được chia thành thiết bị vào (Input) và thiết bị ra (Output). Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Micro (Microphone) là thiết bị ra vì nó phát âm thanh từ máy tính ra ngoài.'},{key:'b',text:'Máy chiếu (Projector) là thiết bị ra, dùng để hiển thị hình ảnh từ máy tính lên màn hình lớn.'},{key:'c',text:'Ổ đĩa USB vừa có thể coi là thiết bị vào (khi chép dữ liệu vào máy), vừa là thiết bị ra (khi chép dữ liệu từ máy ra).'},{key:'d',text:'Màn hình cảm ứng chỉ có chức năng hiển thị thông tin nên nó là thiết bị ra thuần túy.'}], answer:['b','c']},
+  {id:80, type:'multiple', text:"Hệ điều hành là phần mềm quan trọng nhất của máy tính. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Hệ điều hành cung cấp giao diện để người dùng giao tiếp với máy tính.'},{key:'b',text:'Máy tính lắp ráp xong chỉ cần có phần cứng là có thể chạy ngay các ứng dụng như Zalo, Zoom mà không cần hệ điều hành.'},{key:'c',text:'Hệ điều hành quản lý và kiểm soát mọi hoạt động của máy tính.'},{key:'d',text:'Linux và Windows là hai ví dụ về hệ điều hành máy tính.'}], answer:['a','c','d']},
+  {id:81, type:'multiple', text:"Phần mềm ứng dụng giúp người dùng thực hiện các công việc cụ thể. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Phần mềm soạn thảo văn bản, phần mềm bảng tính là các loại phần mềm ứng dụng.'},{key:'b',text:'Để sử dụng được phần mềm ứng dụng, máy tính bắt buộc phải cài đặt hệ điều hành trước.'},{key:'c',text:'Phần mềm ứng dụng có thể trực tiếp điều khiển phần cứng mà không cần thông qua hệ điều hành.'},{key:'d',text:'Người dùng có thể tùy ý cài đặt hoặc gỡ bỏ các phần mềm ứng dụng theo nhu cầu.'}], answer:['a','b','d']},
+  {id:82, type:'multiple', text:"Tệp (File) và Thư mục (Folder) là cách thức tổ chức thông tin trong máy tính. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Tên tệp tin thường bao gồm hai phần: phần tên và phần mở rộng, ngăn cách nhau bởi dấu chấm.'},{key:'b',text:'Thư mục có thể chứa các tệp tin và các thư mục con khác.'},{key:'c',text:'Phần mở rộng của tệp tin (.docx, .jpg, .mp4) giúp hệ điều hành nhận biết loại dữ liệu và phần mềm phù hợp để mở nó.'},{key:'d',text:'Trong một thư mục, ta có thể tạo nhiều thư mục con trùng tên nhau hoàn toàn.'}], answer:['a','b','c']}
+];
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
-/* --- UI refs --- */
+/* --- Current questions pool --- */
+let currentQuestions = [];
+
+/* --- UI elements --- */
+const subjectSelect = document.getElementById('subjectSelect');
 const modeRandomBtn = document.getElementById('modeRandom');
 const modeExamBtn = document.getElementById('modeExam');
+const homeIntro = document.getElementById('homeIntro');
 const singleArea = document.getElementById('singleArea');
 const examArea = document.getElementById('examArea');
-const homeIntro = document.getElementById('homeIntro');
-
-const qbox = document.getElementById('qbox');
-const choicesDiv = document.getElementById('choices');
-const resultDiv = document.getElementById('result');
-const explainDiv = document.getElementById('explain');
 const checkBtn = document.getElementById('checkBtn');
 const nextBtn = document.getElementById('nextBtn');
 const backHome1 = document.getElementById('backHome1');
-
-const startExamBtn = document.getElementById('startExam');
-const submitExamBtn = document.getElementById('submitExam');
-const regenExamBtn = document.getElementById('regenExam');
 const backHome2 = document.getElementById('backHome2');
+const startExam = document.getElementById('startExam');
+const submitExamBtn = document.getElementById('submitExam');
+const regenExam = document.getElementById('regenExam');
 const examForm = document.getElementById('examForm');
 const examResult = document.getElementById('examResult');
+const qbox = document.getElementById('qbox');
+const choices = document.getElementById('choices');
+const result = document.getElementById('result');
+const explain = document.getElementById('explain');
 
-/* --- State for single --- */
+/* --- Handle subject select --- */
+subjectSelect.addEventListener('change', (e) => {
+  const sub = e.target.value;
+  if (sub === 'gdcd') {
+    currentQuestions = QUESTIONS_GDCD;
+  } else if (sub === 'hoa') {
+    currentQuestions = QUESTIONS_HOA;
+  } else if (sub === 'tin') {
+    currentQuestions = QUESTIONS_TIN;
+  } else {
+    currentQuestions = [];
+  }
+  modeRandomBtn.disabled = !currentQuestions.length;
+  modeExamBtn.disabled = !currentQuestions.length;
+});
+
+/* --- Single mode --- */
 let currentSingle = null;
 
-/* Render single question (shuffle choices) */
-function renderSingle(q){
-  qbox.innerHTML = `${q.text}`;
-  choicesDiv.innerHTML = '';
-  resultDiv.style.display = 'none';
-  explainDiv.textContent = '';
-
-  let opts = [];
-  if(q.options && q.options.length) opts = q.options.map(o=>({key:o.key,text:o.text}));
-  else opts = [{key:'Đ',text:'Đúng'},{key:'S',text:'Sai'}];
+function pickRandomSingle() {
+  if (!currentQuestions.length) return;
+  const pool = currentQuestions.slice();
+  shuffle(pool);
+  const q = pool[0];
+  let opts = q.options ? q.options.map(o => ({key: o.key, text: o.text})) : [];
   shuffle(opts);
-  currentSingle = {q, shown:opts};
+  currentSingle = {q, shown: opts};
+  renderSingle();
+}
 
-  const form = document.createElement('form'); form.id='singleForm';
-  opts.forEach((o, i)=>{
-    const div = document.createElement('div'); div.className='option';
-    // không hiển thị "A." nữa, chỉ show nội dung lựa chọn
-    div.innerHTML = `<label><input type="radio" name="choice" value="${o.key}"> ${o.text}</label>`;
-    form.appendChild(div);
+function renderSingle() {
+  result.style.display = 'none';
+  explain.textContent = '';
+  qbox.innerHTML = currentSingle.q.text;
+  choices.innerHTML = '';
+  currentSingle.shown.forEach((o, j) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'option';
+    wrap.innerHTML = `<label><input type="radio" name="single" value="${o.key}"> ${o.text}</label>`;
+    choices.appendChild(wrap);
   });
-  choicesDiv.appendChild(form);
 }
 
-/* pick random single */
-function pickRandomSingle(){
-  const idx = Math.floor(Math.random()*QUESTIONS.length);
-  renderSingle(QUESTIONS[idx]);
-}
-
-/* check single answer */
-function checkSingle(showOnly=false){
-  if(!currentSingle) return alert('Chưa có câu. Nhấn "Random 1 câu" trước.');
-  const form = document.getElementById('singleForm');
-  const selected = form ? (form.elements['choice'] ? form.elements['choice'].value : null) : null;
-  resultDiv.style.display = 'block';
-  if(showOnly || !selected){
-    // show correct (chỉ show text đáp án, không kèm chữ A./B.)
-    const corr = currentSingle.q.answer;
-    let corrText = corr;
-    if(currentSingle.q.options && currentSingle.q.options.length){
-      const f = currentSingle.q.options.find(o=>o.key===corr);
-      corrText = f ? `${f.text}` : corr;
-    } else {
-      corrText = (corr==='Đ'?'Đúng':(corr==='S'?'Sai':corr));
-    }
-    resultDiv.className='result correct';
-    resultDiv.innerHTML = `<strong>Đáp án đúng:</strong> ${corrText}`;
-    explainDiv.textContent = currentSingle.q.explain ? 'Ghi chú: ' + currentSingle.q.explain : '';
-    return;
-  }
+function checkSingle() {
+  const selected = document.querySelector('input[name="single"]:checked');
+  if (!selected) return alert('Chọn đáp án trước.');
+  result.style.display = 'block';
   const correct = currentSingle.q.answer;
-  if(selected === correct){
-    resultDiv.className='result correct';
-    resultDiv.innerHTML = '<strong>ĐÚNG.</strong>';
-    explainDiv.textContent = currentSingle.q.explain ? 'Ghi chú: ' + currentSingle.q.explain : '';
+  if (Array.isArray(correct)) { // for multiple
+    const allSelected = Array.from(document.querySelectorAll('input[name="single"]:checked')).map(inp => inp.value);
+    const sortedSel = allSelected.sort();
+    const sortedCorr = correct.sort();
+    if (sortedSel.join(',') === sortedCorr.join(',')) {
+      result.className = 'result correct';
+      result.innerHTML = '<strong>ĐÚNG.</strong>';
+    } else {
+      result.className = 'result wrong';
+      const corrTexts = correct.map(k => currentSingle.q.options.find(o => o.key === k).text).join(', ');
+      result.innerHTML = `<strong>SAI.</strong> Đáp án đúng: ${corrTexts}`;
+    }
   } else {
-    resultDiv.className='result wrong';
-    let corrText = correct;
-    if(currentSingle.q.options && currentSingle.q.options.length){
-      const f = currentSingle.q.options.find(o=>o.key===correct);
-      corrText = f ? `${f.text}` : correct;
-    } else corrText = (correct==='Đ'?'Đúng':(correct==='S'?'Sai':correct));
-    // chỉ hiển thị nội dung đáp án đúng
-    resultDiv.innerHTML = `<strong>SAI.</strong> Đáp án đúng: <strong>${corrText}</strong>`;
-    explainDiv.textContent = currentSingle.q.explain ? 'Ghi chú: ' + currentSingle.q.explain : '';
+    if (selected.value === correct) {
+      result.className = 'result correct';
+      result.innerHTML = '<strong>ĐÚNG.</strong>';
+    } else {
+      result.className = 'result wrong';
+      const corrOpt = currentSingle.q.options.find(o => o.key === correct);
+      result.innerHTML = `<strong>SAI.</strong> Đáp án đúng: ${corrOpt ? corrOpt.text : correct}`;
+    }
   }
 }
 
 /* --- Exam mode --- */
-let currentExam = null; // array of {q, shownOptions}
+let currentExam = null;
 
-function generateExam(){
-  // copy pool and shuffle
-  const pool = QUESTIONS.slice();
+function generateExam() {
+  const pool = currentQuestions.slice();
   shuffle(pool);
-  const chosen = pool.slice(0, 56);
-  const prepared = chosen.map(q=>{
-    let opts = q.options && q.options.length ? q.options.map(o=>({key:o.key,text:o.text})) : [{key:'Đ',text:'Đúng'},{key:'S',text:'Sai'}];
+  const prepared = pool.map(q => {
+    let opts = q.options ? q.options.map(o => ({key: o.key, text: o.text})) : [];
     shuffle(opts);
-    return {q, shown:opts};
+    return {q, shown: opts};
   });
   currentExam = prepared;
   renderExam();
 }
 
-function renderExam(){
-  // hide single, show exam
-  singleArea.style.display='none';
-  examArea.style.display='block';
-  homeIntro.style.display='none';
+function renderExam() {
+  singleArea.style.display = 'none';
+  examArea.style.display = 'block';
+  homeIntro.style.display = 'none';
   examForm.innerHTML = '';
   examResult.style.display = 'none';
 
-  currentExam.forEach((item, idx)=>{
+  currentExam.forEach((item, idx) => {
     const q = item.q;
     const opts = item.shown;
-    const qdiv = document.createElement('div'); qdiv.className='exam-question'; qdiv.id = 'exam_q_'+idx;
-    qdiv.innerHTML = `<div><span class="qnum">${idx+1}</span> <span class="small"> </span></div>
+    const qdiv = document.createElement('div');
+    qdiv.className = 'exam-question';
+    qdiv.innerHTML = `<div><span class="qnum">${idx+1}</span></div>
       <div style="font-weight:700;margin-top:6px">${q.text}</div>`;
-    const optCon = document.createElement('div'); optCon.className='options';
-    opts.forEach((o,j)=>{
+    const optCon = document.createElement('div');
+    optCon.className = 'options';
+    opts.forEach((o, j) => {
       const rid = `q${idx}_opt${j}`;
-      const wrap = document.createElement('div'); wrap.className='option';
-      // không hiển thị "A." ở đây nữa
-      wrap.innerHTML = `<label><input type="radio" name="q${idx}" value="${o.key}"> ${o.text}</label>`;
+      const wrap = document.createElement('div');
+      wrap.className = 'option';
+      wrap.innerHTML = `<label><input type="${q.type === 'multiple' ? 'checkbox' : 'radio'}" name="q${idx}" value="${o.key}"> ${o.text}</label>`;
       optCon.appendChild(wrap);
     });
     qdiv.appendChild(optCon);
-    // explain area
-    const ex = document.createElement('div'); ex.className='small'; ex.id = 'ex_'+idx; ex.style.marginTop='8px';
+    const ex = document.createElement('div');
+    ex.className = 'small';
+    ex.style.marginTop = '8px';
     qdiv.appendChild(ex);
-
     examForm.appendChild(qdiv);
   });
-
-  // scroll to top
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* submit exam */
-function submitExam(){
-  if(!currentExam) return alert('Chưa có đề. Nhấn "Tạo đề" trước.');
-  if(!confirm('Bạn chắc chắn nộp bài? Sau khi nộp sẽ hiện đáp án và khoá chọn.')) return;
-  const form = examForm;
+function submitExam() {
+  if (!currentExam) return;
   let correctCount = 0;
-  currentExam.forEach((item, idx)=>{
+  currentExam.forEach((item, idx) => {
     const q = item.q;
-    const user = form.elements['q'+idx] ? form.elements['q'+idx].value : null;
-    const correct = q.answer;
-    const qdiv = document.getElementById('exam_q_'+idx);
-    // disable inputs
-    qdiv.querySelectorAll('input[type=radio]').forEach(inp=>inp.disabled=true);
-    const ex = document.getElementById('ex_'+idx);
-    if(user && user === correct){
+    const inputs = examForm.querySelectorAll(`input[name="q${idx}"]:checked`);
+    const user = Array.from(inputs).map(inp => inp.value).sort();
+    const correct = Array.isArray(q.answer) ? q.answer.sort() : [q.answer];
+    const isCorrect = user.join(',') === correct.join(',');
+    const qdiv = examForm.children[idx];
+    qdiv.querySelectorAll('input').forEach(inp => inp.disabled = true);
+    const ex = qdiv.querySelector('.small');
+    if (isCorrect) {
       correctCount++;
       qdiv.style.border = '1px solid #c7f0d0';
-      ex.innerHTML = '<span style="color:#065f2d;font-weight:700">ĐÚNG</span>' + (q.explain?('<div style="margin-top:6px;">Ghi chú: '+q.explain+'</div>'):'');
+      ex.innerHTML = '<span style="color:#065f2d;font-weight:700">ĐÚNG</span>';
     } else {
       qdiv.style.border = '1px solid #f7caca';
-      let corrText = correct;
-      if(q.options && q.options.length){
-        const f = q.options.find(o=>o.key===correct);
-        corrText = f ? `${f.text}` : correct; // chỉ show text đáp án đúng
-      } else corrText = (correct==='Đ'?'Đúng':(correct==='S'?'Sai':correct));
-      ex.innerHTML = `<span style="color:#6b0b0b;font-weight:700">SAI — đáp án đúng: ${corrText}</span>` + (q.explain?('<div style="margin-top:6px;">Ghi chú: '+q.explain+'</div>'):'');
+      const corrTexts = correct.map(k => q.options.find(o => o.key === k).text).join(', ');
+      ex.innerHTML = `<span style="color:#6b0b0b;font-weight:700">SAI — đáp án đúng: ${corrTexts}</span>`;
     }
   });
-  // show summary
   examResult.style.display = 'block';
-  examResult.className = 'result';
   const total = currentExam.length;
-  const pct = Math.round((correctCount/total)*100);
-  examResult.innerHTML = `<div style="font-weight:700">Kết quả: ${correctCount} / ${total} đúng (${pct}%)</div>
-    <div class="small" style="margin-top:6px">Bấm "Tạo đề khác" để random lại đề mới.</div>`;
-  examResult.scrollIntoView({behavior:'smooth'});
+  const pct = Math.round((correctCount / total) * 100);
+  examResult.innerHTML = `<div style="font-weight:700">Kết quả: ${correctCount} / ${total} đúng (${pct}%)</div>`;
 }
 
-/* --- Events wiring --- */
-modeRandomBtn.addEventListener('click', ()=>{
-  // show single UI
-  homeIntro.style.display='none';
-  examArea.style.display='none';
-  singleArea.style.display='block';
+/* --- Events --- */
+modeRandomBtn.addEventListener('click', () => {
+  homeIntro.style.display = 'none';
+  examArea.style.display = 'none';
+  singleArea.style.display = 'block';
   pickRandomSingle();
 });
 
-modeExamBtn.addEventListener('click', ()=>{
-  // hide home, show exam area and prepare when click "Tạo đề"
-  homeIntro.style.display='none';
-  singleArea.style.display='none';
-  examArea.style.display='block';
-  examForm.innerHTML='';
-  examResult.style.display='none';
+modeExamBtn.addEventListener('click', () => {
+  homeIntro.style.display = 'none';
+  singleArea.style.display = 'none';
+  examArea.style.display = 'block';
 });
 
-checkBtn.addEventListener('click', ()=>checkSingle(false));
-nextBtn.addEventListener('click', ()=>pickRandomSingle());
-backHome1.addEventListener('click', ()=>{
-  singleArea.style.display='none';
-  homeIntro.style.display='block';
+checkBtn.addEventListener('click', checkSingle);
+nextBtn.addEventListener('click', pickRandomSingle);
+backHome1.addEventListener('click', () => {
+  singleArea.style.display = 'none';
+  homeIntro.style.display = 'block';
 });
-
-startExamBtn.addEventListener('click', ()=>generateExam());
-submitExamBtn.addEventListener('click', (e)=>{ e.preventDefault(); submitExam(); });
-regenExamBtn.addEventListener('click', ()=>{
-  if(!confirm('Tạo đề khác — sẽ xóa đề hiện tại. Tiếp tục?')) return;
-  generateExam();
+backHome2.addEventListener('click', () => {
+  examArea.style.display = 'none';
+  homeIntro.style.display = 'block';
+  examForm.innerHTML = '';
+  currentExam = null;
 });
-backHome2.addEventListener('click', ()=>{
-  examArea.style.display='none';
-  homeIntro.style.display='block';
-  examForm.innerHTML='';
-  currentExam=null;
+startExam.addEventListener('click', generateExam);
+submitExamBtn.addEventListener('click', submitExam);
+regenExam.addEventListener('click', () => {
+  if (confirm('Tạo đề khác — sẽ xóa đề hiện tại?')) generateExam();
 });
-
-/* back/initial state: show home intro */
-homeIntro.style.display='block';
-singleArea.style.display='none';
-examArea.style.display='none';
 </script>
 </body>
 </html>
