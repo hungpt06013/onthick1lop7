@@ -1,601 +1,633 @@
+
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Thi cuối kì 1 — Trang chủ</title>
-<style>
-  :root{--primary:#2b7bf6;--muted:#666;}
-  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#f3f6fb; margin:0; padding:18px; color:#111;}
-  .wrap{max-width:1000px;margin:0 auto;}
-  .card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(30,40,50,0.06);border:1px solid #e9eef7}
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  h1{margin:0;font-size:20px}
-  .home-actions{display:flex;gap:10px;margin-top:14px}
-  .btn{background:var(--primary);color:#fff;padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
-  .btn.secondary{background:#6c757d}
-  .btn.ghost{background:transparent;color:var(--primary);border:1px solid #d6e6ff}
-  .muted{color:var(--muted);font-size:0.95em}
-  main{margin-top:16px}
-  .question{font-weight:700;margin-bottom:8px}
-  .options .option{margin:6px 0}
-  .result{padding:10px;border-radius:8px;margin-top:10px}
-  .correct{background:#e6ffed;color:#065f2d;border:1px solid #b7f1c6}
-  .wrong{background:#ffecec;color:#6b0b0b;border:1px solid #f2b3b3}
-  .exam-question{padding:10px;border-radius:8px;background:#fff;border:1px solid #f0f3f7;margin-bottom:10px}
-  .qnum{color:var(--primary);font-weight:700;margin-right:8px}
-  .small{font-size:0.9em;color:var(--muted)}
-.question-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.9em}
-.question-table td,.question-table th{border:1px solid #ddd;padding:8px;text-align:left}
-.question-table th{background:#f5f5f5;font-weight:600}
-.question-image{max-width:100%;height:auto;margin:10px 0;border:1px solid #e0e0e0;border-radius:8px}
-  footer{margin-top:14px;font-size:0.9em;color:var(--muted)}
-  @media (max-width:700px){header{flex-direction:column;align-items:flex-start}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bài Kiểm Tra Cuối Kì 1 - Đa Môn</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <header>
-        <div>
-          <h1>Trang chủ — Thi cuối kì 1</h1>
-          <div class="muted">Chọn môn, sau đó chọn chế độ: làm 1 câu ngẫu nhiên hoặc làm đề thi (toàn bộ câu).</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <select id="subjectSelect" style="padding:8px;border-radius:8px;border:1px solid #d6e6ff">
-            <option value="">Chọn môn</option>
-            <option value="tin">Tin học</option>
-            <option value="hoa">Hóa học</option>
-            <option value="gdcd">Giáo dục công dân</option>
-          </select>
-          <div class="home-actions">
-            <button id="modeRandom" class="btn" disabled>Random 1 câu</button>
-            <button id="modeExam" class="btn" disabled>Làm đề thi (toàn bộ)</button>
-          </div>
-        </div>
-      </header>
+<body class="antialiased bg-gradient-to-br from-blue-50 to-green-50 min-h-screen p-6">
 
-      <main id="mainArea">
-        <!-- khu vực cho 1 câu -->
-        <section id="singleArea" style="display:none;margin-top:12px">
-          <div id="singleBox" class="">
-            <div id="qbox" class="question">—</div>
-            <div id="choices" class="options"></div>
-
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-              <button id="checkBtn" class="btn">Kiểm tra</button>
-              <button id="nextBtn" class="btn secondary">Câu tiếp theo</button>
-              <button id="backHome1" class="btn ghost">Quay lại trang chủ</button>
+  <!-- SUBJECT SELECTION SCREEN -->
+  <div id="subjectScreen" class="min-h-screen flex items-center justify-center">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-600 via-green-600 to-teal-600 p-8 text-white text-center">
+          <div class="mb-4">
+            <div class="inline-block bg-white/20 rounded-full p-4 backdrop-blur-sm">
+              <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
             </div>
-
-            <div id="result" style="display:none" class="result"></div>
-            <div id="explain" class="small" style="margin-top:8px"></div>
           </div>
-        </section>
+          <h1 class="text-4xl font-bold mb-3">Các bài kiểm tra cuối kì 1</h1>
+          <p class="text-xl text-blue-100">Chọn môn học để bắt đầu</p>
+        </div>
 
-        <!-- khu vực cho đề thi -->
-        <section id="examArea" style="display:none;margin-top:12px">
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button id="startExam" class="btn">Tạo đề (toàn bộ câu)</button>
-            <button id="submitExam" class="btn secondary">Nộp bài</button>
-            <button id="regenExam" class="btn ghost">Tạo đề khác</button>
-            <button id="backHome2" class="btn ghost">Quay lại trang chủ</button>
-            <div class="small" style="margin-left:8px">Toàn bộ câu — thứ tự câu & lựa chọn được xáo</div>
+        <div class="p-8">
+          <div class="grid md:grid-cols-2 gap-6">
+            <button id="selectGDCD" class="group relative overflow-hidden bg-gradient-to-br from-purple-600 to-purple-700 text-white p-8 rounded-xl hover:from-purple-700 hover:to-purple-800 transition-all transform hover:scale-[1.02] shadow-lg">
+              <div class="relative z-10">
+                <div class="flex items-center justify-center mb-4">
+                  <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">GDCD</h3>
+                <p class="text-purple-100 text-sm">Giáo dục công dân</p>
+                <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">44 câu hỏi</div>
+              </div>
+            </button>
+
+            <button id="selectCongNghe" class="group relative overflow-hidden bg-gradient-to-br from-orange-600 to-orange-700 text-white p-8 rounded-xl hover:from-orange-700 hover:to-orange-800 transition-all transform hover:scale-[1.02] shadow-lg">
+              <div class="relative z-10">
+                <div class="flex items-center justify-center mb-4">
+                  <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">CN</h3>
+                <p class="text-orange-100 text-sm">Công nghệ</p>
+                <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">40 câu hỏi</div>
+              </div>
+            </button>
           </div>
-
-          <form id="examForm" style="margin-top:12px"></form>
-          <div id="examResult" style="display:none;margin-top:12px" class="result"></div>
-        </section>
-
-        <!-- trang chủ (giới thiệu ngắn) -->
-        <section id="homeIntro" style="margin-top:18px">
-          <div class="small">Chọn môn trước, sau đó nhấn một trong hai nút để bắt đầu. "Random 1 câu" chỉ lấy 1 câu, "Làm đề thi" sẽ tạo toàn bộ câu không lặp.</div>
-        </section>
-      </main>
-
-      <footer>
-        <div class="small">Ghi chú: đáp án & ghi chú (nếu có) sẽ hiển thị sau khi kiểm tra / nộp bài.</div>
-      </footer>
+        </div>
+      </div>
     </div>
   </div>
 
-<script>
-const QUESTIONS_GDCD = [
-  {id:1, text:"Hành vi nào sau đây thể hiện sự quan tâm, cảm thông và chia sẻ?", options:[{key:'A',text:'Chế giễu, mỉa mai những người khuyết tật.'},{key:'B',text:'Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.'},{key:'C',text:'Cười trên sự đau khổ của người khác.'},{key:'D',text:'Giúp đỡ người khác để được tiếng tốt và nổi danh.'}], answer:'B'},
-  {id:2, text:"Hành vi nào sau đây không thể hiện sự quan tâm, cảm thông và chia sẻ?", options:[{key:'A',text:'Giảng giúp bạn những bài chưa hiểu'},{key:'B',text:'Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.'},{key:'C',text:'Trò chuyện, giúp đỡ bạn khi bạn chưa quen nhiều bạn trong lớp'},{key:'D',text:'Giúp đỡ người khác để được khen và tặng quà.'}], answer:'D'},
-  {id:3, text:"Để cảm thông, quan tâm, chia sẻ với người khác mỗi chúng ta nên có biểu hiện nào sau đây?", options:[{key:'A',text:'Có lối sống ích kỷ, nhỏ nhen trước mọi người.'},{key:'B',text:'Sẵn sàng cho đi khi người khác gặp khó khăn, mất mát.'},{key:'C',text:'Quan tâm người khác khi bản thân thấy có lợi.'},{key:'D',text:'Sống khép mình, không quan tâm đến mọi quan hệ xung quanh.'}], answer:'B'},
-  {id:4, text:"Hành vi nào dưới đây không phải là biểu hiện của sự quan tâm, cảm thông và chia sẻ với người khác?", options:[{key:'A',text:'Thường xuyên hỏi thăm sức khỏe của người thân.'},{key:'B',text:'Giúp đỡ bố mẹ một số công việc trong nhà.'},{key:'C',text:'Thương cảm trước nỗi đau của người khác.'},{key:'D',text:'Bao che cho người thân khi họ mắc lỗi sai.'}], answer:'D'},
-  {id:5, text:"Câu tục ngữ nào nói về quan tâm, thông cảm, chia sẻ", options:[{key:'A',text:'Một miếng khi đói bằng một gói khi no'},{key:'B',text:'Đi một ngày đàng, học một sàng khôn'},{key:'C',text:'Một khó vàng không bằng một nang chữ'},{key:'D',text:'Muôn biết phải hỏi, muôn giỏi phải học'}], answer:'A'},
-  {id:6, text:"Câu tục ngữ nào dưới đây nói về sự quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Một con ngựa đau, cả tàu bỏ cỏ.'},{key:'B',text:'Chớ thấy sóng cả mà ngã tay chèo.'},{key:'C',text:'Uống nước nhớ nguồn.'},{key:'D',text:'Ở hiền gặp lành.'}], answer:'A'},
-  {id:7, text:"Gia đình P có hoàn cảnh khó khăn, bố mất sớm, mẹ P phải một mình làm lụng nuôi hai con. Gần đây, mẹ của P bị ốm nên P thường xuyên phải nghỉ học để chăm mẹ. Nếu là bạn cùng lớp, biết được hoàn cảnh của P em nên chọn cách ứng xử nào sau đây?", options:[{key:'A',text:'Kêu gọi các bạn cùng lớp quyên góp, hỗ trợ P.'},{key:'B',text:'Làm ngơ vì không liên quan đến bản thân mình.'},{key:'C',text:'Kêu gọi các bạn trong lớp xa lánh P vì nhà P nghèo.'},{key:'D',text:'Khuyên P nên nghỉ học để ở nhà làm việc giúp mẹ.'}], answer:'A'},
-  {id:8, text:"Cuối giờ học, M để nguyên cốc nhựa đựng nước ngọt trên bàn mà không đem bỏ vào thùng rác. Khi P nhắc nhở, M trả lời: \"Tại sao mình phải dọn dẹp, đó là việc của cô lao công cơ mà\". P giải thích và khuyên M nên cảm thông với sự vất vả của cô lao công, nhưng M không nghe và tỏ thái độ khó chịu. Trong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Cô lao công.'},{key:'B',text:'Bạn P.'},{key:'C',text:'Bạn M.'},{key:'D',text:'Hai bạn P và M.'}], answer:'C'},
-  {id:9, text:"A và N là bạn cùng lớp và ở gần nhà nhau. N bị ốm phải nghỉ học nhiều ngày. Hết giờ học, A sang nhà, đưa vở của mình cho N chép và giải thích những chỗ khó hiểu để N có thể theo kịp bào học trên lớp. H là bạn cùng lớp, thấy vậy, nên đã trách A làm thế là không đúng vì việc học là nhiệm vụ của học sinh, N phải tự tìm hiểu và hoàn thành nhiệm vụ học tập của mình. Trong trường hợp trên, bạn học sinh nào đã biết quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Bạn H.'},{key:'B',text:'Bạn A.'},{key:'C',text:'Bạn H và N.'},{key:'D',text:'Bạn A và H.'}], answer:'B'},
-  {id:10, text:"Nhà trường phát động phong trào quyên góp sách, báo, truyện… đánh tặng cho các bạn học sinh vùng cao. K và Q rất hào hứng tham gia, hai bạn còn tích cực vận động người thân, bạn bè cùng quyên góp. Trái lại, H tỏ thái độ khó chịu và chỉ rằng: \"Việc quan tâm, giáo dục và giúp đỡ trẻ em vùng cao đã có các cấp chính quyền lo, mình là học sinh, đóng góp được bao nhiêu đâu, tham gia làm gì cho mất thời gian\". Trong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", options:[{key:'A',text:'Bạn K.'},{key:'B',text:'Bạn Q.'},{key:'C',text:'Bạn H.'},{key:'D',text:'Hai bạn K và Q.'}], answer:'C'},
-  {id:11, text:"Hành động nào sau đây là biểu hiện của học tập tự giác, tích cực?", options:[{key:'A',text:'Trước giờ đi học cần xoay sở, vội.'},{key:'B',text:'Luôn cố gắng, vượt khó, kiên trì trong học tập.'},{key:'C',text:'Luôn để bố mẹ gọi dậy đi học.'},{key:'D',text:'Trong giờ kiểm tra, nhìn bài bạn để đạt được điểm cao.'}], answer:'B'},
-  {id:12, text:"Biểu hiện nào sau đây đối lập với tinh tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chăm chỉ'},{key:'B',text:'Kiên trì'},{key:'C',text:'Cháy lười, ỷ lại'},{key:'D',text:'Siêng năng'}], answer:'C'},
-  {id:13, text:"Nhận định nào dưới đây đúng khi bàn về tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chỉ những bạn học kém mới cần tự giác, tích cực học tập.'},{key:'B',text:'Tự giác, tích cực học tập giúp chúng ta không ngừng tiến bộ.'},{key:'C',text:'Tự giác là lối sống vốn có của mỗi người, không cần rèn luyện.'},{key:'D',text:'Những người tự giác, tích cực học tập sẽ phải chịu nhiều thiệt thòi.'}], answer:'B'},
-  {id:14, text:"Nhận định nào dưới đây không đúng khi bàn về tự giác, tích cực trong học tập?", options:[{key:'A',text:'Chỉ những bạn học sinh yếu kém mới cần tự giác, tích cực học tập.'},{key:'B',text:'Học tập tự giác, tích cực giúp ta có thêm kiến thức, mở rộng hiểu biết.'},{key:'C',text:'Người có đức tính tự giác, tích cực học tập sẽ được mọi người tôn trọng.'},{key:'D',text:'Học tập tự giác, tích cực giúp ta gặt hái nhiều thành công trong cuộc sống.'}], answer:'A'},
-  {id:15, text:"Học tập tự giác, tích cực là", options:[{key:'A',text:'chủ động nỗ lực học tập mỗi khi đến các kì thi quan trọng.'},{key:'B',text:'chủ động học tập khi có sự nhắc nhở của cha mẹ hoặc thầy cô.'},{key:'C',text:'chủ động nỗ lực khi được bố mẹ hứa thưởng sau đợt thi qua cao.'},{key:'D',text:'chủ động thực hiện đầy đủ, hiệu quả nhiệm vụ học tập đã đề ra.'}], answer:'D'},
-  {id:16, text:"Câu tục ngữ nào sau đây thể hiện học tập tự giác, tích cực?", options:[{key:'A',text:'Học không hay, cày không biết,'},{key:'B',text:'Đi cuộc đầu tay, đi cày mới gối.'},{key:'C',text:'Luyện mãi thành tài, miệt mãi tất giỏi.'},{key:'D',text:'Học trước quên sau.'}], answer:'C'},
-  {id:17, text:"Việc làm nào sau đây thể hiện tính tự giác, tích cực trong hoạt động học tập?", options:[{key:'A',text:'Hăng hái phát biểu xây dựng bài.'},{key:'B',text:'Dạy sớm tập thể dục thể thao.'},{key:'C',text:'Tôn trọng, quý mến mọi người.'},{key:'D',text:'Quan tâm, sẻ chia với mọi người.'}], answer:'A'},
-  {id:18, text:"Nội dung nào dưới đây không phải là biểu hiện của học tập tự giác, tích cực?", options:[{key:'A',text:'Lập thời gian biểu khoa học, hợp lí.'},{key:'B',text:'Quyết tâm thực hiện các mục tiêu học tập.'},{key:'C',text:'Xác định đúng mục tiêu học tập.'},{key:'D',text:'Luôn luôn chờ đợi vào sự giúp đỡ.'}], answer:'D'},
-  {id:19, text:"Câu tục ngữ nào sau đây nói lên học tập tự giác:", options:[{key:'A',text:'Kính lão đắc thọ'},{key:'B',text:'Nhà sạch thì mát, bát sạch ngon cơm'},{key:'C',text:'Buôn có bạn, bạn có phương'},{key:'D',text:'Học hành vất vả, kết quả ngọt bùi'}], answer:'D'},
-  {id:20, text:"Chủ thể nào dưới đây đã học tập tự giác, tích cực?", options:[{key:'A',text:'Bạn P thường xuyên trốn học để đi chơi game.'},{key:'B',text:'Mỗi khi gặp bài tập khó, T lại nhờ anh trai giải hộ.'},{key:'C',text:'Bạn K thường xuyên làm việc riêng trong giờ học.'},{key:'D',text:'Bạn C luôn hăng hái phát biểu, xây dựng bài học.'}], answer:'D'},
-  {id:21, text:"Trong giờ học trên lớp, nhóm em được giao một nhiệm vụ học tập. Trong khi các bạn khác đang tích cực thảo luận, H ngồi làm việc riêng. Khi các bạn nhắc nhở, H nói rằng chỉ cần đại diện một bạn trong nhóm thực hiện nhiệm vụ này, H hưởng trên cho nhanh thì bạn H thuộc tính nào?", options:[{key:'A',text:'Trung thực.'},{key:'B',text:'Tự giác, tích cực học tập.'},{key:'C',text:'Đoàn kết.'},{key:'D',text:'Cần cù lao động.'}], answer:'B'},
-  {id:22, text:"Hành vi nào dưới đây là biểu hiện của giờ chủ tín?", options:[{key:'A',text:'Hứa tất cả mọi việc để được khen của mọi người.'},{key:'B',text:'Luôn đến đúng giờ, giữ đúng lời hứa.'},{key:'C',text:'Mượn đồ của người khác nhưng không trả.'},{key:'D',text:'Lời nói không đi đôi với việc làm.'}], answer:'B'},
-  {id:23, text:"Hành vi nào sau đây là biểu hiện của giữ chữ tín?", options:[{key:'A',text:'Chỉ giữ lời hứa với những người lớn'},{key:'B',text:'Giữ lời hứa khi có điều kiện thực hiện'},{key:'C',text:'Chỉ thực hiện những lời hứa quan trọng'},{key:'D',text:'Giữ đúng lời hứa với mọi người'}], answer:'D'},
-  {id:24, text:"Câu ca dao \"Nói chín thì phải làm mười/ Nói mười làm chín kẻ cười người chê\" thể hiện đức tính nào sau đây?", options:[{key:'A',text:'Yêu thương con người'},{key:'B',text:'Giữ chữ tín'},{key:'C',text:'Tôn trọng người khác'},{key:'D',text:'Tự trọng'}], answer:'B'},
-  {id:25, text:"Hành động, việc làm nào sau đây không phải là biểu hiện của giữ chữ tín?", options:[{key:'A',text:'Giữ đúng lời hứa với mọi người.'},{key:'B',text:'Luôn đúng hẹn.'},{key:'C',text:'Làm tốt việc mình đã nhận.'},{key:'D',text:'Hứa suông cho xong việc.'}], answer:'D'},
-  {id:26, text:"Nhận định nào sau đây đúng khi bàn về vấn đề giữ chữ tín?", options:[{key:'A',text:'Chỉ những người buôn bán, kinh doanh mới cần giữ chữ tín.'},{key:'B',text:'Người trưởng thành mới cần giữ chữ tín, học sinh không cần.'},{key:'C',text:'Giữ chữ tín làm cho các mối quan hệ xã hội trở nên tốt đẹp.'},{key:'D',text:'Giữ chữ tín là lối sống gây gò bó, khó chịu cho mọi người.'}], answer:'C'},
-  {id:27, text:"Câu tục ngữ nào dưới đây phản ánh về việc giữ chữ tín?", options:[{key:'A',text:'Rao ngoạc, bán dá.'},{key:'B',text:'Treo đầu đê, bấn thịt chó.'},{key:'C',text:'Nói có sách, mách có chứng.'},{key:'D',text:'Chữ tín còn quý hơn vàng.'}], answer:'D'},
-  {id:28, text:"Câu ca dao \"Nói lời phải giữ lấy lời/ Đúng như con bướm đậu rồi lại bay\" khuyên chúng ta nên?", options:[{key:'A',text:'Tiết kiệm.'},{key:'B',text:'Dũng cảm.'},{key:'C',text:'Giữ chữ tín.'},{key:'D',text:'Tích cực học tập.'}], answer:'C'},
-  {id:29, text:"Chị L ở Long An, mua sách hàng ngày bằng nghề bán vé số. Một hôm, đã gần đến giờ xổ số mà chị vẫn còn nhiều vé. Chị lên gọi điện cho anh T mua 20 tờ vé số và nhờ chị L giữ hộ. Chiến thắng xổ số, khi có kết quả xổ số, anh T có những vé trúng giải đặc biệt, với tổng số tiền 6,6 tỉ đồng. Chị L đã trao tận tay anh T những tờ vé số trúng thưởng. Trường hợp này cho thấy chị L là người như thế nào?", options:[{key:'A',text:'Giả dối, không giữ chữ tín.'},{key:'B',text:'Biết giữ chữ tín trong kinh doanh.'},{key:'C',text:'Không có tâm nhìn xa trong kinh doanh.'},{key:'D',text:'Thông minh, nhạy bén trong buôn bán.'}], answer:'B'},
-  {id:30, text:"Bà M mở cửa hàng bán thực phẩm sạch. Để tăng lợi nhuận, bà M đã nhập thực phẩm ôi thiu được ngâm tẩm hóa chất độc hại, không rõ nguồn gốc xuất xứ về bán cho khách hàng. Trường hợp này cho thấy bà M là người như thế nào?", options:[{key:'A',text:'Trung thực, biết giữ chữ tín.'},{key:'B',text:'Nhạy bén trong kinh doanh.'},{key:'C',text:'Không giữ chữ tín với khách hàng.'},{key:'D',text:'Thông minh, sắp xếp công việc hiệu quả.'}], answer:'C'},
-  {id:31, text:"A và D là đôi bạn thân từ nhỏ, lại cùng học chung một lớp. Mấy hôm nay A bị ốm, D hứa với A buổi chiều sẽ mang vở đến cho bạn mượn để ghi lại bài và giúp bạn học. Nhưng đến chiều, do mải xem phim nên D đã không tới nhà A. Thấy vậy, mẹ D nhắc nhở, D bực bội nói: \"Ôi đào, chiều nay con không đến thì ngày mai cũng được mà, có sao đâu mẹ\". Trong trường hợp này, chủ thể nào không giữ chữ tín?", options:[{key:'A',text:'Bạn A.'},{key:'B',text:'Bạn D.'},{key:'C',text:'Mẹ bạn D.'},{key:'D',text:'Hai bạn A và D.'}], answer:'B'},
-  {id:32, text:"Chị X mở cửa hàng bán mĩ phẩm nhập khẩu Hàn Quốc. Để tăng lợi nhuận, chị X đã nhập hàng không rõ nguồn gốc xuất xứ về bán cho khách hàng. Trường hợp này cho thấy chị X là người như thế nào?", options:[{key:'A',text:'Trung thực, biết giữ chữ tín.'},{key:'B',text:'Nhạy bén trong kinh doanh.'},{key:'C',text:'Không giữ chữ tín với khách hàng.'},{key:'D',text:'Thông minh, sắp xếp công việc hiệu quả.'}], answer:'C'},
-  {id:33, text:"Di sản văn hóa bao gồm di sản văn hóa vật thể và", options:[{key:'A',text:'di sản văn hóa vật chất.'},{key:'B',text:'di sản văn hóa phi vật thể.'},{key:'C',text:'danh lam thắng cảnh,'},{key:'D',text:'di tích lịch sử - văn hóa.'}], answer:'B'},
-  {id:34, text:"Di sản văn hóa phi vật thể không bao gồm nội dung nào dưới đây?", options:[{key:'A',text:'Di vật, bảo vật quốc gia.'},{key:'B',text:'Lễu diễn dân ca truyền thống.'},{key:'C',text:'Trò chơi dân gian.'},{key:'D',text:'Lễ hội truyền thống.'}], answer:'A'},
-  {id:35, text:"Di sản nào dưới đây là di sản văn hóa vật thể?", options:[{key:'A',text:'Nhã nhạc cung đình Huế.'},{key:'B',text:'Dân ca Quan họ.'},{key:'C',text:'Văn Miếu – Quốc Tử Giám.'},{key:'D',text:'Không gian văn hóa cồng chiêng Tây Nguyên'}], answer:'C'},
-  {id:36, text:"Nhận định nào dưới đây không đúng về di sản văn hóa?", options:[{key:'A',text:'Chỉ những sản phẩm vật chất mới được coi là di sản văn hóa.'},{key:'B',text:'Di sản văn hóa là tài sản và niềm tự hào của toàn dân tộc.'},{key:'C',text:'Di sản văn hóa gồm: di sản vật thể và di sản phi vật thể.'},{key:'D',text:'Góp phần phát triển văn hóa Việt Nam tiến tiến, đậm đà bản sắc.'}], answer:'A'},
-  {id:37, text:"Hành vi nào sau đây thể hiện việc giữ gìn và phát huy di sản văn hóa?", options:[{key:'A',text:'Ông P tuyên truyền sai lệch về di sản văn hóa của địa phương.'},{key:'B',text:'Nhóm anh C tuyên bá làm điều dần ca quan họ cho thế hệ trẻ.'},{key:'C',text:'Anh K tổ chức văn chuyến trái phép cổ vật ra nước ngoài.'},{key:'D',text:'Bạn X có hành vi xả rác bừa bãi tại khu di tích lịch sử - văn hóa.'}], answer:'B'},
-  {id:38, text:"Hành vi nào sau đây không phù hợp với việc giữ gìn và phát huy di sản văn hóa?", options:[{key:'A',text:'Ông B cải giảu số cổ vật mà mình tìm được khi đào móng nhà.'},{key:'B',text:'Chị M tích cực quảng bá di sản văn hóa quê hương tới bạn bè quốc tế.'},{key:'C',text:'Tập thể lớp 7A tham gia quét dọn khu di tích lịch sử tại địa phương.'},{key:'D',text:'Nghệ nhân K mở lớp học để truyền lại kĩ thuật hát ca trù cho thế hệ trẻ.'}], answer:'A'},
-  {id:39, text:"Trong quá trình đào móng để làm lại nhà, ông K đã phát hiện ra một số chén đĩa, bình hoa bằng gốm sứ có hoa văn đẹp mắt. Hoa văn và màu men gốm trên sồ chén đĩa, bình hoa đó mang nét đặc trưng của triều đại thời Trần. Chuyền ông K đào được cổ vật truyền ra ngoại, có nhiều người tới hỏi mua và trả giá cao. Trong trường hợp trên, theo em, ông K nên lựa chọn cách ứng xử nào dưới đây?", options:[{key:'A',text:'Tổ chức đấu giá để bán số cổ vật vừa tìm được.'},{key:'B',text:'Cất giữ số cổ vật đó và coi đó là \"báo vật gia truyền\".'},{key:'C',text:'Cất giữ một nửa, còn một nửa thì nộp lại cho chính quyền địa phương.'},{key:'D',text:'Nhanh chóng báo cáo và giao nộp toàn bộ cổ vật cho cơ quan chức năng.'}], answer:'D'},
-  {id:40, text:"Trong một lần đi tham quan di tích Cột cờ Hà Nội, thấy trên bức tường, bìa di tích có những nét khắc, nét vẽ chứng chịt tên, ngày tháng của những người đên tham quan. Bạn T tỏ thái độ phê phán những việc làm đó. Ngược lại, bạn Q cho rằng việc khắc tên lên bìa đã là một cách lưu lại dấu ấn của du khách. Bạn P cũng đồng tình ý kiến của Q, bên cạnh đó, P còn rủ Q cùng khắc tên lên tường thành cổ. Trong trường hợp trên, bạn học sinh nào chưa có ý thức bảo vệ di sản văn hóa?", options:[{key:'A',text:'Bạn P.'},{key:'B',text:'Bạn Q.'},{key:'C',text:'Bạn P và Q.'},{key:'D',text:'Bạn T.'}], answer:'C'},
-  {id:41, text:"Một tấm bia Di tích lịch sử – văn hóa quốc gia đường Hồ Chí Minh đã bị các quẩn ấn, nhà hàng lấn chiếm đất, tiến sát đến chân công trình. Hơn nữa, các thông tin trên tấm bia đã bị xóa xóa, hủy hoại. Điều này đã làm ảnh hưởng đến an toàn giao thông, làm mất vẻ trang nghiêm, biến dạng hoàn toàn di tích lịch sử – văn hóa quốc gia này. Theo em, hành vi lẫn chiếm đất trên sẽ bị xử phạt như thế nào theo quy định của pháp luật?", options:[{key:'A',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi lẫn chiếm đất đai thuộc di tích lịch sử – văn hóa, danh lam thắng cảnh; '},{key:'B',text:'Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng đối với hành vi làm tư hại hiện vật trong di tích lịch sử - văn hóa đã được xếp hạng hoặc được đưa vào Danh mục kiểm kê di tích của địa phương.'},{key:'C',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với hành vi hủy hoại, làm thay đối yếu tố góc nhìn thành di tích lịch sử - văn hóa, danh lam thắng cảnh; '},{key:'D',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi sử dụng trái phép di tích lịch sử - văn hóa, danh lam thắng cảnh;'}], answer:'A'},
-  {id:42, text:"Trong lúc tham quan một di tích lịch sử – văn hóa cấp quốc gia, A dùng bút xóa để viết tên mình lên tường di tích khiến bề mặt di tích bị bẩn và phải mất nhiều thời gian để vệ sinh. Theo Nghị định 38/2021/NĐ-CP, hành vi của A có thể bị xử phạt bao nhiêu?", options:[{key:'A',text:'Phạt cảnh cáo'},{key:'B',text:'Phạt tiền từ 500.000 đồng đến 1.000.000 đồng'},{key:'C',text:'Phạt tiền từ 1.000.000 đồng đến 3.000.000 đồng'},{key:'D',text:'Phạt tiền từ 5.000.000 đồng đến 10.000.000 đồng'}], answer:'C'},
-  {id:43, text:"Một cơ sở sản xuất đồ lưu niệm từ ý lâm bán sao một cổ vật thuộc báo vật quốc gia để bán cho khách du lịch mà không xin giấy phép của cơ quan quản lý có thẩm quyền. Theo Nghị định 38/2021/NĐ-CP, cơ sở này có thể bị xử phạt ở mức nào?", options:[{key:'A',text:'Phạt tiền từ 10.000.000 đồng đến 20.000.000 đồng'},{key:'B',text:'Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng'},{key:'C',text:'Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng'},{key:'D',text:'Phạt tiền từ 50.000.000 đồng đến 70.000.000 đồng'}], answer:'C'},
-  {id:44, text:"Ngày Di sản văn hóa Việt Nam là ngày nào hằng năm?", options:[{key:'A',text:'Ngày 23 tháng 11.'},{key:'B',text:'Ngày 24 tháng 11.'},{key:'C',text:'Ngày 25 tháng 11.'},{key:'D',text:'Ngày 26 tháng 11.'}], answer:'A'}
-];
+  <!-- MODE SELECTION SCREEN -->
+  <div id="modeScreen" class="hidden min-h-screen flex items-center justify-center">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-600 via-green-600 to-teal-600 p-8 text-white text-center relative">
 
-const QUESTIONS_HOA = [
-  {id:1, text:"Thành phần cấu tạo của hầu hết các loại nguyên tử gồm", options:[{key:'A',text:'Proton và electron.'},{key:'B',text:'Neutron và electron.'},{key:'C',text:'Proton và neutron.'},{key:'D',text:'Proton, neutron và electron.'}], answer:'D'},
-  {id:2, text:"Trong nguyên tử hạt nào có khối lượng xấp xỉ gần bằng nhau?", options:[{key:'A',text:'Electron và neutron.'},{key:'B',text:'Neutron và proton.'},{key:'C',text:'Electron và proton.'},{key:'D',text:'Electron, neutron và proton.'}], answer:'B'},
-  {id:3, text:"Trong nguyên tử, loại hạt có khối lượng không đáng kể so với các hạt còn lại là", options:[{key:'A',text:'proton.'},{key:'B',text:'neutron.'},{key:'C',text:'electron.'},{key:'D',text:'neutron và electron.'}], answer:'C'},
-  {id:4, text:"Trừ hạt nhân của nguyên tử hydrogen, hạt nhân các nguyên tử còn lại được tạo thành từ hạt", options:[{key:'A',text:'electron và proton.'},{key:'B',text:'electron, proton và neutron.'},{key:'C',text:'neutron và electron.'},{key:'D',text:'proton và neutron.'}], answer:'D'},
-  {id:5, text:"Các hạt cấu tạo nên hầu hết các nguyên tử là", options:[{key:'A',text:'electron và neutron.'},{key:'B',text:'proton và neutron.'},{key:'C',text:'neutron và electron.'},{key:'D',text:'electron, proton và neutron.'}], answer:'D'},
-  {id:6, text:"Trong nguyên tử, hạt mang điện là", options:[{key:'A',text:'electron.'},{key:'B',text:'electron và neutron.'},{key:'C',text:'proton và neutron.'},{key:'D',text:'proton và electron.'}], answer:'D'},
-  {id:7, text:"Thông tin nào sau đây không đúng?", options:[{key:'A',text:'Proton mang điện tích dương, nằm trong hạt nhân, khối lượng gần bằng 1 amu.'},{key:'B',text:'Electron mang điện tích âm, nằm trong hạt nhân, khối lượng gần bằng 0 amu.'},{key:'C',text:'Neutron không mang điện, khối lượng gần bằng 1 amu.'},{key:'D',text:'Nguyên tử trung hòa điện, có kích thước lớn hơn nhiều so với hạt nhân, nhưng có khối lượng gần bằng khối lượng hạt nhân.'}], answer:'B'},
-  {id:8, text:"Phát biểu nào dưới đây không đúng?", options:[{key:'A',text:'Nguyên tử được cấu thành từ các hạt cơ bản là proton, neutron và electron.'},{key:'B',text:'Hầu hết hạt nhân nguyên tử được cấu thành từ các hạt proton và neutron.'},{key:'C',text:'Vỏ nguyên tử được cấu thành bởi các hạt electron.'},{key:'D',text:'Nguyên tử có cấu trúc đặc khít, gồm vỏ nguyên tử và hạt nhân nguyên tử.'}], answer:'D'},
-  {id:9, text:"Hạt nhân của nguyên tử Sodium (Na) có 11 proton. Số hạt electron của nguyên tử Sodium (Na) là bao nhiêu?", options:[{key:'A',text:'9.'},{key:'B',text:'10.'},{key:'C',text:'11.'},{key:'D',text:'12.'}], answer:'C'},
-  {id:10, text:"Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron của nguyên tử calcium là bao nhiêu?", options:[{key:'A',text:'5.'},{key:'B',text:'10.'},{key:'C',text:'15.'},{key:'D',text:'20.'}], answer:'D'},
-  {id:11, text:"Phát biểu nào sau đây không mô tả đúng mô hình nguyên tử của Ro-đơ-pho - Bo?", options:[{key:'A',text:'Nguyên tử có cấu tạo rỗng, gồm hạt nhân ở tâm nguyên tử và các electron ở vỏ nguyên tử.'},{key:'B',text:'Nguyên tử có cấu tạo đặc khít, gồm hạt nhân nguyên tử và các electron.'},{key:'C',text:'Electron chuyển động xung quanh hạt nhân theo những quỹ đạo xác định tạo thành các lớp electron.'},{key:'D',text:'Hạt nhân nguyên tử mang điện tích dương, electron mang điện tích âm.'}], answer:'B'},
-  {id:12, text:"Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron ở lớp ngoài cùng của nguyên tử calcium là bao nhiêu?", options:[{key:'A',text:'2.'},{key:'B',text:'8.'},{key:'C',text:'10.'},{key:'D',text:'20.'}], answer:'A'},
-  {id:13, text:"Phát biểu nào sau đây không mô tả đúng vỏ nguyên tử theo mô hình nguyên tử của Ro-đơ-pho - Bo?", options:[{key:'A',text:'Electron chuyển động xung quanh hạt nhân theo từng lớp khác nhau tạo thành các lớp electron.'},{key:'B',text:'Lớp electron trong cùng gần hạt nhân nhất có tối đa 2 electron, các lớp electron khác có chứa tối đa 8 electron hoặc nhiều hơn.'},{key:'C',text:'Lớp electron trong cùng gần hạt nhân nhất có tối đa 8 electron, các lớp electron khác có chứa tối đa nhiều hơn 8 electron.'},{key:'D',text:'Các electron sắp xếp vào các lớp theo thứ tự từ trong ra ngoài cho đến hết.'}], answer:'C'},
-  {id:14, text:"Trong một nguyên tử có số proton bằng 5, số electron trong các lớp của vỏ nguyên tử, viết từ lớp trong ra lớp ngoài, lần lượt là", options:[{key:'A',text:'1, 8, 2.'},{key:'B',text:'2, 8, 1.'},{key:'C',text:'2, 3.'},{key:'D',text:'3, 2.'}], answer:'C'},
-  {id:15, text:"Nito (nitrogen) là nguyên tố hóa học phổ biến trong không khí. Trong hạt nhân nguyên tử nitơ có 7 proton. Số lớp electron của nguyên tử nitơ là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'5.'}], answer:'B'},
-  {id:16, text:"Trong hạt nhân nguyên tử fluorine có 9 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử fluorine là", options:[{key:'A',text:'2.'},{key:'B',text:'5.'},{key:'C',text:'7.'},{key:'D',text:'8.'}], answer:'C'},
-  {id:17, text:"Nguyên tử sulfur có 16 electron ở vỏ nguyên tử. Số electron ở lớp thứ 3 của nguyên tử sulfur là", options:[{key:'A',text:'2.'},{key:'B',text:'6.'},{key:'C',text:'8.'},{key:'D',text:'16.'}], answer:'B'},
-  {id:18, text:"Nguyên tử nhôm (aluminium) có 13 electron ở vỏ. Số electron ở lớp trong cùng của nguyên tử nhôm là", options:[{key:'A',text:'2.'},{key:'B',text:'8.'},{key:'C',text:'10.'},{key:'D',text:'18.'}], answer:'A'},
-  {id:19, text:"Cho các phát biểu: 1. Nguyên tử trung hòa về điện. 2. Khối lượng của nguyên tử tập trung chủ yếu ở hạt nhân. 3. Trong nguyên tử, số hạt mang điện tích dương bằng số hạt mang điện tích âm nên số hạt electron bằng số hạt neutron. 4. Vỏ nguyên tử, gồm các lớp electron có khoảng cách khác nhau đối với hạt nhân. Trong các phát biểu trên, số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
-  {id:20, text:"Hạt nhân một nguyên tử fluorine có 9 proton và 10 neutron. Khối lượng của nguyên tử fluorine xấp xỉ bằng", options:[{key:'A',text:'9 amu.'},{key:'B',text:'10 amu.'},{key:'C',text:'19 amu.'},{key:'D',text:'28 amu.'}], answer:'C'},
-  {id:21, text:"Muối ăn chứa hai nguyên tố hóa học là natri (sodium) và chlorine. Trong hạt nhân nguyên tử của natri và chlorine có lần lượt 11 và 17 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử", options:[{key:'A',text:'1 và 7.'},{key:'B',text:'3 và 9.'},{key:'C',text:'9 và 15.'},{key:'D',text:'3 và 7.'}], answer:'A'},
-  {id:22, text:"Trong hạt nhân nguyên tử lưu huỳnh (sulfur) có 16 proton. Số electron trong các lớp của vỏ nguyên tử sulfur, viết từ lớp trong ra lớp ngoài, lần lượt là", options:[{key:'A',text:'2, 10, 6.'},{key:'B',text:'2, 6, 8.'},{key:'C',text:'2, 8, 6.'},{key:'D',text:'2, 9, 5.'}], answer:'C'},
-  {id:23, text:"Cho các phát biểu sau: 1. Trong nguyên tử, hạt không mang điện là hạt electron. 2. Lớp vỏ của tất cả các nguyên tử đều chứa electron. 3. Tất cả các nguyên tử đều trung hòa về điện. 4. Trong nguyên tử, hạt mang điện là neutron và electron. 5. Khối lượng của hạt proton gấp hạt electron khoảng 1818 lần. Số phát biểu không đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'D'},
-  {id:24, text:"X là nguyên tố phổ biến thứ 4 trong vỏ trái đất, X có trong hemoglobin của máu làm nhiệm vụ vận chuyển oxygen, duy trì sự sống. Nguyên tử X có 26 proton trong hạt nhân. Cho các phát biểu sau về X: 1. X có 26 neutron trong hạt nhân. 2. X có 26 electron ở vỏ nguyên tử. 3. X có điện tích hạt nhân là +26. 4. Khối lượng nguyên tử X là 26 amu. Trong các phát biểu trên, số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'B'},
-  {id:25, text:"Cho các phát biểu sau: 1. Tất cả các hạt nhân nguyên tử đều chứa proton và neutron. 2. Khối lượng nguyên tử tập trung phần lớn ở lớp vỏ. 3. Trong nguyên tử, số electron bằng số proton. 4. Trong hạt nhân nguyên tử, hạt mang điện là proton và electron. 5. Trong nguyên tử, hạt electron có khối lượng không đáng kể so với các hạt còn lại. Số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'B'},
-  {id:26, text:"Nguyên tố hóa học là tập hợp các nguyên tử cùng loại có ...", options:[{key:'A',text:'cùng số neutron trong hạt nhân.'},{key:'B',text:'cùng số proton trong hạt nhân.'},{key:'C',text:'cùng số electron trong hạt nhân.'},{key:'D',text:'cùng số proton và neutron trong hạt nhân.'}], answer:'B'},
-  {id:27, text:"Nhận định đúng nhất là", options:[{key:'A',text:'Các nguyên tử thuộc cùng một nguyên tố hóa học thì có tính chất giống nhau.'},{key:'B',text:'Tập hợp các nguyên tử có cùng số proton đều thuộc cùng một nguyên tố hóa học.'},{key:'C',text:'Nguyên tố hóa học là những nguyên tử có cùng số neutron khác nhau số proton.'},{key:'D',text:'Nguyên tố hóa học là những nguyên tố có cùng điện tích hạt nhân.'}], answer:'B'},
-  {id:28, text:"Cho thành phần các nguyên tử sau: X (17p, 17e, 18n), Y (20p, 20e, 20n), Z (17p, 17e, 20n), T (19p,19e, 20n). Trong số các nguyên tử trên có bao nhiêu nguyên tố hóa học?", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
-  {id:29, text:"Cho các kí hiệu hóa học sau: H, Li, NA, O, Ne, AL, CA, K, N. Số kí hiệu hóa học viết đúng là", options:[{key:'A',text:'5.'},{key:'B',text:'6.'},{key:'C',text:'7.'},{key:'D',text:'4.'}], answer:'B'},
-  {id:30, text:"Đến nay con người đã tìm ra bao nhiêu nguyên tố hóa học?", options:[{key:'A',text:'118.'},{key:'B',text:'94.'},{key:'C',text:'20.'},{key:'D',text:'1 000'}], answer:'A'},
-  {id:31, text:"Điền từ thích hợp vào chỗ trống: \"Số ... là số đặc trung của một nguyên tố hóa học\".", options:[{key:'A',text:'electron.'},{key:'B',text:'proton.'},{key:'C',text:'neutron.'},{key:'D',text:'neutron và electron.'}], answer:'B'},
-  {id:32, text:"Kí hiệu hóa học của kim loại sodium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Na.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'B'},
-  {id:33, text:"Nguyên tử nào sau đây là nhẹ nhất?", options:[{key:'A',text:'Hydrogen.'},{key:'B',text:'Oxygen.'},{key:'C',text:'Carbon.'},{key:'D',text:'Iron.'}], answer:'A'},
-  {id:34, text:"Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây?", options:[{key:'A',text:'Ca.'},{key:'B',text:'S.'},{key:'C',text:'Na.'},{key:'D',text:'Mg.'}], answer:'B'},
-  {id:35, text:"Nguyên tử Ca nặng hơn hay nhẹ hơn so với nguyên tử O?", options:[{key:'A',text:'Nặng hơn 0,4 lần.'},{key:'B',text:'Nhẹ hơn 2,5 lần.'},{key:'C',text:'Nhẹ hơn 0,4 lần.'},{key:'D',text:'Nặng hơn 2,5 lần.'}], answer:'D'},
-  {id:36, text:"Cho các ký hiệu hóa học sau: Na, ZN, CA, Al, Ba, CU. Các ký hiệu hóa học nào viết sai?", options:[{key:'A',text:'Na, ZN, CA.'},{key:'B',text:'Al, Ba, CU.'},{key:'C',text:'ZN, CA, Al.'},{key:'D',text:'ZN, CA, CU.'}], answer:'D'},
-  {id:37, text:"Bốn nguyên tố thiết yếu nhất cho sinh vật là:", options:[{key:'A',text:'C, H, Na, Ca.'},{key:'B',text:'C, H, O, N.'},{key:'C',text:'C, H, O, Na.'},{key:'D',text:'C, H, O, Ca.'}], answer:'B'},
-  {id:38, text:"Kí hiệu hóa học của nguyên tố magnesium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'B'},
-  {id:39, text:"Kí hiệu hóa học của nguyên tố aluminium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'C'},
-  {id:40, text:"Kí hiệu hóa học của nguyên tố carbon là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'D'},
-  {id:41, text:"Kí hiệu hóa học của nguyên tố calcium là", options:[{key:'A',text:'Ca.'},{key:'B',text:'Mg.'},{key:'C',text:'Al.'},{key:'D',text:'C.'}], answer:'A'},
-  {id:42, text:"Kí hiệu hóa học của nguyên tố oxygen là", options:[{key:'A',text:'Ox.'},{key:'B',text:'O.'},{key:'C',text:'Og.'},{key:'D',text:'Oxy.'}], answer:'B'},
-  {id:43, text:"Kí hiệu hóa học của nguyên tố nitrogen là", options:[{key:'A',text:'Ni.'},{key:'B',text:'No.'},{key:'C',text:'N.'},{key:'D',text:'Na.'}], answer:'C'},
-  {id:44, text:"Kí hiệu hóa học của nguyên tố chlorine là", options:[{key:'A',text:'Cl.'},{key:'B',text:'C.'},{key:'C',text:'Ch.'},{key:'D',text:'Cr.'}], answer:'A'},
-  {id:45, text:"Kí hiệu hóa học của nguyên tố potassium là", options:[{key:'A',text:'Po.'},{key:'B',text:'P.'},{key:'C',text:'K.'},{key:'D',text:'Ka.'}], answer:'C'},
-  {id:46, text:"Kí hiệu hóa học của nguyên tố sulfur là", options:[{key:'A',text:'S.'},{key:'B',text:'Su.'},{key:'C',text:'Sl.'},{key:'D',text:'Sf.'}], answer:'A'},
-  {id:47, text:"Kí hiệu hóa học của nguyên tố phosphorus là", options:[{key:'A',text:'Ph.'},{key:'B',text:'Po.'},{key:'C',text:'Ps.'},{key:'D',text:'P.'}], answer:'D'},
-  {id:48, text:"Kí hiệu hóa học của nguyên tố bạc (silver) là", options:[{key:'A',text:'Ag.'},{key:'B',text:'Ba.'},{key:'C',text:'Hg.'},{key:'D',text:'O.'}], answer:'A'},
-  {id:49, text:"Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây? (O=16; Ca=40; S=32; Na=23; Mg=12)", options:[{key:'A',text:'Ca.'},{key:'B',text:'S.'},{key:'C',text:'Na.'},{key:'D',text:'Mg.'}], answer:'B'},
-  {id:50, text:"Biết rằng 4 nguyên tử magnesium nặng bằng 3 nguyên tử nguyên tố X. X là nguyên tố nào? (C=12; Mg=24; O=16; Si=28; S=32)", options:[{key:'A',text:'C.'},{key:'B',text:'Si.'},{key:'C',text:'S.'},{key:'D',text:'O.'}], answer:'C'},
-  {id:51, text:"Biết nguyên tố Y có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của silicon. Y là nguyên tố nào sau đây? (O=16; Ca=40; S=32; Si=28; Fe=56; Cu=64; N=14)", options:[{key:'A',text:'Cu.'},{key:'B',text:'Fe.'},{key:'C',text:'Ca.'},{key:'D',text:'N.'}], answer:'B'},
-  {id:52, text:"Kí hiệu hóa học của nguyên tố barium là", options:[{key:'A',text:'Ag.'},{key:'B',text:'Ba.'},{key:'C',text:'Hg.'},{key:'D',text:'O.'}], answer:'B'},
-  {id:53, text:"Kí hiệu biểu diễn hai nguyên tử oxygen là", options:[{key:'A',text:'2O.'},{key:'B',text:'O₂.'},{key:'C',text:'2O₂.'},{key:'D',text:'-O.'}], answer:'A'},
-  /*
-  {id:54, text:"Các nguyên tố nào sau đây thuộc nhóm VIA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Na, H, Mg, Ca.'},{key:'B',text:'F, Cl, Br, I.'},{key:'C',text:'O, S, Se, Te.'},{key:'D',text:'He, Ne, Ar, Kr.'}], answer:'C'},
-  {id:55, text:"Chu kì là tập hợp các nguyên tố hóa học có cùng .... trong nguyên tử theo hàng ngang.", options:[{key:'A',text:'số neutron trong hạt nhân.'},{key:'B',text:'số proton trong hạt nhân.'},{key:'C',text:'số electron.'},{key:'D',text:'số lớp electron.'}], answer:'D'},
-  {id:56, text:"Số thứ tự của chu kì trong bảng tuần hoàn nguyên tố hóa học cho ta biết thông tin nào?", options:[{key:'A',text:'Số lớp electron trong nguyên tử.'},{key:'B',text:'Số electron lớp ngoài cùng của nguyên tử.'},{key:'C',text:'Số điện tích của nguyên tử.'},{key:'D',text:'Số hạt proton trong hạt nhân nguyên tử.'}], answer:'A'},
-  {id:57, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì?", options:[{key:'A',text:'1 chu kì.'},{key:'B',text:'3 chu kì.'},{key:'C',text:'5 chu kì.'},{key:'D',text:'7 chu kì.'}], answer:'D'},
-  {id:58, text:"Nguyên tố Sodium (Na) có 3 lớp electron và lớp ngoài cùng có 1 electron, nguyên tố Na thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IIIA.'},{key:'B',text:'Nhóm IA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIA.'}], answer:'B'},
-  {id:59, text:"Nguyên tố potassium (K) có 4 lớp electron trong nguyên tử, nguyên tố K thuộc chu kì nào?", options:[{key:'A',text:'Chu kì 2.'},{key:'B',text:'Chu kì 3.'},{key:'C',text:'Chu kì 4.'},{key:'D',text:'Chu kì 5.'}], answer:'C'},
-  {id:60, text:"Cho các dãy nguyên tố hóa học sau: Li, Na, ?, Rb, Ce, Fr. Nguyên tố còn thiếu là", options:[{key:'A',text:'C.'},{key:'B',text:'Cl.'},{key:'C',text:'K.'},{key:'D',text:'Na.'}], answer:'C'},
-  {id:61, text:"Cho sơ đồ nguyên tử Na (sodium) như sau. [hình sẽ được update] Số hạt proton, số hạt electron và số lớp electron của nguyên tử Na là bao nhiêu?", options:[{key:'A',text:'Số p = 11, số e = 12; 3 lớp electron.'},{key:'B',text:'Số p = 11, số e = 11; 3 lớp electron.'},{key:'C',text:'Số p = 11, số e = 12; 4 lớp electron.'},{key:'D',text:'Số p = 11, số e = 11; 4 lớp electron.'}], answer:'B'},
-  {id:62, text:"Nguyên tố nào sau đây thuộc nhóm IA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Li.'},{key:'B',text:'Al.'},{key:'C',text:'N.'},{key:'D',text:'Cl.'}], answer:'A'},
-  {id:63, text:"Nguyên tố nitrogen thuộc nhóm nào trong bảng tuần hoàn nguyên tố hóa học?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIA.'},{key:'C',text:'Nhóm VA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'C'},
-  {id:64, text:"Nguyên tử chlorine (Cl) có 7 electron ở lớp ngoài cùng, nguyên tố Cl thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IVA.'},{key:'B',text:'Nhóm VIIA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIIIA.'}], answer:'B'},
-  {id:65, text:"Trong bảng tuần hoàn nguyên tố hóa học có bao nhiêu chu kì lớn và nhỏ?", options:[{key:'A',text:'3 chu kì lớn, 4 chu kì nhỏ.'},{key:'B',text:'1 chu kì lớn, 6 chu kì nhỏ.'},{key:'C',text:'5 chu kì lớn, 2 chu kì nhỏ.'},{key:'D',text:'4 chu kì lớn, 3 chu kì nhỏ.'}], answer:'D'},
-  {id:66, text:"Các nguyên tố nào sau đây thuộc nhóm VIIA trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'C, H, Na, Ca.'},{key:'B',text:'F, Cl, Br, I.'},{key:'C',text:'Na, H, S, O.'},{key:'D',text:'He, Ne, Ar, Kr.'}], answer:'B'},
-  {id:67, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu nhóm A?", options:[{key:'A',text:'2 nhóm.'},{key:'B',text:'4 nhóm.'},{key:'C',text:'6 nhóm.'},{key:'D',text:'8 nhóm.'}], answer:'D'},
-  {id:68, text:"Nguyên tố Magnesium (Mg) có 3 electron trong nguyên tử, nguyên tố Mg thuộc chu kì nào?", options:[{key:'A',text:'Chu kì 1.'},{key:'B',text:'Chu kì 2.'},{key:'C',text:'Chu kì 3.'},{key:'D',text:'Chu kì 4.'}], answer:'C'},
-  {id:69, text:"Nguyên tố oxygen (O) có 6 electron ở lớp ngoài cùng, nguyên tố O thuộc nhóm nào?", options:[{key:'A',text:'Nhóm IVA.'},{key:'B',text:'Nhóm VIIIA.'},{key:'C',text:'Nhóm IIA.'},{key:'D',text:'Nhóm VIA.'}], answer:'D'},
-  {id:70, text:"Nguyên tố phosphorus (P) thuộc nhóm nào trong bảng tuần hoàn các nguyên tố hóa học?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIIA.'},{key:'C',text:'Nhóm VA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'C'},
-  {id:71, text:"Số thứ tự của nhóm A trong bảng tuần hoàn các nguyên tố hóa học cho ta biết", options:[{key:'A',text:'Số lớp electron trong nguyên tử.'},{key:'B',text:'Số electron lớp ngoài cùng của nguyên tử.'},{key:'C',text:'Số điện tích hạt nhân của nguyên tử.'},{key:'D',text:'Số hạt proton trong hạt nhân nguyên tử.'}], answer:'B'},
-  {id:72, text:"Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì lớn?", options:[{key:'A',text:'3 chu kì lớn.'},{key:'B',text:'1 chu kì lớn.'},{key:'C',text:'5 chu kì lớn.'},{key:'D',text:'4 chu kì lớn.'}], answer:'D'},
-  {id:73, text:"Nhóm nguyên tố nào sau đây được gọi là nhóm halogen?", options:[{key:'A',text:'Nhóm IA.'},{key:'B',text:'Nhóm IIA.'},{key:'C',text:'Nhóm IVA.'},{key:'D',text:'Nhóm VIIA.'}], answer:'D'},
-  {id:74, text:"Cho sơ đồ nguyên tử Ca (calcium) như sau. [hình sẽ được update] Số hạt proton, số hạt electron và số lớp electron của nguyên tử Ca là bao nhiêu?", options:[{key:'A',text:'Số p = 20, số e = 20; 3 lớp electron.'},{key:'B',text:'Số p = 20, số e = 20; 4 lớp electron.'},{key:'C',text:'Số p = 20, số e = 21; 4 lớp electron.'},{key:'D',text:'Số p = 21, số e = 20; 3 lớp electron.'}], answer:'B'},
-  {id:75, text:"Bảng tuần hoàn các nguyên tố hóa học được sắp xếp theo nguyên tắc", options:[{key:'A',text:'nguyên tử khối tăng dần.'},{key:'B',text:'tính kim loại tăng dần.'},{key:'C',text:'điện tích hạt nhân tăng dần'},{key:'D',text:'tính phi kim tăng dần.'}], answer:'C'},
-  {id:76, text:"Số thứ tự chu kì trong bảng hệ thống tuần hoàn cho biết", options:[{key:'A',text:'Số thứ tự của nguyên tố.'},{key:'B',text:'Số hiệu nguyên tử.'},{key:'C',text:'Số electron lớp ngoài cùng.'},{key:'D',text:'Số lớp electron.'}], answer:'D'},
-  {id:77, text:"Số thứ tự nhóm A trong bảng hệ thống tuần hoàn cho biết:", options:[{key:'A',text:'Số electron lớp ngoài cùng.'},{key:'B',text:'Số lớp electron.'},{key:'C',text:'Số hiệu nguyên tử.'},{key:'D',text:'Số thứ tự của nguyên tố.'}], answer:'A'},
-  {id:78, text:"Trong bảng hệ thống tuần hoàn các nguyên tố hóa học, số chu kì nhỏ và chu kì lớn là", options:[{key:'A',text:'3 và 3.'},{key:'B',text:'4 và 3.'},{key:'C',text:'3 và 4.'},{key:'D',text:'4 và 4.'}], answer:'B'},
-  {id:79, text:"Chu kì 3 của bảng hệ thống tuần hoàn có", options:[{key:'A',text:'2 nguyên tố.'},{key:'B',text:'8 nguyên tố.'},{key:'C',text:'10 nguyên tố.'},{key:'D',text:'18 nguyên tố.'}], answer:'B'},
-  {id:80, text:"Chu kì 4 của bảng hệ thống tuần hoàn có", options:[{key:'A',text:'2 nguyên tố.'},{key:'B',text:'18 nguyên tố.'},{key:'C',text:'36 nguyên tố.'},{key:'D',text:'20 nguyên tố.'}], answer:'B'},
-  {id:81, text:"Nguyên tố X ở chu kì 3 nhóm IA, số đơn vị điện tích hạt nhân của nguyên tố X là", options:[{key:'A',text:'Z = 13.'},{key:'B',text:'Z = 10.'},{key:'C',text:'Z = 12.'},{key:'D',text:'Z = 11.'}], answer:'D'},
-  {id:82, text:"Biết cấu tạo nguyên tử X như sau: có 3 lớp electron, lớp ngoài cùng có 6 electron. Dựa vào bảng tuần hoàn thì nguyên tố X là", options:[{key:'A',text:'Chlorine (Z=17).'},{key:'B',text:'Phosphorus (Z=15).'},{key:'C',text:'Nitrogen (Z=7).'},{key:'D',text:'Sulfur (Z=16).'}], answer:'D'},
-  {id:83, text:"Nguyên tử của nguyên tố X có 3 lớp electron, lớp electron ngoài cùng có 7 electron. Vị trí của nguyên tố X trong bảng tuần hoàn là", options:[{key:'A',text:'chu kỳ 3, nhóm VI.'},{key:'B',text:'chu kỳ 7, nhóm III.'},{key:'C',text:'chu kỳ 3, nhóm VII.'},{key:'D',text:'chu kỳ 7, nhóm VI.'}], answer:'C'},
-  {id:84, text:"Nguyên tử của nguyên tố Y có 2 lớp electron, trong đó lớp ngoài cùng có 4 electron. Vị trí của Y trong bảng tuần hoàn là", options:[{key:'A',text:'chu kỳ 2, nhóm IVA.'},{key:'B',text:'chu kỳ 4, nhóm IIA.'},{key:'C',text:'chu kỳ 2, nhóm IIA.'},{key:'D',text:'chu kỳ 4, nhóm IVA.'}], answer:'A'},
-  {id:85, text:"Hạt nhân nguyên tử X có 15 proton. Vị trí của X trong bảng tuần hoàn là", options:[{key:'A',text:'số thứ tự 15, chu kì 3, nhóm VIIA.'},{key:'B',text:'số thứ tự 15, chu kì 2, nhóm VA.'},{key:'C',text:'số thứ tự 15, chu kì 3, nhóm VA.'},{key:'D',text:'số thứ tự 15, chu kì 4, nhóm VA.'}], answer:'C'},
-  {id:86, text:"Số hiệu nguyên tử của nguyên tố Y là 19. Vị trí của Y trong bảng tuần hoàn là", options:[{key:'A',text:'số thứ tự 19, chu kì 3, nhóm VIIA.'},{key:'B',text:'số thứ tự 19, chu kì 4, nhóm IA.'},{key:'C',text:'số thứ tự 19, chu kì 4, nhóm IIA.'},{key:'D',text:'số thứ tự 19, chu kì 3, nhóm IA.'}], answer:'B'},
-  {id:87, text:"Cho các nguyên tố sau: Ge, S, Br, Pb, C, Mo, Ba, Ar, Hg. Số nguyên tố kim loại, phi kim, khí hiếm lần lượt là", options:[{key:'A',text:'4, 4, 1.'},{key:'B',text:'4, 3, 2.'},{key:'C',text:'5, 2, 2.'},{key:'D',text:'5, 3, 1.'}], answer:'D'},
-  {id:88, text:"Cho các phát biểu sau: 1. Bảng tuần hoàn hiện nay sắp xếp theo chiều tăng dần khối lượng nguyên tử. 2. Nguyên tử các nguyên tố trong cùng một hàng có cùng số lớp electron. 3. Số thứ tự của nhóm A luôn luôn bằng số electron ở lớp vỏ ngoài cùng của nguyên tử nguyên tố thuộc nhóm đó. 4. Các nguyên tố nhóm halogen hầu hết là các nguyên tố kim loại. 5. Tất cả các nguyên tố nhóm VIIIA đều là khí hiếm. Số phát biểu đúng là", options:[{key:'A',text:'1.'},{key:'B',text:'2.'},{key:'C',text:'3.'},{key:'D',text:'4.'}], answer:'C'},
-  {id:89, text:"Phát biểu nào sau đây là đúng?", options:[{key:'A',text:'Bảng tuần hoàn gồm 116 nguyên tố hóa học.'},{key:'B',text:'Bảng tuần hoàn gồm 6 chu kì.'},{key:'C',text:'Bảng tuần hoàn gồm 8 nhóm A và 8 nhóm B.'},{key:'D',text:'Các nguyên tố trong bảng tuần hoàn được xếp theo chiều tăng dần khối lượng nguyên tử.'}], answer:'C'},
-  {id:90, text:"Vị trí kim loại kiềm trong bảng tuần hoàn các nguyên tố hóa học thường", options:[{key:'A',text:'ở đầu nhóm.'},{key:'B',text:'ở cuối nhóm.'},{key:'C',text:'ở đầu chu kì.'},{key:'D',text:'ở cuối chu kì.'}], answer:'A'}
-  */
-];
+          <button id="backToSubject" class="absolute top-4 left-4 z-20 flex items-center gap-2 text-white hover:text-blue-100 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span class="font-medium">Chọn môn khác</span>
+          </button>
+		  
+          <div class="mb-4">
+            <div class="inline-block bg-white/20 rounded-full p-4 backdrop-blur-sm">
+              <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+          </div>
 
-const QUESTIONS_TIN = [
-  {id:1, text:"Micro là loại thiết bị nào?", options:[{key:'A',text:'Thiết bị vào.'},{key:'B',text:'Thiết bị ra.'},{key:'C',text:'Thiết bị vừa vào vừa ra.'},{key:'D',text:'Thiết bị lưu trữ.'}], answer:'A'},
-  {id:2, text:"Máy tính để bàn là một bộ gồm có các thành phần nào:", options:[{key:'A',text:'Hộp thân máy - Màn hình – Loa'},{key:'B',text:'Màn hình - Bàn phím và chuột – Máy chiếu'},{key:'C',text:'Bàn phím và chuột - Hộp thân máy - Màn hình'},{key:'D',text:'Máy in - Màn hình – Micro – Máy chiếu'}], answer:'C'},
-  {id:3, text:"Bàn phím và chuột thuộc nhóm thiết bị nào của máy tính?", options:[{key:'A',text:'Thiết bị vào/nhập'},{key:'B',text:'Thiết bị ra/xuất'},{key:'C',text:'Thiết bị lưu trữ'},{key:'D',text:'Thiết bị in ấn.'}], answer:'A'},
-  {id:4, text:"Hộp thân máy của máy tính để bàn chứa thành phần quan trọng nhất của máy tính, đó chính là:", options:[{key:'A',text:'Bộ trung tâm, bộ nguồn'},{key:'B',text:'Bộ xử lý, bộ tản nhiệt'},{key:'C',text:'Bộ xử lý trung tâm, bộ nhớ.'},{key:'D',text:'Các ổ đĩa.'}], answer:'C'},
-  {id:5, text:"CPU là viết tắt của cụm từ?", options:[{key:'A',text:'Processing Unit.'},{key:'B',text:'Central Unit.'},{key:'C',text:'Central Processing'},{key:'D',text:'Central Processing Unit.'}], answer:'D'},
-  {id:6, text:"Dữ liệu được lưu trữ lâu dài trong máy tính ngay cả khi tắt máy được chứa tại:", options:[{key:'A',text:'Bộ nhớ trong.'},{key:'B',text:'Bộ nhớ ngoài.'},{key:'C',text:'Bộ nguồn.'},{key:'D',text:'Bộ phận khác.'}], answer:'B'},
-  {id:7, text:"Thiết bị nào vừa giúp nhập và xuất của máy tính bảng hoặc điện thoại thông minh?", options:[{key:'A',text:'Màn hình.'},{key:'B',text:'Bàn phím'},{key:'C',text:'Màn hình cảm ứng.'},{key:'D',text:'Camera.'}], answer:'C'},
-  {id:8, text:"Bộ phận nào của máy tính để bàn có chức năng hiển thị kết quả xử lí thông tin hoặc thông báo tới người dùng máy tính?", options:[{key:'A',text:'Bộ nhớ.'},{key:'B',text:'Bàn phím.'},{key:'C',text:'Màn chiếu'},{key:'D',text:'Màn hình.'}], answer:'D'},
-  {id:9, text:"Chọn phát biểu đúng?", options:[{key:'A',text:'Điện thoại thông minh không thể coi là một loại máy tính.'},{key:'B',text:'Tất cả máy tính bảng đều không thể nghe, gọi điện thoại được.'},{key:'C',text:'Máy tính để bàn thường không dùng màn hình để nhập dữ liệu vào.'},{key:'D',text:'Màn hình cảm ứng chỉ là thiết bị ra.'}], answer:'C'},
-  {id:10, text:"Màn hình, Loa, Máy in, Máy chiếu được gọi tên chung là gì trên máy tính?", options:[{key:'A',text:'Thiết bị vào/nhập'},{key:'B',text:'Thiết bị ra/xuất'},{key:'C',text:'Thiết bị vừa nhập vừa xuất'},{key:'D',text:'Thiết bị lưu trữ dữ liệu.'}], answer:'B'},
-  {id:11, text:"Đâu là thiết bị xuất thông tin dạng văn bản và hình ảnh trên máy tính?", options:[{key:'A',text:'Bàn phím và máy in'},{key:'B',text:'Màn hình và máy in'},{key:'C',text:'Loa và Micro'},{key:'D',text:'Micro và máy chiếu'}], answer:'B'},
-  {id:12, text:"Chọn cụm từ còn thiếu trong dấu “…” của đoạn văn sau: “… là tên gọi chung của các thiết bị để khi hoạt động, máy tính giao tiếp với thế giới bên ngoài”.  (giao tiếp: tiếp nhận và xuất thông tin ra thế giới bên ngoài )", options:[{key:'A',text:'Màn hình cảm ứng.'},{key:'B',text:'Thiết bị vào.'},{key:'C',text:'Thiết bị ra.'},{key:'D',text:'Thiết bị vào – ra.'}], answer:'D'},
-  {id:13, text:"Thành phần nào của máy tính được coi là bộ não của máy tính?", options:[{key:'A',text:'CPU'},{key:'B',text:'RAM'},{key:'C',text:'ROM'},{key:'D',text:'Đĩa cứng.'}], answer:'A'},
-  {id:14, text:"Đâu là thiết bị ra xuất thông tin dạng âm thanh của máy tính?", options:[{key:'A',text:'Máy in'},{key:'B',text:'Loa của máy tính'},{key:'C',text:'Máy quét'},{key:'D',text:'Máy tính có camera.'}], answer:'B'},
-  {id:15, text:"Đâu là nhận định đúng?", options:[{key:'A',text:'Thiết bị vào – ra có thể thu nhận thông tin đưa vào máy tính.'},{key:'B',text:'Thiết bị vào – ra không thể xuất thông tin ra khỏi máy tính dưới dạng quen thuộc với con người.'},{key:'C',text:'Không thể đọc hay lưu trữ dữ liệu số từ máy tính vào vật lưu trữ hoặc gửi lên mạng.'},{key:'D',text:'Thiết bị vào – ra không phải là tên gọi chung của các thiết bị như chuột, màn hình, bàn phím, loa…'}], answer:'A'},
-  {id:16, text:"Nếu muốn trò chuyện video với bạn thì máy tính để bàn của em thường cần có những thiết bị nào?", options:[{key:'A',text:'Camera và micro'},{key:'B',text:'Camera'},{key:'C',text:'Không cần gì thêm.'},{key:'D',text:'Micro'}], answer:'A'},
-  {id:17, text:"Chuột của máy tính để bàn có thể được kết nối bằng cổng nào?", options:[{key:'A',text:'HDMI'},{key:'B',text:'VGA'},{key:'C',text:'USB (PS/2)'},{key:'D',text:'LAN'}], answer:'C'},
-  {id:18, text:"Máy tính đang mở một tệp trên USB. Hãy chọn cách sắp xếp lại thứ tự các thao tác sau để tắt máy tính an toàn, không làm mất dữ liệu. 1. Chọn nút lệnh Shutdown (turn off) để tắt máy tính. 2. Đóng tệp đang mở trên USB. 3. Chọn “Safe To Remove Hardware” để ngắt kết nối với USB. 4. Lưu lại nội dung của tệp.", options:[{key:'A',text:'4 – 3 – 2 – 1'},{key:'B',text:'4 – 2 – 3 – 1'},{key:'C',text:'2 – 3 –1 – 4'},{key:'D',text:'1 – 4 – 2 – 3'}], answer:'B'},
-  {id:19, text:"Thao tác nào sau đây tắt máy tính 1 cách an toàn.", options:[{key:'A',text:'Sử dụng nút lệnh Restart của Windows.'},{key:'B',text:'Chọn lệnh Shutdown của Windows.'},{key:'C',text:'Nhấn giữ công tắc nguồn.'},{key:'D',text:'Rút dây nguồn khỏi ổ cắm.'}], answer:'B'},
-  {id:20, text:"Cổng bên có tên gì:", img:'https://i.postimg.cc/NMFHq4gF/cong.jpg', options:[{key:'A',text:'VGA'},{key:'B',text:'HDMI'},{key:'C',text:'PS/2'},{key:'D',text:'LAN'}], answer:'B'},
-  {id:21, text:"Chuột và bàn phím hiện nay phổ biến sử dụng đầu cắm nào:", options:[{key:'A',text:'USB'},{key:'B',text:'HDMI'},{key:'C',text:'VGA.'},{key:'D',text:'LAN'}], answer:'A'},
-  {id:22, text:"Khi bạn sử dụng đầu cắm VGA thì bạn cần cắm vào cổng nào:", options:[{key:'A',text:'HDMI'},{key:'B',text:'VGA'},{key:'C',text:'LAN'},{key:'D',text:'DVI'}], answer:'B'},
-  {id:23, text:"Việc làm nào không nên khi làm việc với các thiết bị vào-ra trong máy tính.", options:[{key:'A',text:'Dịch chuyển màn hình làm cáp màn hình kéo căng.'},{key:'B',text:'Cắm sai cổng cho các thiết bị vào- ra với máy tính.'},{key:'C',text:'Đập vào thùng máy khi nó không hoạt động.'},{key:'D',text:'Tất cả các việc làm được nêu.'}], answer:'D'},
-  {id:24, text:"Phát biểu nào sau đây đúng?", options:[{key:'A',text:'On-screen Keyboard là phần cứng máy tính.'},{key:'B',text:'On-screen Keyboard là phần mềm máy tính'},{key:'C',text:'On-screen Keyboard là hệ điều hành.'},{key:'D',text:'On-screen Keyboard là tên của thiết bị xuất.'}], answer:'B'},
-  {id:25, text:"Chức năng nào sau đây KHÔNG phải là của Hệ điều hành?", options:[{key:'A',text:'Quản lí các tệp dữ liệu trên đĩa.'},{key:'B',text:'Tạo và chỉnh sửa nội dung một tệp văn bản.'},{key:'C',text:'Điều khiển các thiết bị vào ra.'},{key:'D',text:'Quản lí giao diện giữa người sử dụng và máy tính.'}], answer:'B'},
-  {id:26, text:"Phát biểu nào sau đây là SAI?", options:[{key:'A',text:'Người sử dụng xử lí những yêu cầu cụ thể bằng phần mềm ứng dụng.'},{key:'B',text:'Để phần mềm ứng dụng chạy được trên máy tính phải có Hệ điều hành.'},{key:'C',text:'Để máy tính hoạt động được phải có phần mềm ứng dụng.'},{key:'D',text:'Để máy tính hoạt động được phải có hệ điều hành.'}], answer:'C'},
-  {id:27, text:"Hệ điều hành phổ biến cho điện thoại di động là?", options:[{key:'A',text:'Android'},{key:'B',text:'BIOS'},{key:'C',text:'Windows'},{key:'D',text:'ChromeOS'}], answer:'A'},
-  {id:28, text:"Đối tượng quản lý chính trên máy tính là gì?", options:[{key:'A',text:'Phần cứng và phần mềm'},{key:'B',text:'Đường dẫn và thư mục'},{key:'C',text:'Thư mục và tập tin'},{key:'D',text:'Tập tin và hệ điều hành.'}], answer:'C'},
-  {id:29, text:"Khi tạo mới một đối tượng trên máy tính, cần xác định điều gì?", options:[{key:'A',text:'Tên và người tạo'},{key:'B',text:'Tên và kích thước'},{key:'C',text:'Tên và thời gian tạo'},{key:'D',text:'Tên và vị trí'}], answer:'D'},
-  {id:30, text:"Phần mở rộng của tệp cho biết điều gì?", options:[{key:'A',text:'Dữ liệu của tệp thuộc loại nào'},{key:'B',text:'Tệp tạo khi nào'},{key:'C',text:'Tệp ở vị trí nào'},{key:'D',text:'Không có cũng không sao'}], answer:'A'},
-  {id:31, text:"Tập tin là gì?", options:[{key:'A',text:'Đối tượng quản lý đối tượng khác.'},{key:'B',text:'Đối tượng chứa đựng đối tượng khác.'},{key:'C',text:'Đối tượng lưu trữ dữ liệu.'},{key:'D',text:'Đối tượng lưu trữ đối tượng khác'}], answer:'C'},
-  {id:32, text:"Cặp lệnh thực hiện việc di chuyển trên máy tính là gì?", options:[{key:'A',text:'Move và Paste'},{key:'B',text:'Cut và Paste'},{key:'C',text:'Copy và Delete'},{key:'D',text:'Paste và Rename'}], answer:'B'},
-  {id:33, text:"Công việc nào sau đây có thể thay đổi nội dung tệp", options:[{key:'A',text:'Xem'},{key:'B',text:'Sao chép'},{key:'C',text:'Di chuyển'},{key:'D',text:'Đổi phần mở rộng'}], answer:'D'},
-  {id:34, text:"Trên cửa sổ File Explorer, em có thể xác định vị trí hiện hành qua thành phần nào?", options:[{key:'A',text:'Thanh tiêu đề'},{key:'B',text:'Thanh đường dẫn'},{key:'C',text:'Vùng nội dung'},{key:'D',text:'Thanh trạng thái'}], answer:'B'},
-  {id:35, text:"Những phần mềm Word, Excel, Powerpoint được gọi chung là phần mềm gì?", options:[{key:'A',text:'Phần mềm ứng dụng'},{key:'B',text:'Phần mềm hệ thống'},{key:'C',text:'Phần mềm soạn thảo văn bản'},{key:'D',text:'Phần mềm trình chiếu'}], answer:'A'},
-  {id:36, text:"Tiện ích nào sau đây của Hệ điều hành Windows cho phép mở tập tin văn bản để đọc dữ liệu", options:[{key:'A',text:'Calculator'},{key:'B',text:'MS Paint'},{key:'C',text:'WordPad'},{key:'D',text:'OnScreen Keyboard'}], answer:'C'},
-  {id:37, text:"Phần mềm nào sau đây không phải là hệ điều hành", options:[{key:'A',text:'Windows 7.'},{key:'B',text:'Windows 10.'},{key:'C',text:'File Explorer.'},{key:'D',text:'iOS.'}], answer:'C'},
-  {id:38, text:"Tệp có phần mở rộng .docx/.doc thuộc loại tệp gì?", options:[{key:'A',text:'Tệp dữ liệu của phần mềm Microsoft Word.'},{key:'B',text:'Tệp hình ảnh. Pjg png'},{key:'C',text:'Tệp dữ liệu của phần mềm Microsoft Powerpoint. (ppt/pptx)/(xlsx/xls)excel'},{key:'D',text:'Tệp dữ liệu video. Mp4'}], answer:'A'},
-  {id:39, text:"Đâu là chương trình máy tính giúp em quản lí tệp và thư mục.", options:[{key:'A',text:'Internet Explore.'},{key:'B',text:'Help.'},{key:'C',text:'Microsoft Windows.'},{key:'D',text:'File Explorer.'}], answer:'D'},
-  {id:40, text:"Chọn ra hệ điều hành ở trong các tên dưới đây", options:[{key:'A',text:'Firefox'},{key:'B',text:'Windows'},{key:'C',text:'Google'},{key:'D',text:'MacBook'}], answer:'B'},
-  {id:41, text:"Công cụ nào sau đây dùng để trao đổi thông tin trên Internet?", options:[{key:'A',text:'Thư điện tử'},{key:'B',text:'Mạng xã hội'},{key:'C',text:'Diễn đàn trực tuyến'},{key:'D',text:'Tất cả các đáp án trên'}], answer:'D'},
-  {id:42, text:"Trong các website dưới đây, website nào là mạng xã hội?", options:[{key:'A',text:'https://dantri.com'},{key:'B',text:'https://vietnamnet.vn'},{key:'C',text:'https://facebook.com'},{key:'D',text:'http://trandainghia.edu.vn/'}], answer:'C'},
-  {id:43, text:"Chọn cụm từ còn thiếu: “Mạng xã hội là một … web kết nối các … có cùng đặc điểm cá nhân như sở thích, lứa tuổi, nghề nghiệp hay lĩnh vực quan tâm”.", options:[{key:'A',text:'phần mềm ứng dụng – tài khoản.'},{key:'B',text:'ứng dụng phần mềm – thành viên.'},{key:'C',text:'phần mềm – tài khoản.'},{key:'D',text:'ứng dụng – thành viên.'}], answer:'D'},
-  {id:44, text:"Phát biểu nào sau đây đúng?", options:[{key:'A',text:'Mạng xã hội là một ứng dụng web.'},{key:'B',text:'Người dùng không thể đưa thông tin lên mạng xã hội.'},{key:'C',text:'Số lượng người tham gia kết bạn trên mạng xã hội được giới hạn dưới 10 người.'},{key:'D',text:'Người dùng chỉ có thể chia sẻ bài viết dưới dạng văn bản cho bạn bè trên mạng xã hội.'}], answer:'A'},
-  {id:45, text:"Nội dung trên mạng xã hội là do ai tạo ra?", options:[{key:'A',text:'Do nhà quản lý tạo ra.'},{key:'B',text:'Do mạng Internet tạo ra.'},{key:'C',text:'Do người dùng tạo ra.'},{key:'D',text:'Do máy tính tạo ra.'}], answer:'C'},
-  {id:46, text:"Đâu là nhận định đúng khi đưa thông tin lên mạng xã hội?", options:[{key:'A',text:'Em có thể đưa thông tin cá nhân lên mạng bất cứ khi nào mà không cần suy nghĩ, lo lắng.'},{key:'B',text:'Không đưa thông tin cá nhân lên mạng xã hội. Kẻ xấu có thể lợi dụng các thông tin này để tống tiền, hăm dọa…'},{key:'C',text:'Khi có người yêu cầu thì em ngay lập tức đưa thông tin cá nhân.'},{key:'D',text:'Chỉ đưa thông tin cá nhân lên khi cảm thấy tinh thần vui vẻ.'}], answer:'B'},
-  {id:47, text:"Đâu là nhận định đúng khi đăng bài hay chia sẻ, bình luận trên mạng xã hội.", options:[{key:'A',text:'Đăng bài với những câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'B',text:'Chia sẻ với những nội dung có câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'C',text:'Không đăng bài hay chia sẻ, bình luận với những câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'},{key:'D',text:'Bình luận hùa theo những nội dung có câu từ phản cảm, thiếu văn hóa trên mạng xã hội.'}], answer:'C'},
-  {id:48, text:"Đâu là nhận định đúng khi tiếp cận với mọi thông tin trên mạng xã hội?", options:[{key:'A',text:'Tin vào mọi thông tin trên mạng xã hội.'},{key:'B',text:'Mọi thông tin trên mạng xã hội đều đúng.'},{key:'C',text:'Chỉ tin vào những nội dung được chia sẻ nhiều trên mạng xã hội.'},{key:'D',text:'Không hoàn toàn tin vào mọi thông tin trên mạng xã hội, vì 1 số thông tin trên đó có độ chính xác không cao.'}], answer:'D'},
-  {id:49, text:"Trong các câu sau, câu nào đúng?", options:[{key:'A',text:'Sử dụng mạng xã hội quá nhiều dễ dẫn đến xao nhãng việc học.'},{key:'B',text:'Mạng xã hội là nơi tuyệt đối an toàn, không ai bị lừa hay lôi kéo vào những việc phạm pháp.'},{key:'C',text:'Mạng xã hội làm tăng nguy cơ bị lừa đảo, bắt nạt, xâm hại.'},{key:'D',text:'Tất cả các câu trên đều đúng.'}], answer:'A'},
-  {id:50, text:"Để sử dụng mạng xã hội an toàn, chúng ta cần:", options:[{key:'A',text:'Cài đặt quyền riêng tư.'},{key:'B',text:'Không chia sẻ thông tin cá nhân.'},{key:'C',text:'Không tin vào mọi thông tin trên mạng.'},{key:'D',text:'Tất cả các câu trên đều đúng.'}], answer:'D'},
-  {id:51, text:"Mạng xã hội có lợi ích gì?", options:[{key:'A',text:'Kết nối bạn bè, chia sẻ thông tin.'},{key:'B',text:'Học tập, giải trí.'},{key:'C',text:'Cả kết nối bạn bè, chia sẻ thông tin và học tập, giải trí đều đúng.'},{key:'D',text:'Không có lợi ích nào.'}], answer:'C'},
-  {id:52, text:"Mạng xã hội nào phổ biến ở Việt Nam?", options:[{key:'A',text:'Facebook'},{key:'B',text:'Zalo'},{key:'C',text:'YouTube'},{key:'D',text:'Tất cả các đáp án trên'}], answer:'D'},
-  {id:53, text:"Để tạo tài khoản mạng xã hội, em cần:", options:[{key:'A',text:'Email hoặc số điện thoại.'},{key:'B',text:'Mật khẩu.'},{key:'C',text:'Cả email hoặc số điện thoại và mật khẩu.'},{key:'D',text:'Không cần gì.'}], answer:'C'},
-  {id:54, text:"Hành vi nào sau đây là bắt nạt trên mạng?", options:[{key:'A',text:'Chia sẻ hình ảnh xấu của bạn bè.'},{key:'B',text:'Nhắn tin đe dọa.'},{key:'C',text:'Bình luận tiêu cực.'},{key:'D',text:'Tất cả các đáp án trên.'}], answer:'D'},
-  {id:55, text:"Nếu bị bắt nạt trên mạng, em nên:", options:[{key:'A',text:'Báo cho bố mẹ hoặc thầy cô.'},{key:'B',text:'Chặn người bắt nạt.'},{key:'C',text:'Báo cáo với mạng xã hội.'},{key:'D',text:'Tất cả các đáp án trên.'}], answer:'D'},
-  {id:56, text:"Nghiện mạng xã hội có thể dẫn đến:", options:[{key:'A',text:'Giảm sút sức khỏe.'},{key:'B',text:'Xao nhãng học tập.'},{key:'C',text:'Cả giảm sút sức khỏe và xao nhãng học tập.'},{key:'D',text:'Không có hậu quả.'}], answer:'C'},
-  {id:57, text:"Để tránh nghiện mạng xã hội, em nên:", options:[{key:'A',text:'Giới hạn thời gian sử dụng.'},{key:'B',text:'Tham gia hoạt động ngoại khóa.'},{key:'C',text:'Cả giới hạn thời gian sử dụng và tham gia hoạt động ngoại khóa.'},{key:'D',text:'Sử dụng càng nhiều càng tốt.'}], answer:'C'},
-  {id:58, text:"Tin giả trên mạng xã hội là:", options:[{key:'A',text:'Thông tin sai sự thật.'},{key:'B',text:'Thông tin được chia sẻ nhiều.'},{key:'C',text:'Thông tin từ bạn bè.'},{key:'D',text:'Tất cả đều đúng.'}], answer:'A'},
-  {id:59, text:"Để kiểm tra tin giả, em nên:", options:[{key:'A',text:'Kiểm chứng nguồn tin.'},{key:'B',text:'Không chia sẻ nếu nghi ngờ.'},{key:'C',text:'Cả kiểm chứng nguồn tin và không chia sẻ nếu nghi ngờ.'},{key:'D',text:'Chia sẻ ngay.'}], answer:'C'},
-  {id:60, text:"Văn hóa ứng xử trên mạng xã hội bao gồm:", options:[{key:'A',text:'Lịch sự, tôn trọng.'},{key:'B',text:'Không bình luận tiêu cực.'},{key:'C',text:'Cả lịch sự, tôn trọng và không bình luận tiêu cực.'},{key:'D',text:'Không cần quan tâm.'}], answer:'C'},
-  {id:61, text:"Khi gọi video, em nên:", options:[{key:'A',text:'Nói to.'},{key:'B',text:'Chọn nơi yên tĩnh.'},{key:'C',text:'Bật nhạc nền.'},{key:'D',text:'Không cần chuẩn bị.'}], answer:'B'},
-  {id:62, text:"Khi nhắn tin, em nên:", options:[{key:'A',text:'Sử dụng ngôn ngữ lịch sự.'},{key:'B',text:'Trả lời nhanh.'},{key:'C',text:'Cả sử dụng ngôn ngữ lịch sự và trả lời nhanh.'},{key:'D',text:'Gửi tin nhắn dài.'}], answer:'C'},
-  {id:63, text:"Nếu thấy tin giả, em nên:", options:[{key:'A',text:'Báo cáo.'},{key:'B',text:'Không chia sẻ.'},{key:'C',text:'Cả báo cáo và không chia sẻ.'},{key:'D',text:'Chia sẻ để cảnh báo.'}], answer:'C'},
-  {id:64, text:"Mạng xã hội giúp em học tập bằng cách:", options:[{key:'A',text:'Tham gia nhóm học.'},{key:'B',text:'Xem video giáo dục.'},{key:'C',text:'Cả tham gia nhóm học và xem video giáo dục.'},{key:'D',text:'Chỉ chơi game.'}], answer:'C'},
-  {id:65, text:"Rủi ro trên mạng xã hội là:", options:[{key:'A',text:'Lừa đảo.'},{key:'B',text:'Bắt nạt.'},{key:'C',text:'Cả lừa đảo và bắt nạt.'},{key:'D',text:'Không có rủi ro.'}], answer:'C'},
-  {id:66, text:"Để bảo vệ tài khoản, em nên:", options:[{key:'A',text:'Có mật khẩu mạnh.'},{key:'B',text:'Không chia sẻ mật khẩu.'},{key:'C',text:'Cả có mật khẩu mạnh và không chia sẻ mật khẩu.'},{key:'D',text:'Mật khẩu đơn giản.'}], answer:'C'},
-  {id:67, text:"Khi gọi điện video ở nơi công cộng, em nên:", options:[{key:'A',text:'Nói to.'},{key:'B',text:'Đi ra nơi riêng.'},{key:'C',text:'Bật loa ngoài.'},{key:'D',text:'Nhắn tin bình phẩm.'}], answer:'B'},
-  {id:68, text:"Hoa vừa phát hiện tài khoản mạng xã hội của một bạn khác đã đăng tải hình ảnh riêng tư của Hoa mà cô ấy không muốn công khai. Bạn bè khuyên Hoa nên dùng tài khoản giả mạo để lăng mạ và đe dọa người kia. Hoa có nên làm theo không?", options:[{key:'A',text:'Có, vì người kia đã sai trước.'},{key:'B',text:'Không, vì trên mạng xã hội không ai biết Hoa là ai nên Hoa sẽ không thể lấy lại được danh dự khi dùng tài khoản ẩn danh. Hoa nên dùng tài khoản chính của bạn ấy.'},{key:'C',text:'Không, Hoa nên dũng cảm nói ra và nhờ bố mẹ, thầy cô hoặc người thân giúp đỡ.'},{key:'D',text:'Có, vì đó là cách duy nhất để lấy lại danh dự.'}], answer:'C'},
-  {id:69, text:"Bạn A gửi cho bạn B một tin nhắn rất dài hỏi về một vấn đề gấp và có 1 phần riêng tư về A. Bạn B đang lái xe máy trên đường nên chưa thể đọc và trả lời chi tiết. Để thể hiện sự lịch sự và có văn hóa, B nên phản hồi A như thế nào? (Chọn ý đúng nhất)", options:[{key:'A',text:'Đọc và trả lời chi tiết ngay khi đang lái xe.'},{key:'B',text:'Bỏ qua tin nhắn và trả lời sau một tuần.'},{key:'C',text:'Nhắn với A là hẹn trả lời sau khi về đến nhà.'},{key:'D',text:'Nhắn tin nhờ người khác trả lời ngay vì vấn đề này rất gấp.'}], answer:'C'},
-  {id:70, text:"Sau khi chơi game liên tục nhiều ngày, sức khỏe của Hải giảm sút và Hải bỏ bê học hành. Để thoát khỏi nguy cơ nghiện game, Hải cần phải làm gì ngay lập tức?", options:[{key:'A',text:'Tìm kiếm một trò chơi mới hấp dẫn hơn.'},{key:'B',text:'Kể về trải nghiệm chơi game thú vị của mình trên mạng xã hội.'},{key:'C',text:'Tự ý thức hoặc nhờ bố mẹ đặt ra một khung giờ hạn chế mỗi ngày dành cho chơi game hay lên mạng.'},{key:'D',text:'Chỉ chơi game khi không có ai nhìn thấy.'}], answer:'C'},
-  {id:71, type:'multiple', text:"Mạng xã hội là một cộng đồng trực tuyến giúp mọi người kết nối, tương tác và chia sẻ thông tin với nhau bất kể khoảng cách địa lý. Các nền tảng phổ biến bao gồm Facebook, Zalo, YouTube, Instagram,... Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Mạng xã hội chỉ cho phép người dùng chia sẻ thông tin dưới dạng văn bản (text), không hỗ trợ hình ảnh hay video.'},{key:'b',text:'Người dùng cần tạo tài khoản và hồ sơ cá nhân (profile) như ảnh bìa, ảnh đại diện và một số thông tin các nhân để có thể tham gia đầy đủ các hoạt động trên mạng xã hội.'},{key:'c',text:'Mạng xã hội giúp người dùng dễ dàng tìm kiếm, kết bạn và duy trì liên lạc với người thân, bạn bè.'},{key:'d',text:'Tất cả các mạng xã hội đều không có quy định về độ tuổi, trẻ em ở bất kỳ độ tuổi nào cũng có thể tự do đăng ký.'}], answer:['b','c']},
-  {id:72, type:'multiple', text:"Khi sử dụng mạng xã hội, người dùng có thể thực hiện nhiều hoạt động tương tác như gửi lời mời kết bạn, theo dõi (follow), nhắn tin trò chuyện và tham gia các hội nhóm. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chức năng \"Hủy kết bạn\" (Unfriend) cho phép người dùng ngắt kết nối với một người trong danh sách bạn bè nếu không muốn liên lạc nữa.'},{key:'b',text:'Người dùng có thể tạo hoặc tham gia các nhóm (Group) để thảo luận về các chủ đề chung như học tập, sở thích, thể thao.'},{key:'c',text:'Trên Zalo hoặc Facebook, tin nhắn cá nhân (Messenger) là chế độ công khai, tất cả mọi người trên mạng đều có thể đọc được nội dung cuộc trò chuyện.'},{key:'d',text:'Người dùng có thể thay đổi ảnh đại diện (Avatar) và ảnh bìa để thể hiện cá tính của mình trên trang cá nhân.'}], answer:['a','b','d']},
-  {id:73, type:'multiple', text:"Trao đổi thông tin trên mạng xã hội rất nhanh chóng và thuận tiện, tuy nhiên người dùng cần biết cách chọn lọc và chia sẻ thông tin một cách có trách nhiệm. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chức năng \"Bình luận\" (Comment) và \"Thích\" (Like) giúp người dùng bày tỏ cảm xúc và ý kiến đối với bài đăng của người khác.'},{key:'b',text:'Mọi thông tin được chia sẻ trên mạng xã hội đều là thông tin chính xác và đã được kiểm chứng, người dùng có thể tin tưởng tuyệt đối.'},{key:'c',text:'Chia sẻ (Share) là hành động lan truyền một bài viết hoặc thông tin từ trang của người khác về trang cá nhân của mình hoặc vào các hội nhóm.'},{key:'d',text:'Việc phát tán, chia sẻ các thông tin sai sự thật, tin giả (fake news) trên mạng xã hội có thể gây hậu quả xấu và vi phạm pháp luật.'}], answer:['a','c','d']},
-  {id:74, type:'multiple', text:"Bắt nạt qua mạng là hành vi sử dụng công nghệ để quấy rối, đe dọa hoặc làm xấu mặt người khác. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Chỉ những hành động đánh nhau ngoài đời thực mới bị coi là bắt nạt, còn nhắn tin trêu chọc trên mạng là vô hại.'},{key:'b',text:'Nếu thấy bạn bè bị bắt nạt trên mạng, em nên hùa theo hoặc chia sẻ bài viết đó để mọi người cùng biết.'},{key:'c',text:'Em cần thông báo ngay cho cha mẹ, thầy cô hoặc người lớn tin cậy nếu bản thân hoặc bạn bè bị đe dọa qua mạng.'},{key:'d',text:'Hành vi bịa đặt thông tin, tung tin đồn thất thiệt nhằm bôi nhọ danh dự người khác trên mạng xã hội là vi phạm pháp luật.'}], answer:['c','d']},
-  {id:75, type:'multiple', text:"Để đảm bảo an toàn khi tham gia mạng xã hội, người dùng cần biết cách bảo vệ thông tin cá nhân và tránh các rủi ro từ người lạ. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Nên công khai địa chỉ nhà, số điện thoại và lịch trình đi học hàng ngày lên mạng để bạn bè dễ tìm.'},{key:'b',text:'Không nên chấp nhận lời mời kết bạn từ những người lạ mà em không biết rõ nguồn gốc.'},{key:'c',text:'Mật khẩu tài khoản nên đặt đơn giản (như 123456 hoặc ngày sinh) để dễ nhớ và nên chia sẻ cho bạn thân biết.'},{key:'d',text:'Luôn đăng xuất tài khoản sau khi sử dụng máy tính ở nơi công cộng.'}], answer:['b','d']},
-  {id:76, type:'multiple', text:"\"Nghiện\" Internet và mạng xã hội có thể gây ra nhiều hậu quả tiêu cực đến sức khỏe và việc học tập. Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Sử dụng mạng xã hội liên tục 5-6 tiếng mỗi ngày giúp cập nhật thông tin nhanh và giải trí hiệu quả hơn.'},{key:'b',text:'Việc thức quá khuya để lướt mạng có thể gây mệt mỏi, giảm khả năng tập trung vào ngày hôm sau.'},{key:'c',text:'Nên cân đối, điều chỉnh thời gian sử dụng thiết bị số phù hợp với các hoạt động thể chất, giao tiếp trực tiếp với gia đình.'},{key:'d',text:'Chỉ có trẻ em mới dễ bị nghiện game hay mạng xã hội, còn người lớn thì không.'}], answer:['b','c']},
-  {id:77, type:'multiple', text:"Khi tiếp nhận thông tin trên môi trường số, việc có tư duy phản biện và kiểm chứng nguồn tin là rất quan trọng để tránh tin giả (fake news). Hãy đánh giá tính đúng sai của các nhận định a), b), c), d) sau:", options:[{key:'a',text:'Mọi thông tin, bài viết được chia sẻ nhiều (viral) trên mạng xã hội đều là sự thật.'},{key:'b',text:'Trước khi chia sẻ (share) một bài viết, nên kiểm tra xem nguồn tin đó có uy tín và chính thống hay không.'},{key:'c',text:'Hành vi lan truyền tin giả về dịch bệnh hoặc thiên tai có thể bị xử phạt theo quy định của pháp luật.'},{key:'d',text:'Nếu thấy một tiêu đề bài báo rất \"sốc\" và lạ, em nên chia sẻ ngay lập tức để cảnh báo mọi người mà không cần đọc nội dung.'}], answer:['b','c']},
-  {id:78, type:'multiple', text:"Máy tính là một hệ thống gồm nhiều thiết bị phối hợp hoạt động. Hãy đánh giá các nhận định sau về các thành phần cơ bản của máy tính:", options:[{key:'a',text:'CPU (Bộ xử lý trung tâm) chịu trách nhiệm thực hiện các tính toán và điều khiển hoạt động của máy tính.'},{key:'b',text:'RAM là bộ nhớ ngoài, dùng để lưu trữ dữ liệu lâu dài ngay cả khi tắt máy.'},{key:'c',text:'Thân máy (Case) chứa các thành phần quan trọng như CPU, RAM và ổ cứng.'},{key:'d',text:'Người dùng khó có thể sử dụng máy tính để bàn nếu thiếu bàn phím và chuột.'}], answer:['a','c','d']},
-  {id:79, type:'multiple', text:"Các thiết bị ngoại vi được chia thành thiết bị vào (Input) và thiết bị ra (Output). Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Micro (Microphone) là thiết bị ra vì nó phát âm thanh từ máy tính ra ngoài.'},{key:'b',text:'Máy chiếu (Projector) là thiết bị ra, dùng để hiển thị hình ảnh từ máy tính lên màn hình lớn.'},{key:'c',text:'Ổ đĩa USB vừa có thể coi là thiết bị vào (khi chép dữ liệu vào máy), vừa là thiết bị ra (khi chép dữ liệu từ máy ra).'},{key:'d',text:'Màn hình cảm ứng chỉ có chức năng hiển thị thông tin nên nó là thiết bị ra thuần túy.'}], answer:['b','c']},
-  {id:80, type:'multiple', text:"Hệ điều hành là phần mềm quan trọng nhất của máy tính. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Hệ điều hành cung cấp giao diện để người dùng giao tiếp với máy tính.'},{key:'b',text:'Máy tính lắp ráp xong chỉ cần có phần cứng là có thể chạy ngay các ứng dụng như Zalo, Zoom mà không cần hệ điều hành.'},{key:'c',text:'Hệ điều hành quản lý và kiểm soát mọi hoạt động của máy tính.'},{key:'d',text:'Linux và Windows là hai ví dụ về hệ điều hành máy tính.'}], answer:['a','c','d']},
-  {id:81, type:'multiple', text:"Phần mềm ứng dụng giúp người dùng thực hiện các công việc cụ thể. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Phần mềm soạn thảo văn bản, phần mềm bảng tính là các loại phần mềm ứng dụng.'},{key:'b',text:'Để sử dụng được phần mềm ứng dụng, máy tính bắt buộc phải cài đặt hệ điều hành trước.'},{key:'c',text:'Phần mềm ứng dụng có thể trực tiếp điều khiển phần cứng mà không cần thông qua hệ điều hành.'},{key:'d',text:'Người dùng có thể tùy ý cài đặt hoặc gỡ bỏ các phần mềm ứng dụng theo nhu cầu.'}], answer:['a','b','d']},
-  {id:82, type:'multiple', text:"Tệp (File) và Thư mục (Folder) là cách thức tổ chức thông tin trong máy tính. Hãy đánh giá các nhận định sau:", options:[{key:'a',text:'Tên tệp tin thường bao gồm hai phần: phần tên và phần mở rộng, ngăn cách nhau bởi dấu chấm.'},{key:'b',text:'Thư mục có thể chứa các tệp tin và các thư mục con khác.'},{key:'c',text:'Phần mở rộng của tệp tin (.docx, .jpg, .mp4) giúp hệ điều hành nhận biết loại dữ liệu và phần mềm phù hợp để mở nó.'},{key:'d',text:'Trong một thư mục, ta có thể tạo nhiều thư mục con trùng tên nhau hoàn toàn.'}], answer:['a','b','c']}
-];
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+          <h1 class="text-4xl font-bold mb-3" id="subjectTitle"></h1>
+          <p class="text-xl text-blue-100">Chọn chế độ làm bài</p>
+        </div>
 
-/* --- Current questions pool --- */
-let currentQuestions = [];
+        <div class="p-8">
+          <div class="grid md:grid-cols-2 gap-4">
+            <button id="startFull" class="group relative overflow-hidden bg-gradient-to-br from-blue-600 to-blue-700 text-white p-6 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02] shadow-lg">
+              <div class="relative z-10">
+                <div class="flex items-center justify-center mb-3">
+                  <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Bài Test Đầy Đủ</h3>
+                <p class="text-blue-100 text-sm mb-3" id="fullModeDesc"></p>
+                <div class="flex items-center justify-center gap-2 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Không giới hạn thời gian</span>
+                </div>
+              </div>
+            </button>
 
-/* --- UI elements --- */
-const subjectSelect = document.getElementById('subjectSelect');
-const modeRandomBtn = document.getElementById('modeRandom');
-const modeExamBtn = document.getElementById('modeExam');
-const homeIntro = document.getElementById('homeIntro');
-const singleArea = document.getElementById('singleArea');
-const examArea = document.getElementById('examArea');
-const checkBtn = document.getElementById('checkBtn');
-const nextBtn = document.getElementById('nextBtn');
-const backHome1 = document.getElementById('backHome1');
-const backHome2 = document.getElementById('backHome2');
-const startExam = document.getElementById('startExam');
-const submitExamBtn = document.getElementById('submitExam');
-const regenExam = document.getElementById('regenExam');
-const examForm = document.getElementById('examForm');
-const examResult = document.getElementById('examResult');
-const qbox = document.getElementById('qbox');
-const choices = document.getElementById('choices');
-const result = document.getElementById('result');
-const explain = document.getElementById('explain');
+            <button id="startRandom" class="group relative overflow-hidden bg-gradient-to-br from-green-600 to-green-700 text-white p-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all transform hover:scale-[1.02] shadow-lg">
+              <div class="relative z-10">
+                <div class="flex items-center justify-center mb-3">
+                  <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581"/>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Luyện Tập Ngẫu Nhiên</h3>
+                <p class="text-green-100 text-sm mb-3">Mỗi lần 1 câu random</p>
+                <div class="flex items-center justify-center gap-2 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span>Không giới hạn</span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-/* --- Handle subject select --- */
-subjectSelect.addEventListener('change', (e) => {
-  const sub = e.target.value;
-  if (sub === 'gdcd') {
-    currentQuestions = QUESTIONS_GDCD;
-  } else if (sub === 'hoa') {
-    currentQuestions = QUESTIONS_HOA;
-  } else if (sub === 'tin') {
-    currentQuestions = QUESTIONS_TIN;
-  } else {
-    currentQuestions = [];
-  }
-  modeRandomBtn.disabled = !currentQuestions.length;
-  modeExamBtn.disabled = !currentQuestions.length;
-});
+  <!-- QUIZ SCREEN -->
+  <div id="quizScreen" class="hidden min-h-screen flex items-start justify-center pt-12">
+    <div class="max-w-3xl mx-auto w-full">
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="flex justify-between items-center mb-6">
+          <button id="backHome" class="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span class="font-medium">Trang chủ</span>
+          </button>
 
-/* --- Single mode --- */
-let currentSingle = null;
+          <div class="flex items-center gap-3">
+            <button id="btnRestart" class="flex items-center gap-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-blue-200" title="Làm lại bài test">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12a9 9 0 0114.32-6.32L21 6m0 0v-4m0 4h-4"/>
+              </svg>
+              <span class="font-medium hidden sm:inline">Làm lại</span>
+            </button>
+            <div class="flex items-center gap-4 border-l pl-3">
+              <div id="countInfo" class="text-sm font-semibold text-gray-500"></div>
+              <div id="scoreInfo" class="text-lg font-bold text-blue-600"></div>
+            </div>
+          </div>
+        </div>
 
-function pickRandomSingle() {
-  if (!currentQuestions.length) return;
-  const pool = currentQuestions.slice();
-  shuffle(pool);
-  const q = pool[0];
-  let opts = q.options ? q.options.map(o => ({key: o.key, text: o.text})) : [];
-  shuffle(opts);
-  currentSingle = {q, shown: opts};
-  renderSingle();
-}
+        <div id="progressWrap" class="mb-6">
+          <div id="progressBar" class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progressFill" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width:0%"></div>
+          </div>
+        </div>
 
-function renderSingle() {
-  // reset
-  result.style.display = 'none';
-  explain.textContent = '';
-  choices.innerHTML = '';
-  qbox.innerHTML = '';
+        <h3 id="questionText" class="text-2xl font-bold text-gray-800 mb-6"></h3>
 
-  if (!currentSingle || !currentSingle.q) return;
+        <div id="optionsContainer" class="space-y-3 mb-6"></div>
 
-  // text câu hỏi
-  const qText = document.createElement('div');
-  qText.className = 'q-text';
-  qText.innerHTML = currentSingle.q.text || '';
-  qbox.appendChild(qText);
+        <div class="flex gap-3">
+          <button id="btnSubmit" class="flex-1 py-3 rounded-lg font-semibold transition-colors bg-gray-300 text-gray-500 cursor-not-allowed">Kiểm tra đáp án</button>
+          <button id="btnNext" class="hidden flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">Câu tiếp theo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  // nếu có ảnh (img property) -> tạo <img>
-  if (currentSingle.q.img) {
-    const imgWrap = document.createElement('div');
-    imgWrap.style.margin = '12px 0';
-    const img = document.createElement('img');
-    img.src = currentSingle.q.img;
-    img.alt = currentSingle.q.alt || 'Hình câu hỏi';
-    img.className = 'question-image';
-    img.style.maxWidth = '100%';
-    img.style.height = 'auto';
-    img.style.border = '1px solid #ddd';
-    img.style.borderRadius = '8px';
-    img.style.cursor = 'pointer';
-    img.style.display = 'block';
-    img.addEventListener('click', () => window.open(currentSingle.q.img, '_blank'));
-    img.onerror = () => {
-      img.style.display = 'none';
-      const errMsg = document.createElement('p');
-      errMsg.textContent = '⚠️ Không thể tải hình ảnh';
-      errMsg.style.color = '#999';
-      imgWrap.appendChild(errMsg);
-    };
-    imgWrap.appendChild(img);
-    qbox.appendChild(imgWrap);
-  }
+  <!-- RESULT SCREEN -->
+  <div id="resultScreen" class="hidden min-h-screen p-6">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+        <div id="trophyWrap" class="w-20 h-20 mx-auto text-yellow-500 mb-4">
+          <svg viewBox="0 0 24 24" class="w-20 h-20 inline-block" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8M12 3v4m5 0a5 5 0 01-10 0"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Hoàn thành bài kiểm tra! 🎉</h2>
+        <div id="resultScoreLarge" class="text-6xl font-bold text-blue-600 mb-2">0/0</div>
+        <p id="resultPercent" class="text-xl text-gray-600 mb-6">Điểm số: 0%</p>
 
-  // xử lý single / multiple
-  const isMultiple = Array.isArray(currentSingle.q.answer) || currentSingle.q.type === 'multiple';
+        <p id="resultRemark" class="text-lg font-semibold mb-6"></p>
 
-  currentSingle.shown.forEach((o) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'option';
-    const inputType = isMultiple ? 'checkbox' : 'radio';
-    wrap.innerHTML = `<label><input type="${inputType}" name="single" value="${o.key}"> ${o.text}</label>`;
-    choices.appendChild(wrap);
-  });
-}
+        <div class="flex flex-col gap-3 mt-8">
+          <button id="resultRestart" class="flex items-center justify-center gap-2 w-full bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4V6m0 0a9 9 0 1118 0M21 14v6h-6"/>
+            </svg>
+            Làm lại bài test
+          </button>
 
+          <button id="resultHome" class="flex items-center justify-center gap-2 w-full bg-gray-600 text-white px-8 py-4 rounded-lg hover:bg-gray-700 transition-colors font-semibold text-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3"/>
+            </svg>
+            Về trang chủ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      const subjectData = {
+      'gdcd': {
+        name: 'GDCD',
+        fullName: 'Giáo dục công dân',
+        questions: [
+		{q: "Hành vi nào sau đây thể hiện sự quan tâm, cảm thông và chia sẻ?", o: ["Chế giễu, mỉa mai những người khuyết tật.", "Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.", "Cười trên sự đau khổ của người khác.", "Giúp đỡ người khác để được tiếng tốt và nổi danh."], c: 1},
+        {q: "Hành vi nào sau đây không thể hiện sự quan tâm, cảm thông và chia sẻ?", o: ["Giảng giúp bạn những bài chưa hiểu", "Giúp đỡ người khuyết tật hòa nhập với cuộc sống cộng đồng.", "Trò chuyện, giúp đỡ bạn khi bạn chưa quen nhiều bạn trong lớp", "Giúp đỡ người khác để được khen và tặng quà."], c: 3},
+        {q: "Để cảm thông, quan tâm, chia sẻ với người khác mỗi chúng ta nên có biểu hiện nào sau đây?", o: ["Có lối sống ích kỷ, nhỏ nhen trước mọi người.", "Sẵn sàng cho đi khi người khác gặp khó khăn, mất mát.", "Quan tâm người khác khi bản thân thấy có lợi.", "Sống khép mình, không quan tâm đến mọi quan hệ xung quanh."], c: 1},
+        {q: "Hành vi nào dưới đây không phải là biểu hiện của sự quan tâm, cảm thông và chia sẻ với người khác?", o: ["Thường xuyên hỏi thăm sức khỏe của người thân.", "Giúp đỡ bố mẹ một số công việc trong nhà.", "Thương cảm trước nỗi đau của người khác.", "Bao che cho người thân khi họ mắc lỗi sai."], c: 3},
+        {q: "Câu tục ngữ nào nói về quan tâm, thông cảm, chia sẻ", o: ["Một miếng khi đói bằng một gói khi no", "Đi một ngày đàng, học một sàng khôn", "Một kho vàng không bằng một nang chữ", "Muốn biết phải hỏi, muốn giỏi phải học"], c: 0},
+        {q: "Câu tục ngữ nào dưới đây nói về sự quan tâm, cảm thông, chia sẻ?", o: ["Một con ngựa đau, cả tàu bỏ cỏ.", "Chớ thấy sóng cả mà ngã tay chèo.", "Uống nước nhớ nguồn.", "Ở hiền gặp lành."], c: 0},
+        {q: "Gia đình P có hoàn cảnh khó khăn, bố mất sớm, mẹ P phải một mình làm lụng nuôi hai con. Gần đây, mẹ của P bị ốm nên P thường xuyên phải nghỉ học để chăm mẹ. Nếu là bạn cùng lớp, biết được hoàn cảnh của P em nên chọn cách ứng xử nào sau đây?", o: ["Kêu gọi các bạn cùng lớp quyên góp, hỗ trợ P.", "Làm ngơ vì không liên quan đến bản thân mình.", "Kêu gọi các bạn trong lớp xa lánh P vì nhà P nghèo.", "Khuyên P nên nghỉ học để ở nhà làm việc giúp mẹ."], c: 0},
+        {q: "Cuối giờ học, M để nguyên cốc nhựa đựng nước ngọt trên bàn mà không đem bỏ vào thùng rác. Khi P nhắc nhở, M trả lời: \"Tại sao mình phải dọn dẹp, đó là việc của cô lao công cơ mà\". P giải thích và khuyên M nên cảm thông với sự vất vả của cô lao công, nhưng M không nghe và tỏ thái độ khó chịu. Trong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", o: ["Cô lao công.", "Bạn P.", "Bạn M.", "Hai bạn P và M."], c: 2},
+        {q: "A và N là bạn cùng lớp và ở gần nhà nhau. N bị ốm phải nghỉ học nhiều ngày. Hết giờ học, A sang nhà, đưa vở của mình cho N chép và giải thích những chỗ khó hiểu để N có thể theo kịp bào học trên lớp. H là bạn cùng lớp, thấy vậy, nên đã trách A làm thế là không đúng vì việc học là nhiệm vụ của học sinh, N phải tự tìm hiểu và hoàn thành nhiệm vụ học tập của mình.\n\nTrong trường hợp trên, bạn học sinh nào đã biết quan tâm, cảm thông, chia sẻ?", o: ["Bạn H.", "Bạn A.", "Bạn H và N.", "Bạn A và H."], c: 1},
+        {q: "Nhà trường phát động phong trào quyên góp sách, báo, truyện... đánh tặng cho các bạn học sinh vùng cao. K và Q rất hào hứng tham gia, hai bạn còn tích cực vận động người thân, bạn bè cùng quyên góp. Trái lại, H tỏ thái độ khó chịu và chỉ rằng: \"Việc quan tâm, giáo dục và giúp đỡ trẻ em vùng cao đã có các cấp chính quyền lo, mình là học sinh, đóng góp được bao nhiêu đâu, tham gia làm gì cho mất thời gian\".\n\nTrong trường hợp này, nhân vật nào chưa biết cách quan tâm, cảm thông, chia sẻ?", o: ["Bạn K.", "Bạn Q.", "Bạn H.", "Hai bạn K và Q."], c: 2},
+        {q: "Hành động nào sau đây là biểu hiện của học tập tự giác, tích cực?", o: ["Trước giờ đi học cần xoay sở, vội.", "Luôn cố gắng, vượt khó, kiên trì trong học tập.", "Luôn để bố mẹ gọi dậy đi học.", "Trong giờ kiểm tra, nhìn bài bạn để đạt được điểm cao."], c: 1},
+        {q: "Biểu hiện nào sau đây đối lập với tính tự giác, tích cực trong học tập?", o: ["Chăm chỉ", "Kiên trì", "Chây lười, ỷ lại", "Siêng năng"], c: 2},
+        {q: "Nhận định nào dưới đây đúng khi bàn về tự giác, tích cực trong học tập?", o: ["Chỉ những bạn học kém mới cần tự giác, tích cực học tập.", "Tự giác, tích cực học tập giúp chúng ta không ngừng tiến bộ.", "Tự giác là lối sống vốn có của mỗi người, không cần rèn luyện.", "Những người tự giác, tích cực học tập sẽ phải chịu nhiều thiệt thòi."], c: 1},
+        {q: "Nhận định nào dưới đây không đúng khi bàn về tự giác, tích cực trong học tập?", o: ["Chỉ những bạn học sinh yếu kém mới cần tự giác, tích cực học tập.", "Học tập tự giác, tích cực giúp ta có thêm kiến thức, mở rộng hiểu biết.", "Người có đức tính tự giác, tích cực học tập sẽ được mọi người tôn trọng.", "Học tập tự giác, tích cực giúp ta gặt hái nhiều thành công trong cuộc sống."], c: 0},
+        {q: "Học tập tự giác, tích cực là", o: ["chủ động nỗ lực học tập mỗi khi đến các kì thi quan trọng.", "chủ động học tập khi có sự nhắc nhở của cha mẹ hoặc thầy cô.", "chủ động nỗ lực khi được bố mẹ hứa thưởng sau đợt thi qua cao.", "chủ động thực hiện đầy đủ, hiệu quả nhiệm vụ học tập đã đề ra."], c: 3},
+        {q: "Câu tục ngữ nào sau đây thể hiện học tập tự giác, tích cực?", o: ["Học không hay, cày không biết,", "Đi cuộc đầu tay, đi cày mới gối.", "Luyện mãi thành tài, miệt mài tất giỏi.", "Học trước quên sau."], c: 2},
+        {q: "Việc làm nào sau đây thể hiện tính tự giác, tích cực trong hoạt động học tập?", o: ["Hăng hái phát biểu xây dựng bài.", "Dậy sớm tập thể dục thể thao.", "Tôn trọng, quý mến mọi người.", "Quan tâm, sẻ chia với mọi người."], c: 0},
+        {q: "Nội dung nào dưới đây không phải là biểu hiện của học tập tự giác, tích cực?", o: ["Lập thời gian biểu khoa học, hợp lí.", "Quyết tâm thực hiện các mục tiêu học tập.", "Xác định đúng mục tiêu học tập.", "Luôn luôn chờ đợi vào sự giúp đỡ."], c: 3},
+        {q: "Câu tục ngữ nào sau đây nói lên học tập tự giác:", o: ["Kính lão đắc thọ", "Nhà sạch thì mát, bát sạch ngon cơm", "Buôn có bạn, bạn có phương", "Học hành vất vả, kết quả ngọt bùi"], c: 3},
+        {q: "Chủ thể nào dưới đây đã học tập tự giác, tích cực?", o: ["Bạn P thường xuyên trốn học để đi chơi game.", "Mỗi khi gặp bài tập khó, T lại nhờ anh trai giải hộ.", "Bạn K thường xuyên làm việc riêng trong giờ học.", "Bạn C luôn hăng hái phát biểu, xây dựng bài học."], c: 3},
+        {q: "Trong giờ học trên lớp, nhóm em được giao một nhiệm vụ học tập. Trong khi các bạn khác đang tích cực thảo luận, H ngồi làm việc riêng. Khi các bạn nhắc nhở, H nói rằng chỉ cần đại diện một bạn trong nhóm thực hiện nhiệm vụ này, H hưởng trên cho nhanh thì bạn H thuộc tính nào?", o: ["Trung thực.", "Tự giác, tích cực học tập.", "Đoàn kết.", "Cần cù lao động."], c: 1},
+        {q: "Hành vi nào dưới đây là biểu hiện của giờ chủ tín?", o: ["Hứa tất cả mọi việc để được khen của mọi người.", "Luôn đến đúng giờ, giữ đúng lời hứa.", "Mượn đồ của người khác nhưng không trả.", "Lời nói không đi đôi với việc làm."], c: 1},
+        {q: "Hành vi nào sau đây là biểu hiện của giữ chữ tín?", o: ["Chỉ giữ lời hứa với những người lớn", "Giữ lời hứa khi có điều kiện thực hiện", "Chỉ thực hiện những lời hứa quan trọng", "Giữ lời hứa trong mọi trường hợp"], c: 3},
+        {q: "Câu ca dao \"Nói chín thì phải làm mười/ Nói mười làm chín kẻ cười người chê\" thể hiện đức tính nào sau đây?", o: ["Yêu thương con người", "Giữ chữ tín", "Tôn trọng người khác", "Tự trọng"], c: 1},
+        {q: "Hành động, việc làm nào sau đây không phải là biểu hiện của giữ chữ tín?", o: ["Giữ đúng lời hứa với mọi người.", "Luôn đúng hẹn.", "Làm tốt việc mình đã nhận.", "Hứa suông cho xong việc."], c: 3},
+        {q: "Nhận định nào sau đây đúng khi bàn về vấn đề giữ chữ tín?", o: ["Chỉ những người buôn bán, kinh doanh mới cần giữ chữ tín.", "Người trưởng thành mới cần giữ chữ tín, học sinh không cần.", "Giữ chữ tín làm cho các mối quan hệ xã hội trở nên tốt đẹp.", "Giữ chữ tín là lối sống gây gò bó, khó chịu cho mọi người."], c: 2},
+        {q: "Câu tục ngữ nào dưới đây phản ánh về việc giữ chữ tín?", o: ["Rao ngọc, bán đá.", "Treo đầu dê, bán thịt chó.", "Nói có sách, mách có chứng.", "Chữ tín còn quý hơn vàng."], c: 3},
+        {q: "Câu ca dao \"Nói lời phải giữ lấy lời/ Đúng như con bướm đậu rồi lại bay\" khuyên chúng ta nên?", o: ["Tiết kiệm.", "Dũng cảm.", "Giữ chữ tín.", "Tích cực học tập."], c: 2},
+        {q: "Chị L ở Long An, mua sách hàng ngày bằng nghề bán vé số. Một hôm, đã gần đến giờ xổ số mà chị vẫn còn nhiều vé. Chị lên gọi điện cho anh T mua 20 tờ vé số và nhờ chị L giữ hộ. Chiến thắng xổ số, khi có kết quả xổ số, anh T có những vé trúng giải đặc biệt, với tổng số tiền 6,6 tỉ đồng. Chị L đã trao tận tay anh T những tờ vé số trúng thưởng.\n\nTrường hợp này cho thấy chị L là người như thế nào?", o: ["Giả dối, không giữ chữ tín.", "Biết giữ chữ tín trong kinh doanh.", "Không có tâm nhìn xa trong kinh doanh.", "Thông minh, nhạy bén trong buôn bán."], c: 1},
+        {q: "Bà M mở cửa hàng bán thực phẩm sạch. Để tăng lợi nhuận, bà M đã nhập thực phẩm ôi thiu được ngâm tẩm hóa chất độc hại, không rõ nguồn gốc xuất xứ về bán cho khách hàng.\n\nTrường hợp này cho thấy bà M là người như thế nào?", o: ["Trung thực, biết giữ chữ tín.", "Nhạy bén trong kinh doanh.", "Không giữ chữ tín với khách hàng.", "Thông minh, sắp xếp công việc hiệu quả."], c: 2},
+        {q: "A và D là đôi bạn thân từ nhỏ, lại cùng học chung một lớp. Mấy hôm nay A bị ốm, D hứa với A buổi chiều sẽ mang vở đến cho bạn mượn để ghi lại bài và giúp bạn học. Nhưng đến chiều, do mải xem phim nên D đã không tới nhà A. Thấy vậy, mẹ D nhắc nhở, D bực bội nói: \"Ôi đào, chiều nay con không đến thì ngày mai cũng được mà, có sao đâu mẹ\".\n\nTrong trường hợp này, chủ thể nào không giữ chữ tín?", o: ["Bạn A.", "Bạn D.", "Mẹ bạn D.", "Hai bạn A và D."], c: 1},
+        {q: "Chị X mở cửa hàng bán mĩ phẩm nhập khẩu Hàn Quốc. Để tăng lợi nhuận, chị X đã nhập hàng không rõ nguồn gốc xuất xứ về bán cho khách hàng. Trường hợp này cho thấy chị X là người như thế nào?", o: ["Trung thực, biết giữ chữ tín.", "Nhạy bén trong kinh doanh.", "Không giữ chữ tín với khách hàng.", "Thông minh, sắp xếp công việc hiệu quả."], c: 2},
+        {q: "Di sản văn hóa bao gồm di sản văn hóa vật thể và", o: ["di sản văn hóa vật chất.", "di sản văn hóa phi vật thể.", "danh lam thắng cảnh,", "di tích lịch sử - văn hóa."], c: 1},
+        {q: "Di sản văn hóa phi vật thể không bao gồm nội dung nào dưới đây?", o: ["Di vật, bảo vật quốc gia.", "Biểu diễn dân ca truyền thống.", "Trò chơi dân gian.", "Lễ hội truyền thống."], c: 0},
+        {q: "Di sản nào dưới đây là di sản văn hóa vật thể?", o: ["Nhã nhạc cung đình Huế.", "Dân ca Quan họ.", "Văn Miếu -- Quốc Tử Giám.", "Không gian văn hóa cồng chiêng Tây Nguyên"], c: 2},
+        {q: "Nhận định nào dưới đây không đúng về di sản văn hóa?", o: ["Chỉ những sản phẩm vật chất mới được coi là di sản văn hóa.", "Di sản văn hóa là tài sản và niềm tự hào của toàn dân tộc.", "Di sản văn hóa gồm: di sản vật thể và di sản phi vật thể.", "Góp phần phát triển văn hóa Việt Nam tiến tiến, đậm đà bản sắc."], c: 0},
+        {q: "Hành vi nào sau đây thể hiện việc giữ gìn và phát huy di sản văn hóa?", o: ["Ông P tuyên truyền sai lệch về di sản văn hóa của địa phương.", "Nghệ nhân C truyền bá làn điệu dân ca quan họ cho thế hệ trẻ.", "Anh K tổ chức vận chuyển trái phép cổ vật ra nước ngoài.", "Bạn X có hành vi xả rác bừa bãi tại khu di tích lịch sử - văn hóa."], c: 1},
+        {q: "Hành vi nào sau đây không phù hợp với việc giữ gìn và phát huy di sản văn hóa?", o: ["Ông B cất giấu số cổ vật mà mình tìm được khi đào móng nhà.", "Chị M tích cực quảng bá di sản văn hóa quê hương tới bạn bè quốc tế.", "Tập thể lớp 7A tham gia quét dọn khu di tích lịch sử tại địa phương.", "Nghệ nhân K mở lớp học để truyền lại kĩ thuật hát ca trù cho thế hệ trẻ."], c: 0},
+        {q: "Trong quá trình đào móng để làm lại nhà, ông K đã phát hiện ra một số chén đĩa, bình hoa bằng gốm sứ có hoa văn đẹp mắt. Hoa văn và màu men gốm trên sồ chén đĩa, bình hoa đó mang nét đặc trưng của triều đại thời Trần. Chuyền ông K đào được cổ vật truyền ra ngoài, có nhiều người tới hỏi mua và trả giá cao.\n\nTrong trường hợp trên, theo em, ông K nên lựa chọn cách ứng xử nào dưới đây?", o: ["Tổ chức đấu giá để bán số cổ vật vừa tìm được.", "Cất giữ số cổ vật đó và coi đó là \"báo vật gia truyền\".", "Cất giữ một nửa, còn một nửa thì nộp lại cho chính quyền địa phương.", "Nhanh chóng báo cáo và giao nộp toàn bộ cổ vật cho cơ quan chức năng."], c: 3},
+        {q: "Trong một lần đi tham quan di tích Cột cờ Hà Nội, thấy trên bức tường, bìa di tích có những nét khắc, nét vẽ chứng chịt tên, ngày tháng của những người đến tham quan. Bạn T tỏ thái độ phê phán những việc làm đó. Ngược lại, bạn Q cho rằng việc khắc tên lên bìa đã là một cách lưu lại dấu ấn của du khách. Bạn P cũng đồng tình ý kiến của Q, bên cạnh đó, P còn rủ Q cùng khắc tên lên tường thành cổ.\n\nTrong trường hợp trên, bạn học sinh nào chưa có ý thức bảo vệ di sản văn hóa?", o: ["Bạn P.", "Bạn Q.", "Bạn P và Q.", "Bạn T."], c: 2},
+        {q: "Một tấm bia Di tích lịch sử -- văn hóa quốc gia đường Hồ Chí Minh đã bị các quân ấn, nhà hàng lấn chiếm đất, tiến sát đến chân công trình. Hơn nữa, các thông tin trên tấm bia đã bị xóa xóa, hủy hoại. Điều này đã làm ảnh hưởng đến an toàn giao thông, làm mất vẻ trang nghiêm, biến dạng hoàn toàn di tích lịch sử -- văn hóa quốc gia này. Theo em, hành vi lấn chiếm đất trên sẽ bị xử phạt như thế nào theo quy định của pháp luật?", o: ["Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi lấn chiếm đất đai thuộc di tích lịch sử -- văn hóa, danh lam thắng cảnh;", "Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng đối với hành vi làm hư hại hiện vật trong di tích lịch sử - văn hóa đã được xếp hạng hoặc được đưa vào Danh mục kiểm kê di tích của địa phương.", "Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với hành vi hủy hoại, làm thay đổi yếu tố góc nhìn thành di tích lịch sử - văn hóa, danh lam thắng cảnh;", "Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng đối với một trong các hành vi sử dụng trái phép di tích lịch sử - văn hóa, danh lam thắng cảnh;"], c: 0},
+        {q: "Trong lúc tham quan một di tích lịch sử -- văn hóa cấp quốc gia, A dùng bút xóa để viết tên mình lên tường di tích khiến bề mặt di tích bị bẩn và phải mất nhiều thời gian để vệ sinh. Theo Nghị định 38/2021/NĐ-CP, hành vi của A có thể bị xử phạt bao nhiêu?", o: ["Phạt cảnh cáo", "Phạt tiền từ 500.000 đồng đến 1.000.000 đồng", "Phạt tiền từ 1.000.000 đồng đến 3.000.000 đồng", "Phạt tiền từ 5.000.000 đồng đến 10.000.000 đồng"], c: 2},
+        {q: "Một cơ sở sản xuất đồ lưu niệm từ ý lâm bán sao một cổ vật thuộc báo vật quốc gia để bán cho khách du lịch mà không xin giấy phép của cơ quan quản lý có thẩm quyền. Theo Nghị định 38/2021/NĐ-CP, cơ sở này có thể bị xử phạt ở mức nào?", o: ["Phạt tiền từ 10.000.000 đồng đến 20.000.000 đồng", "Phạt tiền từ 20.000.000 đồng đến 30.000.000 đồng", "Phạt tiền từ 40.000.000 đồng đến 50.000.000 đồng", "Phạt tiền từ 50.000.000 đồng đến 70.000.000 đồng"], c: 2},
+        {q: "Ngày Di sản văn hóa Việt Nam là ngày nào hằng năm?", o: ["Ngày 23 tháng 11.", "Ngày 24 tháng 11.", "Ngày 25 tháng 11.", "Ngày 26 tháng 11."], c: 0}
+		]
+		},
+		'congnghe':{
+		name: 'CN',
+		fullName: 'Công nghệ',
+		questions: [
+		{q: "Yêu cầu đối với người lao động trong lĩnh vực trồng trọt là:", o: ["Có kiến thức về trồng và chăm sóc cây trồng", "Có khả năng sử dụng máy móc thiết bị trong trồng trọt", "Có sức khoẻ, tinh thần, trách nhiệm đối với nghề nghiệp.", "Tất cả các đáp án đều đúng"], c: 3},
+        {q: "Lĩnh vực trồng trọt ở Việt Nam phát triển theo hướng nào?", o: ["Ứng dụng công nghiệp hóa", "Ứng dụng nông nghiệp hóa", "Chỉ hiện đại hóa dụng cụ nông nghiệp", "Chia nhỏ các vùng chuyên canh"], c: 0},
+        {q: "Nghề thuộc ngành trồng trọt ở Việt Nam là?", o: ["Kĩ sư mỏ", "Kĩ sư địa chất", "Kĩ sư nông nghiệp", "Kĩ sư chế tạo máy"], c: 2},
+        {q: "Các cây trồng thuộc nhóm cây lương thực.", o: ["Lúa, ngô, khoai, rau xanh", "Lúa, ngô, khoai, táo", "Lúa, ngô, khoai, sắn", "Lúa, ngô, khoai, đậu các loại"], c: 2},
+        {q: "Đâu không phải vai trò của ngành trồng trọt", o: ["Tạo việc làm cho người lao động", "Tăng thu nhập cho người lao động", "Tạo môi trường sống trong lành", "Góp ô nhiễm môi trường do thuốc trừ sâu và phân hóa học."], c: 3},
+        {q: "Bón lót là bón phân vào thời điểm", o: ["Khi cây đang ra hoa", "Cây sắp kết trái", "Khi cây đang sinh trưởng", "Trước khi gieo trồng"], c: 3},
+        {q: "Bón lót sử dụng loại phân nào?", o: ["Hóa học (N,K)", "Hữu cơ", "Vi sinh", "Tất cả các đáp án đều đúng"], c: 1},
+        {q: "Trồng trọt ở nước ta cần cơ cấu lại cây trồng theo quy mô lớn vì:", o: ["Giúp đảm bảo vững chắc an ninh lương thực trước mắt và lâu dài.", "Tăng thu nhập cho người nông dân, góp phần xóa đói giảm nghèo, ổn định chính trị xã hội.", "Bảo vệ môi trường và thích ứng với biến đổi khí hậu.", "Tất cả các đáp án đều đúng."], c: 1},
+        {q: "Lĩnh vực trồng trọt lại hướng đến hình thành các vùng chuyên canh cây trồng vì:", o: ["Do thời tiết, khí hậu từng vùng phù hợp với các loại cây trồng khác nhau.", "Tạo điều kiện phát triển nông nghiệp ở quy mô lớn.", "Giúp mang lại hiệu quả kinh tế cao.", "Tất cả các đáp án đều đúng."], c: 3},
+        {q: "Các yêu cầu chuẩn bị đất:", o: ["Làm đất tơi nên tơi xốp, đủ độ ẩm và chất dinh dưỡng", "Loại bỏ các chất độc hại, cỏ dại và mầm sâu, bệnh gây hại cho cây trồng.", "Tạo luống, đắp mô phù hợp với từng loại cây trồng (để chăm sóc, chống ngập úng, tạo tăng đất đầy cho cây phát triển).", "Tất cả các đáp án đều đúng."], c: 3},
+        {q: "Sở vụ gieo trồng trong năm phụ thuộc vào những yếu tố nào?", o: ["Khí hậu", "Loại cây trồng", "Thời kỳ sâu bệnh", "Tất cả đều đúng."], c: 3},
+        {q: "Nhược điểm của trồng trọt công nghệ cao là:", o: ["Đòi hỏi người nông dân phải có kiến thức sản xuất và trình độ nhất định, cần phải am hiểu về công nghệ hiện đại, vốn đầu tư ban đầu rất lớn.", "Điều kiện khí hậu thời tiết, khí hậu, đất đai chưa thực sự thuận lợi dẫn đến tâm lý sợ rủi ro.", "Chi phí đầu tư lớn -> giá thành sản phẩm cao -> khó khăn khi cạnh tranh trên thị trường.", "Tất cả đúng."], c: 3},
+        {q: "Mục đích của bón lót là:", o: ["Cung cấp dinh dưỡng cho cây khi mới mọc, mới bén rễ", "Cung cấp dinh dưỡng cho cây khi đang sinh trưởng", "Cung cấp dinh dưỡng cho cây khi cây sắp ra hoa.", "Cung cấp dinh dưỡng cho cây khi cây chuẩn bị kết trái."], c: 0},
+        {q: "Mục đích của bón thúc là:", o: ["Cung cấp dinh dưỡng cho cây khi mới mọc, mới bén rễ", "Cung cấp dinh dưỡng cho cây khi đang sinh trưởng", "Cung cấp dinh dưỡng cho cây khi cây sắp ra hoa.", "Cung cấp dinh dưỡng cho cây khi cây chuẩn bị kết trái."], c: 1},
+        {q: "Bón thúc sử dụng loại phân nào?", o: ["Phân hữu cơ đã ủ hoai mục", "Phân hóa học (N,K)", "Phân vi sinh", "Tất cả đều đúng."], c: 3},
+        {q: "Cây con được tạo bằng hình thức nhân giống vô tính có đặc điểm:", o: ["Giống cây dùng làm mẹ", "Giống cây dùng làm mẹ và xuất hiện tính trạng mới.", "Giống cả 2 cây dùng làm mẹ và dùng làm bố", "Mang tính trạng mới."], c: 0},
+        {q: "Bộ phận nào của cây được sử dụng làm nguyên liệu nhân giống bằng phương pháp giâm cành:", o: ["Rễ .", "Cành già.", "Cành bánh tẻ", "Cành non."], c: 2},
+        {q: "Cây tạo ra bằng phương pháp giâm cành có ưu điểm gì so với cây được nhân giống từ hạt.", o: ["Nhân giống nhanh hơn", "Giữ được tính trạng tốt", "Thời gian thu hoạch sớm", "Tất cả đều đúng"], c: 3},
+        {q: "Đâu là phương thức trồng trọt công nghệ cao:", o: ["Độc canh", "Xen canh", "Khí canh", "Luân canh"], c: 2},
+        {q: "Thu hoạch cà rốt bằng phương pháp nào hợp lý.", o: ["Cắt", "Hái", "Nhổ", "Đào"], c: 2},
+        {q: "Đoạn cành đạt kích thước yêu cầu kỹ thuật cành giâm:", o: ["10 cm", "5 cm", "20 cm", "25 cm"], c: 2},
+        {q: "Nên chọn loại cây nhân giống bằng phương pháp giâm cành có đặc điểm:", o: ["Ra rễ phụ nhanh", "Ra chồi nhanh", "Ra trái nhanh", "Ra hoa nhanh"], c: 0},
+        {q: "Đâu không phải là hình thức nhân giống vô tính?", o: ["Nuôi cấy mô", "Hạt giống", "Giâm cành", "Ghép cành"], c: 1},
+        {q: "Phương thức trồng trọt nào KHÔNG phải là ứng dụng công nghệ cao?", o: ["Thủy canh", "Hệ thống tưới tự động", "Luân canh", "Khí canh"], c: 2},
+        {q: "Trồng trọt theo tiêu chuẩn VietGAP là:", o: ["Kiểm định nghiêm ngặt về đất, phân bón", "Kiểm định nghiêm ngặt về giống cây trồng", "Nâng cao chất lượng sản phẩm (sạch, ngon, nhiều chất dinh dưỡng,...)", "Tất cả các đáp án đều đúng."], c: 3},
+        {q: "Đâu là công việc của nhà nước cây mỏ?", o: ["Nghiên cứu về cây trồng.", "Bảo vệ cây trồng.", "Nhân giống cấp trồng.", "Làm việc liên quan đến cây rừng."], c: 2},
+        {q: "Tác dụng của luân canh:", o: ["Tăng độ phì nhiêu.", "Điều hòa dinh dưỡng.", "Giảm sâu bệnh.", "Tất cả đáp án đều đúng."], c: 3},
+        {q: "Tác dụng của xen canh:", o: ["Tận dụng diện tích đất.", "Tận dụng dinh dưỡng.", "Tận dụng ánh sáng.", "Tất cả đáp án đều đúng."], c: 3},
+        {q: "Đâu KHÔNG phải là cây công nghiệp:", o: ["Cây mồng tơi", "Cây cà phê", "Cây cao su", "Cây hồ tiêu"], c: 0},
+        {q: "Đâu KHÔNG phải là cây rau:", o: ["Khoai tây", "Mồng tơi", "Cải xanh", "Cải bó xôi"], c: 0},
+        {q: "Cần phát quang khi chăm sóc cây rừng một trồng để:", o: ["Cung cấp đủ ánh sáng cho cây con", "Cung cấp đủ dinh dưỡng cho cây con", "Cung cấp đủ nước cho cây con", "Giảm cạnh tranh nước, ánh sáng, chất dinh dưỡng giữa cây xung quanh và cây con mới trồng."], c: 3},
+        {q: "Mùa trồng rừng ở miền Bắc là:", o: ["Xuân Thu", "Hạ Thu", "Thu Đông", "Đông Xuân"], c: 0},
+        {q: "Mùa trồng rừng ở miền Trung và miền Nam:", o: ["Mùa mưa", "Mùa khô", "Mùa nắng", "Tất cả đều đúng"], c: 0},
+        {q: "Trồng rừng nên chọn ngày có thời tiết:", o: ["Râm mát, độ ẩm cao", "Khô", "Nắng to", "Mưa lớn"], c: 0},
+        {q: "Mục đích sử dụng của rừng đặc dụng là để:", o: ["Khai thác gỗ", "Bảo tồn nguồn gen sinh vật rừng; nghiên cứu khoa học; bảo vệ di tích lịch sử,...", "Bảo vệ nguồn nước, đất; chống xói mòn; hạn chế lũ lụt", "Tất cả đều đúng"], c: 1},
+        {q: "Mục đích sử dụng của rừng sản xuất là để:", o: ["Khai thác gỗ", "Bảo tồn nguồn gen sinh vật rừng; nghiên cứu khoa học; bảo vệ di tích lịch sử,...", "Bảo vệ nguồn nước, đất; chống xói mòn; hạn chế lũ lụt", "Tất cả đều đúng"], c: 0},
+        {q: "Mục đích sử dụng của rừng phòng hộ là để:", o: ["Khai thác gỗ", "Bảo tồn nguồn gen sinh vật rừng; nghiên cứu khoa học; bảo vệ di tích lịch sử,...", "Bảo vệ nguồn nước, đất; chống xói mòn; hạn chế lũ lụt", "Tất cả đều đúng"], c: 2},
+        {q: "Có những cách nào để trồng rừng?", o: ["Bằng cây con có bầu đất", "Bằng cây con rễ trần", "Bằng hạt", "Tất cả các cách trên"], c: 3},
+        {q: "Ở nơi đất xấu, đồi núi trọc nên áp dụng trồng rừng bằng:", o: ["Cây con có bầu đất", "Cây con rễ trần", "Hạt", "Tất cả 3 cách trên"], c: 0},
+        {q: "Quy trình trồng rừng bằng cây con có bầu đất và quy trình trồng rừng bằng cây con rễ trần khác nhau ở bước:", o: ["Tạo lỗ trong hố", "Rạch bỏ vỏ bầu", "Đặt cây con vào hố", "Vun gốc"], c:1}
+		]
+		}
+		};
+    let currentSubject = null;
+    let shuffledQuestions = [];
+    let currentQuestion = 0;
+    let selectedAnswer = null;
+    let showResult = false;
+    let score = 0;
+    let quizCompleted = false;
+    let quizStarted = false;
+    let quizMode = 'full';
+    let totalAttempts = 0;
 
-
-function checkSingle() {
-  const selected = document.querySelector('input[name="single"]:checked');
-  if (!selected) return alert('Chọn đáp án trước.');
-  result.style.display = 'block';
-  const correct = currentSingle.q.answer;
-  if (Array.isArray(correct)) { // for multiple
-    const allSelected = Array.from(document.querySelectorAll('input[name="single"]:checked')).map(inp => inp.value);
-    const sortedSel = allSelected.sort();
-    const sortedCorr = correct.sort();
-    if (sortedSel.join(',') === sortedCorr.join(',')) {
-      result.className = 'result correct';
-      result.innerHTML = '<strong>ĐÚNG.</strong>';
-    } else {
-      result.className = 'result wrong';
-      const corrTexts = correct.map(k => currentSingle.q.options.find(o => o.key === k).text).join(', ');
-      result.innerHTML = `<strong>SAI.</strong> Đáp án đúng: ${corrTexts}`;
+    // Helpers
+    function shuffleArray(array) {
+      const newArray = array.slice();
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
     }
-  } else {
-    if (selected.value === correct) {
-      result.className = 'result correct';
-      result.innerHTML = '<strong>ĐÚNG.</strong>';
-    } else {
-      result.className = 'result wrong';
-      const corrOpt = currentSingle.q.options.find(o => o.key === correct);
-      result.innerHTML = `<strong>SAI.</strong> Đáp án đúng: ${corrOpt ? corrOpt.text : correct}`;
+
+    function shuffleOptions(question) {
+      const optionsWithIndex = question.o.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+      const shuffled = shuffleArray(optionsWithIndex);
+      return {
+        q: question.q,
+        o: shuffled.map(o => o.text),
+        c: shuffled.findIndex(o => o.originalIndex === question.c)
+      };
     }
-  }
-}
 
-/* --- Exam mode --- */
-let currentExam = null;
-
-function generateExam() {
-  const pool = currentQuestions.slice();
-  shuffle(pool);
-  const prepared = pool.map(q => {
-    let opts = q.options ? q.options.map(o => ({key: o.key, text: o.text})) : [];
-    shuffle(opts);
-    return {q, shown: opts};
-  });
-  currentExam = prepared;
-  renderExam();
-}
-
-function renderExam() {
-  singleArea.style.display = 'none';
-  examArea.style.display = 'block';
-  homeIntro.style.display = 'none';
-  examForm.innerHTML = '';
-  examResult.style.display = 'none';
-
-  currentExam.forEach((item, idx) => {
-    const q = item.q;
-    const opts = item.shown;
-    const qdiv = document.createElement('div');
-    qdiv.className = 'exam-question';
-    qdiv.innerHTML = `<div><span class="qnum">${idx+1}</span></div>
-      <div style="font-weight:700;margin-top:6px">${q.text}</div>`;
-    
-    // Thêm hình ảnh nếu có
-    if (q.img) {
-      const imgWrap = document.createElement('div');
-      imgWrap.style.margin = '8px 0';
-      const img = document.createElement('img');
-      img.src = q.img;
-      img.alt = 'Hình câu hỏi';
-      img.className = 'question-image';
-      img.style.maxWidth = '100%';
-      img.style.height = 'auto';
-      img.style.border = '1px solid #ddd';
-      img.style.borderRadius = '8px';
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => window.open(q.img, '_blank'));
-      imgWrap.appendChild(img);
-      qdiv.appendChild(imgWrap);
+    function initializeQuiz(mode = quizMode) {
+      const questions = subjectData[currentSubject].questions;
+      if (mode === 'full') {
+        const shuffled = shuffleArray(questions).map(q => shuffleOptions(q));
+        shuffledQuestions = shuffled;
+      } else {
+        const randomQuestion = shuffleOptions(questions[Math.floor(Math.random() * questions.length)]);
+        shuffledQuestions = [randomQuestion];
+      }
+      currentQuestion = 0;
+      selectedAnswer = null;
+      showResult = false;
+      quizCompleted = false;
+      score = 0;
+      totalAttempts = 0;
+      renderQuiz();
     }
-    
-    const optCon = document.createElement('div');
-    optCon.className = 'options';
-    opts.forEach((o, j) => {
-      const rid = `q${idx}_opt${j}`;
-      const wrap = document.createElement('div');
-      wrap.className = 'option';
-      wrap.innerHTML = `<label><input type="${q.type === 'multiple' ? 'checkbox' : 'radio'}" name="q${idx}" value="${o.key}"> ${o.text}</label>`;
-      optCon.appendChild(wrap);
+
+    // DOM
+    const subjectScreen = document.getElementById('subjectScreen');
+    const modeScreen = document.getElementById('modeScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultScreen = document.getElementById('resultScreen');
+
+    const selectGDCD = document.getElementById('selectGDCD');
+    const selectCongNghe = document.getElementById('selectCongNghe');
+    const backToSubject = document.getElementById('backToSubject');
+    const subjectTitle = document.getElementById('subjectTitle');
+    const fullModeDesc = document.getElementById('fullModeDesc');
+
+    const startFullBtn = document.getElementById('startFull');
+    const startRandomBtn = document.getElementById('startRandom');
+
+    const backHomeBtn = document.getElementById('backHome');
+    const btnRestart = document.getElementById('btnRestart');
+    const countInfo = document.getElementById('countInfo');
+    const scoreInfo = document.getElementById('scoreInfo');
+    const progressFill = document.getElementById('progressFill');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnNext = document.getElementById('btnNext');
+
+    const resultScoreLarge = document.getElementById('resultScoreLarge');
+    const resultPercent = document.getElementById('resultPercent');
+    const resultRemark = document.getElementById('resultRemark');
+    const resultRestart = document.getElementById('resultRestart');
+    const resultHome = document.getElementById('resultHome');
+
+    // Render
+    function renderQuiz() {
+      if (!quizStarted) {
+        if (!currentSubject) {
+          subjectScreen.classList.remove('hidden');
+          modeScreen.classList.add('hidden');
+        } else {
+          subjectScreen.classList.add('hidden');
+          modeScreen.classList.remove('hidden');
+        }
+        quizScreen.classList.add('hidden');
+        resultScreen.classList.add('hidden');
+        return;
+      }
+
+      if (quizCompleted) {
+        subjectScreen.classList.add('hidden');
+        modeScreen.classList.add('hidden');
+        quizScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+
+        const total = shuffledQuestions.length;
+        const percentage = total === 0 ? 0 : Math.round((score / total) * 100);
+        resultScoreLarge.textContent = `${score}/${total}`;
+        resultPercent.textContent = `Điểm số: ${percentage}%`;
+
+        if (percentage >= 90) {
+          resultRemark.textContent = 'Xuất sắc! Bạn đã nắm vững kiến thức! 🌟';
+          resultRemark.className = 'text-lg text-green-600 font-semibold mb-6';
+        } else if (percentage >= 70) {
+          resultRemark.textContent = 'Khá tốt! Bạn đã hiểu phần lớn bài học! 📚';
+          resultRemark.className = 'text-lg text-blue-600 font-semibold mb-6';
+        } else if (percentage >= 50) {
+          resultRemark.textContent = 'Cần ôn thêm một số phần! 💪';
+          resultRemark.className = 'text-lg text-orange-600 font-semibold mb-6';
+        } else {
+          resultRemark.textContent = 'Hãy đọc kỹ lại bài học nhé! 📖';
+          resultRemark.className = 'text-lg text-red-600 font-semibold mb-6';
+        }
+        return;
+      }
+
+      subjectScreen.classList.add('hidden');
+      modeScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      resultScreen.classList.add('hidden');
+
+      const q = shuffledQuestions[currentQuestion];
+
+      if (quizMode === 'full') {
+        countInfo.textContent = `Câu ${currentQuestion + 1}/${shuffledQuestions.length}`;
+      } else {
+        countInfo.textContent = '';
+      }
+      scoreInfo.textContent = quizMode === 'full' ? `Điểm: ${score}` : `Đúng: ${score}/${totalAttempts}`;
+
+      if (quizMode === 'full') {
+        const pct = ((currentQuestion + 1) / shuffledQuestions.length) * 100;
+        progressFill.style.width = pct + '%';
+      } else {
+        progressFill.style.width = '0%';
+      }
+
+      questionText.textContent = q.q;
+
+      optionsContainer.innerHTML = '';
+      q.o.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-lg border-2 transition-all mb-1 ${(!showResult ? 'cursor-pointer hover:bg-gray-50' : 'cursor-default')}`;
+        btn.dataset.index = index;
+        btn.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-medium text-gray-800">${opt}</span>
+            <span class="icon-area"></span>
+          </div>
+        `;
+
+        if (showResult) {
+          if (index === q.c) {
+            btn.classList.add('border-green-500', 'bg-green-50');
+            btn.querySelector('.icon-area').innerHTML = '<svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" /></svg>';
+          } else if (index === selectedAnswer && index !== q.c) {
+            btn.classList.add('border-red-500', 'bg-red-50');
+            btn.querySelector('.icon-area').innerHTML = '<svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
+          } else {
+            btn.classList.add('border-gray-200');
+          }
+          btn.style.pointerEvents = 'none';
+        } else {
+          btn.classList.add('border-gray-200');
+          btn.addEventListener('click', () => {
+            handleAnswerClick(index);
+          });
+        }
+
+        if (!showResult && selectedAnswer === index) {
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-blue-500', 'bg-blue-50');
+        }
+
+        optionsContainer.appendChild(btn);
+      });
+
+      if (!showResult) {
+        btnSubmit.classList.remove('hidden');
+        btnSubmit.disabled = (selectedAnswer === null);
+        if (selectedAnswer === null) {
+          btnSubmit.className = 'flex-1 py-3 rounded-lg font-semibold transition-colors bg-gray-300 text-gray-500 cursor-not-allowed';
+        } else {
+          btnSubmit.className = 'flex-1 py-3 rounded-lg font-semibold transition-colors bg-blue-600 text-white hover:bg-blue-700';
+        }
+        btnNext.classList.add('hidden');
+      } else {
+        btnSubmit.classList.add('hidden');
+        btnNext.classList.remove('hidden');
+        if (quizMode === 'random') {
+          btnNext.textContent = 'Câu tiếp theo →';
+        } else {
+          if (currentQuestion < shuffledQuestions.length - 1) {
+            btnNext.textContent = 'Câu tiếp theo →';
+          } else {
+            btnNext.textContent = 'Xem kết quả';
+          }
+        }
+      }
+    }
+
+    function handleAnswerClick(index) {
+      if (showResult) return;
+      selectedAnswer = index;
+      renderQuiz();
+    }
+
+    btnSubmit.addEventListener('click', () => {
+      if (selectedAnswer === null) return;
+      showResult = true;
+      const q = shuffledQuestions[currentQuestion];
+      const isCorrect = selectedAnswer === q.c;
+      if (isCorrect) score++;
+      if (quizMode === 'random') totalAttempts++;
+      renderQuiz();
     });
-    qdiv.appendChild(optCon);
-    const ex = document.createElement('div');
-    ex.className = 'small';
-    ex.style.marginTop = '8px';
-    qdiv.appendChild(ex);
-    examForm.appendChild(qdiv);
-  });
-}
 
-function submitExam() {
-  if (!currentExam) return;
-  let correctCount = 0;
-  currentExam.forEach((item, idx) => {
-    const q = item.q;
-    const inputs = examForm.querySelectorAll(`input[name="q${idx}"]:checked`);
-    const user = Array.from(inputs).map(inp => inp.value).sort();
-    const correct = Array.isArray(q.answer) ? q.answer.sort() : [q.answer];
-    const isCorrect = user.join(',') === correct.join(',');
-    const qdiv = examForm.children[idx];
-    qdiv.querySelectorAll('input').forEach(inp => inp.disabled = true);
-    const ex = qdiv.querySelector('.small');
-    if (isCorrect) {
-      correctCount++;
-      qdiv.style.border = '1px solid #c7f0d0';
-      ex.innerHTML = '<span style="color:#065f2d;font-weight:700">ĐÚNG</span>';
-    } else {
-      qdiv.style.border = '1px solid #f7caca';
-      const corrTexts = correct.map(k => q.options.find(o => o.key === k).text).join(', ');
-      ex.innerHTML = `<span style="color:#6b0b0b;font-weight:700">SAI — đáp án đúng: ${corrTexts}</span>`;
-    }
-  });
-  examResult.style.display = 'block';
-  const total = currentExam.length;
-  const pct = Math.round((correctCount / total) * 100);
-  examResult.innerHTML = `<div style="font-weight:700">Kết quả: ${correctCount} / ${total} đúng (${pct}%)</div>`;
-}
+    btnNext.addEventListener('click', () => {
+      if (quizMode === 'random') {
+        selectedAnswer = null;
+        showResult = false;
+        initializeQuiz('random');
+      } else {
+        if (currentQuestion < shuffledQuestions.length - 1) {
+          currentQuestion++;
+          selectedAnswer = null;
+          showResult = false;
+          renderQuiz();
+        } else {
+          quizCompleted = true;
+          renderQuiz();
+        }
+      }
+    });
 
-/* --- Events --- */
-modeRandomBtn.addEventListener('click', () => {
-  homeIntro.style.display = 'none';
-  examArea.style.display = 'none';
-  singleArea.style.display = 'block';
-  pickRandomSingle();
-});
+    btnRestart.addEventListener('click', () => {
+      selectedAnswer = null;
+      showResult = false;
+      score = 0;
+      quizCompleted = false;
+      quizStarted = true;
+      totalAttempts = 0;
+      initializeQuiz(quizMode);
+    });
 
-modeExamBtn.addEventListener('click', () => {
-  homeIntro.style.display = 'none';
-  singleArea.style.display = 'none';
-  examArea.style.display = 'block';
-});
+    resultRestart.addEventListener('click', () => {
+      selectedAnswer = null;
+      showResult = false;
+      score = 0;
+      quizCompleted = false;
+      quizStarted = true;
+      totalAttempts = 0;
+      initializeQuiz(quizMode);
+    });
 
-checkBtn.addEventListener('click', checkSingle);
-nextBtn.addEventListener('click', pickRandomSingle);
-backHome1.addEventListener('click', () => {
-  singleArea.style.display = 'none';
-  homeIntro.style.display = 'block';
-});
-backHome2.addEventListener('click', () => {
-  examArea.style.display = 'none';
-  homeIntro.style.display = 'block';
-  examForm.innerHTML = '';
-  currentExam = null;
-});
-startExam.addEventListener('click', generateExam);
-submitExamBtn.addEventListener('click', submitExam);
-regenExam.addEventListener('click', () => {
-  if (confirm('Tạo đề khác — sẽ xóa đề hiện tại?')) generateExam();
-});
-</script>
+    resultHome.addEventListener('click', () => {
+      currentSubject = null;
+      quizStarted = false;
+      renderQuiz();
+    });
+
+    backHomeBtn.addEventListener('click', () => {
+      currentSubject = null;
+      quizStarted = false;
+      renderQuiz();
+    });
+
+    backToSubject.addEventListener('click', () => {
+      currentSubject = null;
+      quizStarted = false;
+      renderQuiz();
+    });
+
+    selectGDCD.addEventListener('click', () => {
+      currentSubject = 'gdcd';
+      subjectTitle.textContent = subjectData.gdcd.fullName;
+      fullModeDesc.textContent = `Làm hết ${subjectData.gdcd.questions.length} câu hỏi`;
+      renderQuiz();
+    });
+
+    selectCongNghe.addEventListener('click', () => {
+      currentSubject = 'congnghe';
+      subjectTitle.textContent = subjectData.congnghe.fullName;
+      fullModeDesc.textContent = `Làm hết ${subjectData.congnghe.questions.length} câu hỏi`;
+      renderQuiz();
+    });
+
+    startFullBtn.addEventListener('click', () => {
+      quizMode = 'full';
+      quizStarted = true;
+      initializeQuiz('full');
+    });
+
+    startRandomBtn.addEventListener('click', () => {
+      quizMode = 'random';
+      quizStarted = true;
+      initializeQuiz('random');
+    });
+
+    renderQuiz();
+
+    document.addEventListener('keydown', (e) => {
+      if (!quizStarted || showResult) return;
+      const q = shuffledQuestions[currentQuestion];
+      if (!q) return;
+      if (['1','2','3','4'].includes(e.key)) {
+        const idx = parseInt(e.key, 10) - 1;
+        if (idx < q.o.length) handleAnswerClick(idx);
+      }
+      if (e.key === 'Enter') {
+        if (!showResult && selectedAnswer !== null) {
+          btnSubmit.click();
+        } else if (showResult) {
+          btnNext.click();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
+  </script>
