@@ -1062,7 +1062,6 @@
         const pct = Math.round((answeredCount/Math.max(1,totalQuestions))*100);
         progressFill.style.width = pct + '%';
       } else {
-        countInfo.textContent = `Câu 1/1`;
         if (shuffledQuestions[0].type === 'mcq') {
           scoreInfo.textContent = `Đã trả lời: ${userAnswers[0] !== null ? 1 : 0}/1`;
         } else {
@@ -1073,6 +1072,8 @@
 
       // render content
       quizContent.innerHTML = '';
+// set button label depending on mode
+btnRestart.textContent = (quizMode === 'random') ? 'Câu khác' : 'Làm lại';
 
       if (quizMode === 'full') {
         // show all questions
@@ -1528,13 +1529,24 @@
     });
 
     // Restart / navigation handlers
-    btnRestart.addEventListener('click', () => {
-      if (!currentSubject) return;
-      if (quizStarted && !quizCompleted) {
-        if (!confirm('Bạn có muốn làm lại? Mọi câu trả lời hiện tại sẽ bị mất.')) return;
-      }
-      initializeQuiz(quizMode);
-    });
+// Restart / navigation handlers (REPLACED)
+btnRestart.addEventListener('click', () => {
+  if (!currentSubject) return;
+
+  // Nếu đang ở chế độ random: ngay lập tức lấy câu random khác,
+  // KHÔNG hỏi confirm dù toggle cảnh báo đang bật hay tắt.
+  if (quizMode === 'random') {
+    initializeQuiz('random');
+    return;
+  }
+
+  // Chế độ full (cũ): giữ hành vi confirm như trước
+  if (quizStarted && !quizCompleted) {
+    if (!confirm('Bạn có muốn làm lại? Mọi câu trả lời hiện tại sẽ bị mất.')) return;
+  }
+  initializeQuiz(quizMode);
+});
+
 
     resultRestart.addEventListener('click', () => {
       if (!currentSubject) return;
