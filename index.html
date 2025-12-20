@@ -13,7 +13,7 @@
   <div id="subjectScreen" class="min-h-screen flex items-center justify-center">
     <div class="max-w-4xl mx-auto">
       <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-	  <div class="position  z-50 p-3 rounded-lg border bg-white shadow-lg flex items-center gap-2">
+	  <div class="relative z-50 p-3 rounded-lg border bg-white shadow-lg flex items-center gap-2">
   <input type="checkbox" id="warningToggle" class="w-4 h-4" checked>
   <label for="warningToggle" class="text-sm text-gray-700 cursor-pointer font-bold">
     Cảnh báo khi nộp bài / thoát trang / reload
@@ -61,18 +61,73 @@
             </button>
 
             <!-- Tin học mới -->
-            <button id="selectTinHoc" class="group relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-700 text-white p-8 rounded-xl hover:from-indigo-700 hover:to-indigo-800 transition-all transform hover:scale-[1.02] shadow-lg">
-              <div class="relative z-10">
-                <div class="flex items-center justify-center mb-4">
-                  <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM6 20h12M4 6h16"/>
-                  </svg>
-                </div>
-                <h3 class="text-2xl font-bold mb-2">Tin học</h3>
-                <p class="text-indigo-100 text-sm">Tin học lớp 7 - Ôn tập HKI</p>
-                <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">82 câu hỏi</div>
-              </div>
-            </button>
+<!-- Tin học (thay bằng icon laptop) -->
+<button id="selectTinHoc" class="group relative overflow-hidden bg-gradient-to-br from-indigo-600 to-indigo-700 text-white p-8 rounded-xl hover:from-indigo-700 hover:to-indigo-800 transition-all transform hover:scale-[1.02] shadow-lg">
+  <div class="relative z-10">
+    <div class="flex items-center justify-center mb-4">
+      <!-- Laptop icon -->
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 7a2 2 0 012-2h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20h20" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Tin</h3>
+    <p class="text-indigo-100 text-sm">Tin học</p>
+    <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">82 câu hỏi</div>
+  </div>
+</button>
+
+			<!-- Sinh học -->
+<!-- Sinh (thay bằng icon lá) -->
+<button id="selectSinh" class="group relative overflow-hidden bg-gradient-to-br from-emerald-600 to-emerald-700 text-white p-8 rounded-xl hover:from-emerald-700 hover:to-emerald-800 transition-all transform hover:scale-[1.02] shadow-lg">
+  <div class="relative z-10">
+    <div class="flex items-center justify-center mb-4">
+      <!-- Leaf icon -->
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M20.24 7.76a9 9 0 00-12.73 12.73L12 21l.49-.51a9 9 0 008-12.73z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7l10 10" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Sinh</h3>
+    <p class="text-emerald-100 text-sm">Sinh học</p>
+    <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">60 câu hỏi</div>
+  </div>
+</button>
+<!-- Hóa học -->
+<button id="selectHoa" class="group relative overflow-hidden bg-gradient-to-br from-yellow-600 to-yellow-700 text-white p-8 rounded-xl hover:from-yellow-700 hover:to-yellow-800 transition-all transform hover:scale-[1.02] shadow-lg">
+  <div class="relative z-10">
+    <div class="flex items-center justify-center mb-4">
+      <!-- Flask / chemistry icon -->
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M6 3v2a2 2 0 001 1.732V11a6 6 0 005 5.916V19H7a1 1 0 000 2h10a1 1 0 000-2h-5v-2.084A6 6 0 0017 11V6.732A2 2 0 0018 5V3H6z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Hóa</h3>
+    <p class="text-yellow-100 text-sm">Hóa học</p>
+    <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">90 câu hỏi</div>
+  </div>
+</button>
+<!-- --- THÊM MÔN LÝ --- -->
+<button id="selectLy" class="group relative overflow-hidden bg-gradient-to-br from-sky-600 to-sky-700 text-white p-8 rounded-xl hover:from-sky-700 hover:to-sky-800 transition-all transform hover:scale-[1.02] shadow-lg">
+  <div class="relative z-10">
+    <div class="flex items-center justify-center mb-4">
+      <!-- Physics icon -->
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 2v20M2 12h20" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Lý</h3>
+    <p class="text-sky-100 text-sm">Vật lý</p>
+    <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">50 câu hỏi</div>
+  </div>
+</button>
+<!-- --- /THÊM MÔN LÝ --- -->
+
+
           </div>
         </div>
       </div>
@@ -326,6 +381,324 @@
         {type: 'mcq', q: "Quy trình trồng rừng bằng cây con có bầu đất và quy trình trồng rừng bằng cây con rễ trần khác nhau ở bước:", o: ["Tạo lỗ trong hố", "Rạch bỏ vỏ bầu", "Đặt cây con vào hố", "Vun gốc"], c:1}
 		]
 		},
+      'sinh': {
+        name: 'SINH',
+        fullName: 'Sinh học',
+        questions: [
+          {type:'mcq', q:`Trong quá trình trao đổi khí ở tế bào, loại khí nào sẽ khuếch tán từ máu vào tế bào?`, o:["A. Khí nitrogen","B. Khí carbon dioxide","C. Khí oxygen","D. Khí hydrogen"], c:2},
+          {type:'mcq', q:`Trao đổi khí ở phổi là quá trình:`, o:["A. Trao đổi khí ở phổi là sự khuếch tán của O2 từ không khí ở phổi vào máu.","B. Trao đổi CO2 từ máu vào không khí ở phổi.","C. Trao đổi khí ở phổi gồm sự khuếch tán của O2 từ máu vào không khí ở phổi và của CO2 từ không khí ở phổi vào máu.","D. Trao đổi khí ở phổi gồm sự khuếch tán của O2 từ không khí ở phổi vào máu và của CO2 từ máu vào không khí ở phổi."], c:3},
+          {type:'mcq', q:`Quá trình hô hấp ở thực vật có ý nghĩa:`, o:["A. Đảm bảo sự cân bằng O2 và CO2 trong khí quyển","B. Tạo ra năng lượng cung cấp cho hoạt động sống của các tế bào và cơ thể sinh vật","C. Làm sạch môi trường","D. Chuyển hóa glucid thành CO2 và H2O"], c:1},
+          {type:'mcq', q:`Cơ quan giúp thực vật trao đổi khí với môi trường là:`, o:["A. Lục lạp","B. Rễ","C. Khí khổng","D. Mô dậu"], c:2},
+          {type:'mcq', q:`Cấu tạo của khí khổng:`, o:["A. Mỗi khí khổng gồm hai tế bào hình hạt đậu nằm áp sát nhau, thành ngoài mỏng, thành trong dày.","B. Mỗi khí khổng gồm bốn tế bào hình hạt đậu nằm áp sát nhau, thành ngoài mỏng, thành trong dày.","C. Mỗi khí khổng gồm hai tế bào hình bầu dục nằm áp sát nhau.","D. Mỗi khí khổng gồm hai tế bào hình que nằm áp sát nhau, thành ngoài mỏng, thành trong dày."], c:0},
+          {type:'mcq', q:`Chức năng của khí khổng:`, o:["A. Trao đổi khí","B. Thoát hơi nước","C. Quang hợp","D. Cả A và B"], c:3},
+          {type:'mcq', q:`Ở cá trao đổi khí diễn ra nhờ cơ quan:`, o:["A. Mang","B. Phổi","C. Da","D. Hệ thống ống khí"], c:0},
+          {type:'mcq', q:`Phát biểu nào sau đây là sai khi nói về các hình thức trao đổi khí ở động vật?`, o:["A. Giun đất trao đổi khí qua da.","B. Cá trao đổi khí bằng mang.","C. Châu chấu trao đổi khí bằng mang.","D. Mèo trao đổi khí bằng phổi."], c:2},
+          {type:'mcq', q:`Cho các loài động vật sau: Ếch trưởng thành; Châu chấu; Cá chép; Rắn hổ mang; Chim sẻ; Cua; Chuột đồng; Giun đất. Có bao nhiêu loài trong danh sách trên hô hấp bằng phổi?`, o:["A. 2","B. 3","C. 4","D. 5"], c:2},
+          {type:'mcq', q:`Trong quá trình quang hợp ở thực vật, các khí được trao đổi qua khí khổng như thế nào?`, o:["A. CO2 và O2 khuếch tán từ môi trường vào trong tế bào lá, hơi nước thoát ra ngoài.","B. O2 và CO2 khuếch tán từ trong tế bào lá ra môi trường.","C. O2 khuếch tán từ môi trường vào trong tế bào lá, CO2 khuếch tán từ trong tế bào lá ra môi trường.","D. CO2 khuếch tán từ môi trường vào trong tế bào lá, O2 khuếch tán từ trong tế bào lá ra môi trường."], c:3},
+          {type:'mcq', q:`Có bao nhiêu quá trình dưới đây liên quan đến trao đổi khí?<br>(1) Quang hợp ở thực vật<br>(2) Hô hấp tế bào ở động vật<br>(3) Hấp thụ nước ở rễ cây<br>(4) Thoát hơi nước qua khí khổng<br>(5) Hô hấp ở thực vật`, o:["A. 1","B. 2","C. 3","D. 4"], c:2},
+          {type:'mcq', q:`Cho các phát biểu sau:<br>(1) Trao đổi khí chỉ xảy ra ở động vật có phổi.<br>(2) Quá trình trao đổi khí và hô hấp tế bào có mối liên hệ chặt chẽ.<br>(3) Ở người, trao đổi khí xảy ra ở các mao mạch của phổi.<br>(4) Sinh vật lấy khí O₂ hoặc CO₂ và thải khí ra môi trường theo khuếch tán.<br> Có bao nhiêu phát biểu đúng?`, o:["A. 1","B. 2","C. 3","D. 4"], c:2},
+          {type:'mcq', q:`Cho các phát biểu sau:<br>(1) Cơ chế trao đổi khí là khuếch tán khí từ nơi có nồng độ thấp sang cao.<br>(2) Quá trình trao đổi khí ở động vật diễn ra chủ yếu qua hô hấp ngoài.<br>(3) Thực vật trao đổi khí thông qua khí khổng.<br>(4) Sản phẩm của hô hấp tế bào là nguyên liệu cho trao đổi khí.<br>(5) Sự trao đổi khí giúp đảm bảo cho các hoạt động sống của cơ thể sinh vật. Có bao nhiêu phát biểu đúng?`, o:["A. 1","B. 2","C. 3","D. 4"], c:2},
+          {type:'mcq', q:`Cho các phát biểu về khí khổng:<br>(1) Khí khổng gồm 2 tế bào hình hạt đậu.<br>(2) Khí khổng chỉ mở vào ban đêm.<br>(3) Thành trong tế bào khí khổng dày hơn thành ngoài.<br>(4) Tế bào khí khổng chứa lục lạp.<br>(5) Khí khổng đóng khi có ánh sáng và đủ nước.<br> Có bao nhiêu phát biểu đúng?`, o:["A. 1","B. 2","C. 3","D. 4"], c:2},
+          {type:'mcq', q:`Hãy sắp xếp các bước dưới đây theo đúng trình tự diễn ra trong quá trình trao đổi khí ở người:<br>(1) CO2 từ các tế bào được vận chuyển theo máu về phổi.<br>(2) O2 từ không khí khuếch tán qua phế nang vào máu.<br>(3) Không khí đi vào cơ thể qua khoang mũi → hầu → khí quản → phế quản → phổi.<br>(4) CO2 khuếch tán từ máu vào phế nang và được thải ra ngoài qua động tác thở ra.`, o:["A. 1234","B. 3421","C. 3214","D. 2432"], c:2},
+          {type:'mcq', q:`Trao đổi khí là`, o:["A. sự trao đổi khí oxygen và khí carbon dioxide giữa cơ thể sinh vật và môi trường.","B. sự trao đổi khí oxygen và khí carbon dioxide giữa sinh vật này và sinh vật khác.","C. sự trao đổi khí hydrogen và khí carbon dioxide giữa cơ thể sinh vật và môi trường.","D. sự trao đổi khí hydrogen và khí carbon dioxide giữa sinh vật này và sinh vật khác."], c:0},
+          {type:'mcq', q:`Sự trao đổi khí ở thực vật diễn ra trong`, o:["A. hô hấp.","B. quang hợp.","C. quang hợp và hô hấp.","D. hấp thụ kháng, quang hợp và hô hấp."], c:2},
+          {type:'mcq', q:`Quá trình trao đổi khí giữa cơ thể sinh vật với môi trường tuân theo cơ chế`, o:["A. khuếch tán.","B. bão hòa.","C. thẩm thấu.","D. thẩm tách."], c:0},
+          {type:'mcq', q:`Cho bảng sau:<br>
+<div style="margin-top:6px;"></div>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Quá trình</th>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Khí lấy vào</th>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Khí thải ra</th>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(1) Hô hấp ở động vật</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(a) Khí oxygen</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(c) Khí carbon dioxide</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(2) Hô hấp ở thực vật</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(b) Khí carbon dioxide</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(d) Khí oxygen</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(3) Quang hợp ở thực vật</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">Khí carbon dioxide</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">Khí oxygen</td>
+  </tr>
+</table>
+<br>Cách ghép nối 3 cột để được các thông tin đúng khi nói về quá trình trao đổi khí ở động vật và thực vật là`, o:["A. 1-a,c; 2-a,d; 3-b,d.","B. 1-a,d; 2-a,d; 3-b,c.","C. 1-b,c; 2-a,d; 3-b,d.","D. 1-a,c; 2-b,d; 3-a,c."], c:1},
+          {type:'mcq', q:`Ở thực vật, sự trao đổi khí với môi trường bên ngoài được thực hiện chủ yếu qua`, o:["A. tế bào biểu mô ở lá cây.","B. tế bào biểu bì của lá cây.","C. tế bào khí khổng ở lá cây.","D. tế bào mô mềm ở lá cây."], c:2},
+          {type:'mcq', q:`Ở thực vật, sự vận chuyển khí oxygen vào bên trong khoang chứa khí và vận chuyển khí carbon dioxide ra bên ngoài môi trường thông qua khí khổng sẽ diễn ra vào`, o:["A. ban ngày.","B. ban đêm.","C. ban ngày và ban đêm.","D. lúc khí khổng đóng hoàn toàn."], c:2},
+          {type:'mcq', q:`Trong các nhóm sinh vật dưới đây, nhóm sinh vật nào tiến hành trao đổi khí qua bề mặt cơ thể?`, o:["A. Ruột khoang, giun tròn, giun dẹp, động vật nguyên sinh.","B. Ruột khoang, giun tròn, giun dẹp, côn trùng, cá.","C. Ruột khoang, giun tròn, giun dẹp, bò sát, côn trùng.","D. Ruột khoang, giun tròn, giun dẹp, cá, chim, thú."], c:0},
+          {type:'mcq', q:`Cho hình ảnh mô tả đường đi của các loại khí qua các cơ quan hô hấp ở người sau:<br><img src="https://i.postimg.cc/fT2qZfJN/sodomtaduongdi.jpg" alt="Sơ đồ đường đi của khí" style="max-width:100%;height:auto;margin:8px 0;"><br>(1), (2), (3) lần lượt là`, o:["A. khí quản; thanh quản; phế quản.","B. thanh quản; khí quản; phế quản.","C. phế quản; khí quản; thanh quản.","D. thanh quản; phế quản; khí quản."], c:1},
+          {type:'mcq', q:`Vì sao vào ban đêm không nên để nhiều hoa hoặc cây xanh trong phòng ngủ đóng kín cửa?`, o:["A. Vì khi không có ánh sáng, thực vật chỉ thực hiện hô hấp (lấy O₂ và thải CO₂) dẫn đến trong phòng kín, O₂ sẽ cạn kiệt trong khi CO₂ tăng lên có thể khiến người ngủ trong phòng bị tử vong do ngạt khí.","B. Vì khi không có ánh sáng, thực vật chỉ thực hiện hô hấp (lấy O₂ và CO₂) dẫn đến trong phòng kín, O₂ và CO₂ đều sẽ cạn kiệt có thể khiến người ngủ trong phòng bị tử vong do ngạt khí.","C. Vì trong phòng kín, thực vật chỉ thực hiện quang hợp (lấy O₂ và CO₂) dẫn đến trong phòng kín, O₂ và CO₂ đều sẽ cạn kiệt có thể khiến người ngủ trong phòng bị tử vong do ngạt khí.","D. Vì trong phòng kín, thực vật chỉ thực hiện quang hợp (lấy CO₂ và thải O₂) dẫn đến trong phòng kín, CO₂ sẽ cạn kiệt trong khi O₂ tăng lên có thể khiến người ngủ trong phòng bị tử vong do ngạt khí."], c:0},
+          {type:'mcq', q:`Khi bắt cá bỏ lên môi trường trên cạn sau một khoảng thời gian cá sẽ chết do`, o:["A. da cá bị khô khiến cá không thể thực hiện quá trình trao đổi khí.","B. mang cá bị khô khiến cá không thể thực hiện quá trình trao đổi khí.","C. túi khí của cá bị khô khiến cá không thể thực hiện quá trình trao đổi khí.","D. hệ thống ống khí của cá bị khô khiến cá không thể thực hiện quá trình trao đổi khí."], c:1},
+          {type:'mcq', q:`Khi hít vào, không khí ở môi trường ngoài đi qua những đâu?`, o:["A. Khoang mũi → khí quản → phế quản → phổi → các phế nang trong phổi","B. Khoang mũi → khí quản → phế quản → phổi → màng phổi","C. Khoang mũi → thanh quản → phế quản → phổi → các phế nang trong phổi","D. Khoang mũi → thanh quản → phế quản → phổi → màng phổi"], c:0},
+          {type:'mcq', q:`Cho các phát biểu sau:<br>1. Cơ quan trao đổi khí ở động vật không đa dạng.<br>2. Các loài động vật có thể trao đổi khí qua da, hệ thống ống khí, mang, phổi,...<br>3. Tất cả động vật đơn bào và đa bào đều trao đổi khí qua bề mặt cơ thể.<br>4. Các loài côn trùng trao đổi khí qua hệ thống ống khí.<br>5. Các loài sống dưới nước như cá, tôm, cua, trai, ... trao đổi khí qua mang.<br>6. Động vật thuộc lớp Bò sát, Chim, Thú trao đổi khí qua phổi.<br> Có bao nhiêu phát biểu sai?`, o:["A. 1","B. 2","C. 3","D. 4"], c:1},
+          {type:'mcq', q:`Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua da (bề mặt cơ thể)?`, o:["A. 1","B. 2","C. 3","D. 4"], c:2},
+          {type:'mcq', q:`Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua phổi?`, o:["A. 1","B. 2","C. 3","D. 4"], c:3},
+          {type:'mcq', q:`Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua hệ thống ống khí?`, o:["A. 1","B. 2","C. 3","D. 4"], c:1},
+          {type:'mcq', q:`Thủy tức, Kiến, Cá rô, Cá sấu, Sán lông, Hươu cao cổ, Châu chấu, Chim bồ câu, Ếch, Trai. Có bao nhiêu sinh vật được nêu trao đổi khí qua mang?`, o:["A. 1","B. 2","C. 3","D. 4"], c:1},
+          {type:'mcq', q:`Nước là`, o:["A. một dung môi","B. một hỗn hợp","C. một huyền phù","D. một nhũ tương"], c:0},
+          {type:'mcq', q:`Một phân tử nước được cấu tạo gồm`, o:["A. một nguyên tử oxygen và hai nguyên tử hydrogen liên kết với nhau bằng liên kết cộng hóa trị.","B. một nguyên tử oxygen và hai nguyên tử hydrogen liên kết với nhau bằng liên kết bổ sung.","C. hai nguyên tử oxygen và một nguyên tử hydrogen liên kết bằng liên kết cộng hóa trị.","D. hai nguyên tử oxygen và một nguyên tử hydrogen liên kết bằng liên kết bổ sung."], c:0},
+          {type:'mcq', q:`Phân tử nước có tính phân cực do`, o:["A. nguyên tử oxygen có khả năng hút electron mạnh hơn nguyên tử hydrogen khiến đầu oxygen tích điện âm một phần còn đầu hydrogen tích điện dương một phần.","B. nguyên tử oxygen có khả năng hút electron mạnh hơn nguyên tử hydrogen khiến đầu oxygen tích điện dương một phần còn đầu hydrogen tích điện âm một phần.","C. nguyên tử hydrogen có khả năng hút electron mạnh hơn nguyên tử oxygen khiến đầu oxygen tích điện âm một phần còn đầu hydrogen tích điện dương một phần.","D. nguyên tử hydrogen có khả năng hút electron mạnh hơn nguyên tử oxygen khiến đầu oxygen tích điện dương một phần còn đầu hydrogen tích điện âm một phần."], c:0},
+          {type:'mcq', q:`Nước có thể làm dung môi hòa tan nhiều chất là nhờ`, o:["A. tính phân cực của nước.","B. tính dẫn nhiệt của nước.","C. tính dẫn điện của nước.","D. tính chất lỏng của nước."], c:0},
+          {type:'mcq', q:`Cho đoạn thông tin sau: Nước chiếm hơn ... (1)... khối lượng cơ thể sinh vật, một số loài sinh vật sống ở môi trường nước có hàm lượng nước trong cơ thể lên đến hơn ... (2)... (các loài sứa biển). (1) và (2) lần lượt là`, o:["A. (1) 70%; (2) 90%.","B. (1) 60%; (2) 90%.","C. (1) 70%; (2) 95%.","D. (1) 75%; (2) 90%."], c:0},
+          {type:'mcq', q:`Cho các vai trò sau:<br>(1) Điều hòa thân nhiệt<br>(2) Cung cấp năng lượng cho các hoạt động sống<br>(3) Là dung môi hòa tan và vận chuyển các chất<br>(4) Là nguyên liệu và môi trường cho các phản ứng chuyển hóa các chất trong cơ thể<br> Số vai trò của nước là`, o:["A. 1.","B. 2.","C. 3.","D. 4."], c:3},
+          {type:'mcq', q:`Các chất hóa học được cơ thể sinh vật hấp thụ từ môi trường bên ngoài (thức ăn, phân bón,...), có vai trò cung cấp nguyên liệu cấu tạo nên tế bào, tham gia các phản ứng hóa học trong tế bào và cung cấp năng lượng cho các hoạt động sống, sinh trưởng và phát triển của cơ thể sinh vật được gọi là`, o:["A. chất dinh dưỡng.","B. chất xúc tác sinh học.","C. đại phân tử sinh học.","D. chất điều hòa sinh trưởng."], c:0},
+          {type:'mcq', q:`Cho bảng thông tin sau:<br>
+<div style="margin-top:6px;"></div>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Cột A</th>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Cột B</th>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(1) Các chất không cung cấp năng lượng</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(a) Vitamin</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(2) Các chất cung cấp năng lượng</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(b) Carbohydrate</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle"></td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(c) Lipid</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle"></td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(d) Chất khoáng</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle"></td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(e) Protein</td>
+  </tr>
+</table>
+<br>Cách ghép nối cột A và cột B phù hợp là (Lưu ý: Chỉ cho động vật)`, o:["A. 1-a,b; 2-c,d,e.","B. 1-a,d; 2-b,c,e.","C. 1-a,c; 2-b,d,e.","D. 1-a,e; 2-b,c,d."], c:1},
+          {type:'mcq', q:`Cho bảng sau:<br>
+<div style="margin-top:6px;"></div>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Nhóm chất</th>
+    <th style="border:1px solid #ccc;padding:6px;background:rgba(0,0,0,0.03);font-weight:600">Vai trò</th>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(1) Carbohydrate</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(a) Tham gia cấu tạo màng sinh chất, dự trữ và cung cấp năng lượng cho cơ thể.</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(2) Lipid</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(b) Tham gia cấu tạo tế bào, cung cấp năng lượng, điều hòa các hoạt động của tế bào và cơ thể, vận chuyển các chất,...</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(3) Protein</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(c) Tham gia cấu tạo tế bào, cung cấp năng lượng.</td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(4) Vitamin và chất khoáng</td>
+    <td style="border:1px solid #ccc;padding:6px;vertical-align:middle">(d) Tham gia cấu tạo tế bào, enzyme,... tham gia vào nhiều hoạt động chức năng sinh lí của tế bào và cơ thể (trao đổi chất, miễn dịch,...).</td>
+  </tr>
+</table>
+<br>Cách ghép nối nhóm chất với vai trò phù hợp là`, o:["A. 1-c, 2-a, 3-d, 4-b.","B. 1-c, 2-a, 3-b, 4-d.","C. 1-a, 2-b, 3-c, 4-d.","D. 1-a, 2-c, 3-b, 4-d."], c:1},
+          {type:'mcq', q:`Nitrogen có vai trò quan trọng trong quá trình sinh trưởng và phát triển của thực vật vì`, o:["A. nitrogen là thành phần cấu tạo protein, chất diệp lục,...","B. nitrogen đảm bảo sự cân bằng nước và ion trong cây.","C. nitrogen giữ vai trò chính trong việc đóng mở khí khổng.","D. nitrogen giúp kích thích sự hấp thụ muối khoáng của rễ cây."], c:0},
+          {type:'mcq', q:`Chúng ta cần phải ăn nhiều loại thức ăn khác nhau chủ yếu để`, o:["A. giúp hệ tiêu hóa hoạt động dễ dàng và hiệu quả hơn.","B. đảm bảo cơ thể được cung cấp đủ lượng năng lượng cần thiết.","C. cung cấp đầy đủ các chất dinh dưỡng cho sự sinh trưởng và phát triển của cơ thể.","D. kích thích vị giác của cơ thể nhờ đó dung nạp được số lượng thức ăn nhiều nhất có thể."], c:2},
+          {type:'mcq', q:`Bề mặt trao đổi khí thường có xu hướng`, o:["A. rộng và mỏng.","B. dài và hẹp.","C. mỏng và hẹp.","D. dài và mỏng."], c:0},
+          {type:'mcq', q:`Ý nghĩa của sự trao đổi khí ở tế bào`, o:["A. Làm tăng nồng độ oxy trong máu.","B. Cung cấp oxygen cho tế bào và loại CO2 khỏi tế bào","C. Làm giảm nồng độ CO2 của máu","D. Cả A, B và C"], c:1},
+          {type:'mcq', q:`Cho mệnh đề sau: ... là những chất hay hợp chất hóa học được cơ thể sinh vật lấy từ bên ngoài vào, tham gia đổi mới các thành phần của tế bào hoặc kiến tạo tế bào, tham gia các phản ứng hóa học trong cơ thể, tạo ra năng lượng cho các hoạt động sống. Điền từ thích hợp vào chỗ ... là`, o:["A. chất khoáng.","B. chất dinh dưỡng","C. chất đường bột.","D. nước."], c:1},
+          {type:'mcq', q:`Đâu không phải chất dinh dưỡng cần thiết ở động vật`, o:["A. Protein.","B. Ancol.","C. Lipid.","D. Vitamin và chất khoáng."], c:1},
+          {type:'mcq', q:`Ở người, vai trò của carbohydrate đối với cơ thể là`, o:["A. Tham gia cấu tạo enzyme, xương, răng,...","B. Chống mất nhiệt.","C. Nguồn cung cấp năng lượng chủ yếu.","D. Tất cả các đáp án trên đều đúng."], c:2},
+          {type:'mcq', q:`Vào những ngày trời nắng nóng, sự trao đổi khí của cây diễn ra mạnh hay yếu? Vì sao?`, o:["A. Sự trao đổi khí của cây diễn ra chậm trong những ngày trời nắng nóng. Bởi khi trời nắng nóng, khí khổng đóng lại để hạn chế sự mất nước, làm giảm sự khuếch tán các loại khí qua khí khổng. Điều này ngăn cản quá trình trao đổi khí ở thực vật.","B. Sự trao đổi khí của cây diễn ra nhanh trong những ngày trời nắng nóng. Bởi khi trời nắng nóng, khí khổng mở ra để hấp thu nước, làm tăng sự khuếch tán các loại khí qua khí khổng. Điều này thúc đẩy quá trình trao đổi khí ở thực vật.","C. Cả hai phương án trên đều đúng","D. Cả hai phương án trên đều sai."], c:0},
+          {type:'mcq', q:`Tại sao khi sốt, tiêu chảy, nôn ta cần bổ sung nước bằng cách uống oresol?`, o:["A. Oresol làm tăng hương vị khi ăn giúp ăn được nhiều, cơ thể bù lại sức.","B. Oresol có khả năng tiêu diệt vi khuẩn mạnh mẽ, giúp ta nhanh khỏe lại.","C. Oresol thúc đẩy quá trình ra mồ hôi, thải độc cho cơ thể.","D. Oresol là dung dịch có thành phần là nước và các chất điện giải giúp bù lại lượng nước và điện giải đã mất."], c:3},
+          {type:'mcq', q:`Những biện pháp nào sau đây giúp khắc phục tình trạng suy dinh dưỡng, béo phì?`, o:["A. Ăn nhiều thực phẩm thuộc nhóm carbohydrate.","B. Hạn chế thức ăn chứa nhiều dầu mỡ.","C. Thường xuyên luyện tập thể dục thể thao.","D. Phương án B, C đều đúng."], c:3},
+          {type:'mcq', q:`Nước có những vai trò gì đối với cơ thể sinh vật<br>(1) Vận chuyển các chất trong cơ thể sinh vật.<br>(2) Tạo môi trường liên kết các thành phần khác nhau trong cơ thể.<br>(3) Điều hòa thân nhiệt.<br>(4) Tạo ra năng lượng cho cơ thể.<br>(5) Cung cấp chất dinh dưỡng cho cơ thể sử dụng.<br>(6) Môi trường sống cho nhiều loài sinh vật.<br>(7) Môi trường hòa tan nhiều chất cần thiết.`, o:["A. (1), (3), (4), (6)","B. (2), (3), (5), (6), (7)","C. (1), (2), (3), (6), (7)","D. (1), (4), (5), (7)"], c:2},
+          {type:'mcq', q:`Cơ thể sẽ gặp nguy hiểm nếu không được bổ sung nước khi nào?<br>(1) Sốt cao.<br>(2) Đi dạo.<br>(3) Hoạt động thể thao ngoài trời với cường độ mạnh.<br>(4) Ngồi xem phim.<br>(5) Nôn mửa và tiêu chảy.`, o:["A. (1), (3), (5).","B. (1), (2), (3).","C. (1), (3), (4).","D. (2), (4), (5)."], c:0},
+          {type:'mcq', q:`Trong các phát biểu sau đây, có bao nhiêu phát biểu đúng về vai trò của các chất dinh dưỡng đối với cơ thể sinh vật?<br>(1) Cung cấp nguyên liệu cấu tạo nên tế bào sinh vật.<br>(2) Cung cấp môi trường thuận lợi cho các phản ứng sinh hóa diễn ra.<br>(3) Cung cấp năng lượng cho nhiều hoạt động sống của cơ thể.<br>(4) Giúp tái tạo các tế bào và làm lành vết thương.<br>(5) Giúp cơ thể sinh vật sinh trưởng và phát triển.<br>(6) Giúp điều hòa nhiệt độ cơ thể sinh vật.`, o:["A. 1.","B. 2.","C. 3.","D. 4."], c:3},
+          {type:'mcq', q:`Cơ quan thực hiện quá trình trao đổi khí chủ yếu ở thực vật là`, o:["A. khí khổng.","B. lục lạp.","C. ti thể.","D. ribosome."], c:0},
+          {type:'mcq', q:`Sự trao đổi khí giữa môi trường và mạch máu diễn ra ở đâu?`, o:["A. Phế nang.","B. Phế quản.","C. Khí quản.","D. Khoang mũi."], c:0},
+          {type:'mcq', q:`Trong các chất dinh dưỡng, nhóm chất không cung cấp năng lượng là`, o:["A. Protein và lipid.","B. Vitamin và khoáng chất.","C. Protein và carbohydrate.","D. Carbohydrate và lipid."], c:1},
+          {type:'mcq', q:`Khi tìm kiếm sự sống ở các hành tinh khác trong vũ trụ, các nhà khoa học trước hết tìm kiếm xem ở đó có nước hay không vì`, o:["A. nước được cấu tạo từ các nguyên tố quan trọng là oxygen và hydrogen.","B. nước là thành phần chủ yếu của mọi tế bào và cơ thể sống, giúp tế bào tiến hành chuyển hóa vật chất và duy trì sự sống.","C. nước là dung môi hòa tan nhiều chất cần thiết cho các hoạt động sống của tế bào.","D. nước là môi trường sống của nhiều loài sinh vật."], c:1},
+          {type:'mcq', q:`Vai trò của hít thở sâu đối với cơ thể người là`, o:["A. Tăng cường hệ thống hô hấp.","B. Giảm căng thẳng, bình tĩnh.","C. Tăng năng lượng.","D. Tất cả các đáp án trên đều đúng."], c:3},
+		  {type:'mcq', q:`Ở đa số cây trên cạn, khí khổng thường có ở mặt nào của lá?`, o:["A. Mặt dưới.","B. Mặt trên.","C. Cả mặt dưới và mặt trên.","D. Không có mặt nào."], c:0},
+		  {type:'mcq', q:`Ở những cây có lá nổi trên mặt nước, khí khổng có ở mặt nào của lá?`, o:["A. Mặt dưới.","B. Mặt trên.","C. Cả mặt dưới và mặt trên.","D. Không có mặt nào."], c:1}
+        ]
+      },
+      'hoa': {
+        name: 'HOA',
+        fullName: 'Hóa học',
+        questions: [
+        {type:'mcq', q:`Thành phần cấu tạo của hầu hết các loại nguyên tử gồm`, o:[`Proton và electron.`,`Neutron và electron.`,`Proton và neutron.`,`Proton, neutron và electron.`], c: 3},
+        {type:'mcq', q:`Trong nguyên tử hạt nào có khối lượng xấp xỉ gần bằng nhau?`, o:[`Electron và neutron.`,`Neutron và proton.`,`Electron và proton.`,`Electron, neutron và proton.`], c: 1},
+        {type:'mcq', q:`Trong nguyên tử, loại hạt có khối lượng không đáng kể so với các hạt còn lại là`, o:[`proton.`,`neutron.`,`electron.`,`neutron và electron.`], c: 2},
+        {type:'mcq', q:`Trừ hạt nhân của nguyên tử hydrogen, hạt nhân các nguyên tử còn lại được tạo thành từ hạt`, o:[`electron và proton.`,`electron, proton và neutron.`,`neutron và electron.`,`proton và neutron.`], c: 3},
+        {type:'mcq', q:`Các hạt cấu tạo nên hầu hết các nguyên tử là`, o:[`electron và neutron.`,`proton và neutron.`,`neutron và electron.`,`electron, proton và neutron.`], c: 3},
+        {type:'mcq', q:`Trong nguyên tử, hạt mang điện là`, o:[`electron.`,`electron và neutron.`,`proton và neutron.`,`proton và electron.`], c: 3},
+        {type:'mcq', q:`Thông tin nào sau đây không đúng?`, o:[`Proton mang điện tích dương, nằm trong hạt nhân, khối lượng gần bằng 1 amu.`,`Electron mang điện tích âm, nằm trong hạt nhân, khối lượng gần bằng 0 amu.`,`Neutron không mang điện, khối lượng gần bằng 1 amu.`,`Nguyên tử trung hòa điện, có kích thước lớn hơn nhiều so với hạt nhân, nhưng có khối lượng gần bằng khối lượng hạt nhân.`], c: 1},
+        {type:'mcq', q:`Phát biểu nào dưới đây không đúng?`, o:[`Nguyên tử được cấu thành từ các hạt cơ bản là proton, neutron và electron.`,`Hầu hết hạt nhân nguyên tử được cấu thành từ các hạt proton và neutron.`,`Vỏ nguyên tử được cấu thành bởi các hạt electron.`,`Nguyên tử có cấu trúc đặc khít, gồm vỏ nguyên tử và hạt nhân nguyên tử.`], c: 3},
+        {type:'mcq', q:`Hạt nhân của nguyên tử Sodium (Na) có 11 proton. Số hạt electron của nguyên tử Sodium (Na) là bao nhiêu?`, o:[`9.`,`10.`,`11.`,`12.`], c: 2},
+        {type:'mcq', q:`Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron của nguyên tử calcium là bao nhiêu?`, o:[`5.`,`10.`,`15.`,`20.`], c: 3},
+        {type:'mcq', q:`Phát biểu nào sau đây không mô tả đúng mô hình nguyên tử của Rơ-dơ-pho - Bo?`, o:[`Nguyên tử có cấu tạo rỗng, gồm hạt nhân ở tâm nguyên tử và các electron ở vỏ nguyên tử.`,`Nguyên tử có cấu tạo đặc khít, gồm hạt nhân nguyên tử và các electron.`,`Electron chuyển động xung quanh hạt nhân theo những quỹ đạo xác định tạo thành các lớp electron.`,`Hạt nhân nguyên tử mang điện tích dương, electron mang điện tích âm.`], c: 1},
+        {type:'mcq', q:`Hạt nhân của nguyên tử calcium (Ca) có số điện tích hạt nhân là +20. Số hạt electron ở lớp ngoài cùng của nguyên tử calcium là bao nhiêu?`, o:[`2.`,`8.`,`10.`,`20.`], c: 0},
+        {type:'mcq', q:`Phát biểu nào sau đây không mô tả đúng vỏ nguyên tử theo mô hình nguyên tử của Rơ-dơ-pho - Bo?`, o:[`Electron chuyển động xung quanh hạt nhân theo từng lớp khác nhau tạo thành các lớp electron.`,`Lớp electron trong cùng gần hạt nhân nhất có tối đa 2 electron, các lớp electron khác có chứa tối đa 8 electron hoặc nhiều hơn.`,`Lớp electron trong cùng gần hạt nhân nhất có tối đa 8 electron, các lớp electron khác có chứa tối đa nhiều hơn 8 electron.`,`Các electron sắp xếp vào các lớp theo thứ tự từ trong ra ngoài cho đến hết.`], c: 2},
+        {type:'mcq', q:`Trong một nguyên tử có số proton bằng 5, số electron trong các lớp của vỏ nguyên tử, viết từ lớp trong ra lớp ngoài, lần lượt là`, o:[`1, 8, 2.`,`2, 8, 1.`,`2, 3.`,`3, 2.`], c: 1},
+        {type:'mcq', q:`Nito (nitrogen) là nguyên tố hóa học phổ biến trong không khí. Trong hạt nhân nguyên tử nitơ có 7 proton. Số lớp electron của nguyên tử nitơ là`, o:[`1.`,`2.`,`3.`,`5.`], c: 1},
+        {type:'mcq', q:`Trong hạt nhân nguyên tử fluorine có 9 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử fluorine là`, o:[`2.`,`5.`,`7.`,`8.`], c: 2},
+        {type:'mcq', q:`Nguyên tử sulfur có 16 electron ở vỏ nguyên tử. Số electron ở lớp thứ 3 của nguyên tử sulfur là`, o:[`2.`,`6.`,`8.`,`16.`], c: 1},
+        {type:'mcq', q:`Nguyên tử nhôm (aluminium) có 13 electron ở vỏ. Số electron ở lớp trong cùng của nguyên tử nhôm là`, o:[`2.`,`8.`,`10.`,`18.`], c: 0},
+        {type:'mcq', q:`Cho các phát biểu: 1. Nguyên tử trung hòa về điện. 2. Khối lượng của nguyên tử tập trung chủ yếu ở hạt nhân. 3. Trong nguyên tử, số hạt mang điện tích dương bằng số hạt mang điện tích âm nên số hạt electron bằng số hạt neutron. 4. Vỏ nguyên tử, gồm các lớp electron có khoảng cách khác nhau đối với hạt nhân. Trong các phát biểu trên, số phát biểu đúng là`, o:[`1.`,`2.`,`3.`,`4.`], c: 2},
+        {type:'mcq', q:`Hạt nhân một nguyên tử fluorine có 9 proton và 10 neutron. Khối lượng của nguyên tử fluorine xấp xỉ bằng`, o:[`9 amu.`,`10 amu.`,`19 amu.`,`28 amu.`], c: 2},
+        {type:'mcq', q:`Muối ăn chứa hai nguyên tố hóa học là natri (sodium) và chlorine. Trong hạt nhân nguyên tử của natri và chlorine có lần lượt 11 và 17 proton. Số electron ở lớp ngoài cùng của vỏ nguyên tử`, o:[`1 và 7.`,`3 và 9.`,`9 và 15.`,`3 và 7.`], c: 0},
+        {type:'mcq', q:`Trong hạt nhân nguyên tử lưu huỳnh (sulfur) có 16 proton. Số electron trong các lớp của vỏ nguyên tử sulfur, viết từ lớp trong ra lớp ngoài, lần lượt là`, o:[`2, 10, 6.`,`2, 6, 8.`,`2, 8, 6.`,`2, 9, 5.`], c: 2},
+        {type:'mcq', q:`Cho các phát biểu sau: 1. Trong nguyên tử, hạt không mang điện là hạt electron. 2. Lớp vỏ của tất cả các nguyên tử đều chứa electron. 3. Tất cả các nguyên tử đều trung hòa về điện. 4. Trong nguyên tử, hạt mang điện là neutron và electron. 5. Khối lượng của hạt proton gấp hạt electron khoảng 1818 lần. Số phát biểu không đúng là`, o:[`1.`,`2.`,`3.`,`4.`], c: 1},
+        {type:'mcq', q:`X là nguyên tố phổ biến thứ 4 trong vỏ trái đất, X có trong hemoglobin của máu làm nhiệm vụ vận chuyển oxygen, duy trì sự sống. Nguyên tử X có 26 proton trong hạt nhân. Cho các phát biểu sau về X: 1. X có 26 neutron trong hạt nhân. 2. X có 26 electron ở vỏ nguyên tử. 3. X có điện tích hạt nhân là +26. 4. Khối lượng nguyên tử X là 26 amu. Trong các phát biểu trên, số phát biểu đúng là`, o:[`1.`,`2.`,`3.`,`4.`], c: 1},
+        {type:'mcq', q:`Cho các phát biểu sau: 1. Tất cả các hạt nhân nguyên tử đều chứa proton và neutron. 2. Khối lượng nguyên tử tập trung phần lớn ở lớp vỏ. 3. Trong nguyên tử, số electron bằng số proton. 4. Trong hạt nhân nguyên tử, hạt mang điện là proton và electron. 5. Trong nguyên tử, hạt electron có khối lượng không đáng kể so với các hạt còn lại. Số phát biểu đúng là`, o:[`1.`,`2.`,`3.`,`4.`], c: 0},
+        {type:'mcq', q:`Nguyên tố hóa học là tập hợp các nguyên tử cùng loại có ...`, o:[`cùng số neutron trong hạt nhân.`,`cùng số proton trong hạt nhân.`,`cùng số electron trong hạt nhân.`,`cùng số proton và neutron trong hạt nhân.`], c: 1},
+        {type:'mcq', q:`Nhận định đúng nhất là`, o:[`Các nguyên tử thuộc cùng một nguyên tố hóa học thì có tính chất giống nhau.`,`Tập hợp các nguyên tử có cùng số proton đều thuộc cùng một nguyên tố hóa học.`,`Nguyên tố hóa học là những nguyên tử có cùng số neutron khác nhau số proton.`,`Nguyên tố hóa học là những nguyên tố có cùng điện tích hạt nhân.`], c: 1},
+        {type:'mcq', q:`Cho thành phần các nguyên tử sau: X (17p, 17e, 18n), Y (20p, 20e, 20n), Z (17p, 17e, 20n), T (19p,19e, 20n). Trong số các nguyên tử trên có bao nhiêu nguyên tố hóa học?`, o:[`1.`,`2.`,`3.`,`4.`], c: 2},
+        {type:'mcq', q:`Cho các kí hiệu hóa học sau: H, Li, NA, O, Ne, AL, CA, K, N. Số kí hiệu hóa học viết đúng là`, o:[`5.`,`6.`,`7.`,`4.`], c: 1},
+        {type:'mcq', q:`Đến nay con người đã tìm ra bao nhiêu nguyên tố hóa học?`, o:[`118.`,`94.`,`20.`,`1 000`], c: 0},
+        {type:'mcq', q:`Điền từ thích hợp vào chỗ trống: "Số ... là số đặc trưng của một nguyên tố hóa học".`, o:[`electron.`,`proton.`,`neutron.`,`neutron và electron.`], c: 1},
+        {type:'mcq', q:`Kí hiệu hóa học của kim loại sodium là`, o:[`Ca.`,`Na.`,`Al.`,`C.`], c: 1},
+        {type:'mcq', q:`Nguyên tử nào sau đây là nhẹ nhất?`, o:[`Hydrogen.`,`Oxygen.`,`Carbon.`,`Iron.`], c: 0},
+        {type:'mcq', q:`Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây?`, o:[`Ca.`,`S.`,`Na.`,`Mg.`], c: 1},
+        {type:'mcq', q:`Nguyên tử Ca nặng hơn hay nhẹ hơn so với nguyên tử O?`, o:[`Nặng hơn 0,4 lần.`,`Nhẹ hơn 2,5 lần.`,`Nhẹ hơn 0,4 lần.`,`Nặng hơn 2,5 lần.`], c: 3},
+        {type:'mcq', q:`Cho các ký hiệu hóa học sau: Na, ZN, CA, Al, Ba, CU. Các ký hiệu hóa học nào viết sai?`, o:[`Na, ZN, CA.`,`Al, Ba, CU.`,`ZN, CA, Al.`,`ZN, CA, CU.`], c: 3},
+        {type:'mcq', q:`Bốn nguyên tố thiết yếu nhất cho sinh vật là:`, o:[`C, H, Na, Ca.`,`C, H, O, Na.`,`C, H, S, O.`,`C, H, O, N.`], c: 3},
+        {type:'mcq', q:`Một nguyên tố hóa học có nhiều loại nguyên tử có khối lượng khác nhau vì nguyên nhân:`, o:[`Hạt nhân có cùng số neutron nhưng khác nhau về số proton.`,`Hạt nhân có cùng số neutron nhưng khác nhau về số electron.`,`Hạt nhân có cùng số proton nhưng khác nhau về số electron.`,`Hạt nhân có cùng số proton nhưng khác nhau về số neutron.`], c: 3},
+        {type:'mcq', q:`Cho các nguyên tố hóa học sau: hydrogen, magnesium, oxygen, potassium, silicon, sulfur. Số nguyên tố có kí hiệu hóa học gồm 1 chữ cái là`, o:[`2.`,`3.`,`4.`,`1.`], c: 2},
+        {type:'mcq', q:`Biết 3 nguyên tử nguyên tố X có khối lượng bằng 4,5 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây?`, o:[`Ca.`,`S.`,`Na.`,`Mg.`], c: 3},
+        {type:'mcq', q:`Nguyên tố hóa học tham gia trong cấu tạo của xương và răng của người và động vật là`, o:[`Ca.`,`Ba.`,`Na.`,`Mg.`], c: 0},
+        {type:'mcq', q:`Cho các nguyên tố hóa học sau: hydrogen, carbon, oxygen, sodium, silicon, sulfur, barium. Số nguyên tố có kí hiệu hóa học gồm 2 chữ cái là`, o:[`4.`,`3.`,`2.`,`1.`], c: 1},
+        {type:'mcq', q:`Cho mô hình cấu tạo của các nguyên tử X1, X2, X3 như sau: <br><img src="https://i.postimg.cc/85tDSX96/x1x2x3.jpg" alt="Hình câu 43" style="max-width:100%;height:auto;margin-top:8px;"> Cho biết nguyên tử nào cùng thuộc một nguyên tố hóa học?`, o:[`X1, X2, X3.`,`X1, X2.`,`X1, X3.`,`X2, X3.`], c: 2},
+        {type:'mcq', q:`Nguyên tố hóa học nào có hấp lượng dùng thứ hai trong vỏ trái đất?`, o:[`Silicon.`,`Oxygen.`,`Hydrogen.`,`Carbon.`], c: 0},
+        {type:'mcq', q:`Phát biểu nào dưới đây không đúng?`, o:[`Nguyên tố nitrogen có kí hiệu hóa học là N.`,`Những nguyên tử có cùng số proton thuộc cùng một nguyên tố hóa học.`,`Tên gọi theo IUPAC của nguyên tố có kí hiệu hóa học Ca là Carbon.`,`Bốn nguyên tố carbon, oxygen, hydrogen và nitrogen chiếm khoảng 96% trong lượng cơ thể người.`], c: 2},
+        {type:'mcq', q:`Nguyên tố hóa học chiếm phần trăm khối lượng lớn nhất trong cơ thể người là`, o:[`Carbon.`,`Oxygen.`,`Hydrogen.`,`Nitrogen.`], c: 1},
+        {type:'mcq', q:`Kí hiệu hóa học của nguyên tố lưu huỳnh (sulfur) là`, o:[`Ni.`,`Ag.`,`Fe.`,`S.`], c: 3},
+        {type:'mcq', q:`Kí hiệu hóa học của nguyên tố bạc (silver) là`, o:[`Ag.`,`Ba.`,`Hg.`,`O.`], c: 0},
+        {type:'mcq', q:`Biết nguyên tố X có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của oxygen. X là nguyên tố nào sau đây?`, o:[`Ca.`,`S.`,`Na.`,`Mg.`], c: 1},
+        {type:'mcq', q:`Biết rằng 4 nguyên tử magnesium nặng bằng 3 nguyên tử nguyên tố X. X là nguyên tố nào?`, o:[`C.`,`Si.`,`S.`,`O.`], c: 2},
+        {type:'mcq', q:`Biết nguyên tố Y có khối lượng nguyên tử bằng 2 lần khối lượng nguyên tử của silicon. Y là nguyên tố nào?`, o:[`Cu.`,`Fe.`,`Ca.`,`N.`], c: 1},
+        {type:'mcq', q:`Kí hiệu hóa học của nguyên tố barium là`, o:[`Ag.`,`Ba.`,`Hg.`,`O.`], c: 1},
+        {type:'mcq', q:`Kí hiệu biểu diễn hai nguyên tử oxygen là`, o:[`2O.`,`O₂.`,`2O₂.`,`-O.`], c: 0},
+        {type:'mcq', q:`Các nguyên tố nào sau đây thuộc nhóm VIA trong bảng tuần hoàn các nguyên tố hóa học?`, o:[`Na, H, Mg, Ca.`,`F, Cl, Br, I.`,`O, S, Se, Te.`,`He, Ne, Ar, Kr.`], c: 2},
+        {type:'mcq', q:`Chu kì là tập hợp các nguyên tố hóa học có cùng .... trong nguyên tử theo hàng ngang.`, o:[`số neutron trong hạt nhân.`,`số proton trong hạt nhân.`,`số electron.`,`số lớp electron.`], c: 3},
+        {type:'mcq', q:`Số thứ tự của chu kì trong bảng tuần hoàn nguyên tố hóa học cho ta biết thông tin nào?`, o:[`Số lớp electron trong nguyên tử.`,`Số electron lớp ngoài cùng của nguyên tử.`,`Số điện tích của nguyên tử.`,`Số hạt proton trong hạt nhân nguyên tử.`], c: 0},
+        {type:'mcq', q:`Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì?`, o:[`1 chu kì.`,`3 chu kì.`,`5 chu kì.`,`7 chu kì.`], c: 3},
+        {type:'mcq', q:`Nguyên tố Sodium (Na) có 3 lớp electron và lớp ngoài cùng có 1 electron, nguyên tố Na thuộc nhóm nào?`, o:[`Nhóm IIIA.`,`Nhóm IA.`,`Nhóm IIA.`,`Nhóm VIA.`], c: 1},
+        {type:'mcq', q:`Nguyên tố potassium (K) có 4 lớp electron trong nguyên tử, nguyên tố K thuộc chu kì nào?`, o:[`Chu kì 2.`,`Chu kì 3.`,`Chu kì 4.`,`Chu kì 5.`], c: 2},
+        {type:'mcq', q:`Cho các dãy nguyên tố hóa học sau: Li, Na, ?, Rb, Ce, Fr. Nguyên tố còn thiếu là`, o:[`C.`,`Cl.`,`K.`,`Na.`], c: 2},
+        {type:'mcq', q:`Cho sơ đồ nguyên tử Na (sodium) như sau. Số hạt proton, số hạt electron và số lớp electron của nguyên tử Na là bao nhiêu? <br><img src="https://i.postimg.cc/Gm0WZ1t7/11.jpg" alt="Hình câu 61" style="max-width:100%;height:auto;margin-top:8px;">`, o:[`Số p = 11, số e = 12; 3 lớp electron.`,`Số p = 11, số e = 11; 3 lớp electron.`,`Số p = 11, số e = 12; 4 lớp electron.`,`Số p = 11, số e = 11; 4 lớp electron.`], c: 1},
+        {type:'mcq', q:`Nguyên tố nào sau đây thuộc nhóm IA trong bảng tuần hoàn các nguyên tố hóa học?`, o:[`Li.`,`Al.`,`N.`,`Cl.`], c: 0},
+        {type:'mcq', q:`Nguyên tố nitrogen thuộc nhóm nào trong bảng tuần hoàn nguyên tố hóa học?`, o:[`Nhóm IA.`,`Nhóm IIA.`,`Nhóm VA.`,`Nhóm VIIA.`], c: 2},
+        {type:'mcq', q:`Nguyên tử chlorine (Cl) có 7 electron ở lớp ngoài cùng, nguyên tố Cl thuộc nhóm nào?`, o:[`Nhóm IVA.`,`Nhóm VIIA.`,`Nhóm IIA.`,`Nhóm VIIIA.`], c: 1},
+        {type:'mcq', q:`Trong bảng tuần hoàn nguyên tố hóa học có bao nhiêu chu kì lớn và nhỏ?`, o:[`3 chu kì lớn, 4 chu kì nhỏ.`,`1 chu kì lớn, 6 chu kì nhỏ.`,`5 chu kì lớn, 2 chu kì nhỏ.`,`4 chu kì lớn, 3 chu kì nhỏ.`], c: 3},
+        {type:'mcq', q:`Các nguyên tố nào sau đây thuộc nhóm VIIA trong bảng tuần hoàn các nguyên tố hóa học?`, o:[`C, H, Na, Ca.`,`F, Cl, Br, I.`,`Na, H, S, O.`,`He, Ne, Ar, Kr.`], c: 1},
+        {type:'mcq', q:`Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu nhóm A?`, o:[`2 nhóm.`,`4 nhóm.`,`6 nhóm.`,`8 nhóm.`], c: 3},
+        {type:'mcq', q:`Nguyên tố Magnesium (Mg) có 3 electron trong nguyên tử, nguyên tố Mg thuộc chu kì nào?`, o:[`Chu kì 1.`,`Chu kì 2.`,`Chu kì 3.`,`Chu kì 4.`], c: 2},
+        {type:'mcq', q:`Nguyên tố oxygen (O) có 6 electron ở lớp ngoài cùng, nguyên tố O thuộc nhóm nào?`, o:[`Nhóm IVA.`,`Nhóm VIIIA.`,`Nhóm IIA.`,`Nhóm VIA.`], c: 3},
+        {type:'mcq', q:`Nguyên tố phosphorus (P) thuộc nhóm nào trong bảng tuần hoàn các nguyên tố hóa học?`, o:[`Nhóm IA.`,`Nhóm IIIA.`,`Nhóm VA.`,`Nhóm VIIA.`], c: 2},
+        {type:'mcq', q:`Số thứ tự của nhóm A trong bảng tuần hoàn các nguyên tố hóa học cho ta biết`, o:[`Số lớp electron trong nguyên tử.`,`Số electron lớp ngoài cùng của nguyên tử.`,`Số điện tích hạt nhân của nguyên tử.`,`Số hạt proton trong hạt nhân nguyên tử.`], c: 1},
+        {type:'mcq', q:`Trong bảng tuần hoàn các nguyên tố hóa học có bao nhiêu chu kì lớn?`, o:[`3 chu kì lớn.`,`1 chu kì lớn.`,`5 chu kì lớn.`,`4 chu kì lớn.`], c: 3},
+        {type:'mcq', q:`Nhóm nguyên tố nào sau đây được gọi là nhóm halogen?`, o:[`Nhóm IA.`,`Nhóm IIA.`,`Nhóm IVA.`,`Nhóm VIIA.`], c: 3},
+        {type:'mcq', q:`Cho sơ đồ nguyên tử Ca (calcium) như sau. Số hạt proton, số hạt electron và số lớp electron của nguyên tử Ca là bao nhiêu? <br><img src="https://i.postimg.cc/tR8RCw7b/20.jpg" alt="Hình câu 74" style="max-width:100%;height:auto;margin-top:8px;">`, o:[`Số p = 20, số e = 20; 3 lớp electron.`,`Số p = 20, số e = 20; 4 lớp electron.`,`Số p = 20, số e = 21; 4 lớp electron.`,`Số p = 21, số e = 20; 3 lớp electron.`], c: 1},
+        {type:'mcq', q:`Bảng tuần hoàn các nguyên tố hóa học được sắp xếp theo nguyên tắc`, o:[`nguyên tử khối tăng dần.`,`tính kim loại tăng dần.`,`điện tích hạt nhân tăng dần`,`tính phi kim tăng dần.`], c: 2},
+        {type:'mcq', q:`Số thứ tự chu kì trong bảng hệ thống tuần hoàn cho biết`, o:[`Số thứ tự của nguyên tố.`,`Số hiệu nguyên tử.`,`Số electron lớp ngoài cùng.`,`Số lớp electron.`], c: 3},
+        {type:'mcq', q:`Số thứ tự nhóm A trong bảng hệ thống tuần hoàn cho biết:`, o:[`Số electron lớp ngoài cùng.`,`Số lớp electron.`,`Số hiệu nguyên tử.`,`Số thứ tự của nguyên tố.`], c: 0},
+        {type:'mcq', q:`Trong bảng hệ thống tuần hoàn các nguyên tố hóa học, số chu kì nhỏ và chu kì lớn là`, o:[`3 và 3.`,`4 và 3.`,`3 và 4.`,`4 và 4.`], c: 2},
+        {type:'mcq', q:`Chu kì 3 của bảng hệ thống tuần hoàn có`, o:[`2 nguyên tố.`,`8 nguyên tố.`,`10 nguyên tố.`,`18 nguyên tố.`], c: 1},
+        {type:'mcq', q:`Chu kì 4 của bảng hệ thống tuần hoàn có`, o:[`2 nguyên tố.`,`18 nguyên tố.`,`36 nguyên tố.`,`20 nguyên tố.`], c: 1},
+        {type:'mcq', q:`Nguyên tố X ở chu kì 3 nhóm IA, số đơn vị điện tích hạt nhân của nguyên tố X là`, o:[`Z = 13.`,`Z = 10.`,`Z = 12.`,`Z = 11.`], c: 3},
+        {type:'mcq', q:`Biết cấu tạo nguyên tử X như sau: có 3 lớp electron, lớp ngoài cùng có 6 electron. Dựa vào bảng tuần hoàn thì nguyên tố X là`, o:[`Chlorine (Z=17).`,`Phosphorus (Z=15).`,`Nitrogen (Z=7).`,`Sulfur (Z=16).`], c: 3},
+        {type:'mcq', q:`Nguyên tử của nguyên tố X có 3 lớp electron, lớp electron ngoài cùng có 7 electron. Vị trí của nguyên tố X trong bảng tuần hoàn là`, o:[`chu kỳ 3, nhóm VI.`,`chu kỳ 7, nhóm III.`,`chu kỳ 3, nhóm VII.`,`chu kỳ 7, nhóm VI.`], c: 2},
+        {type:'mcq', q:`Nguyên tử của nguyên tố Y có 2 lớp electron, trong đó lớp ngoài cùng có 4 electron. Vị trí của Y trong bảng tuần hoàn là`, o:[`chu kỳ 2, nhóm IVA.`,`chu kỳ 4, nhóm IIA.`,`chu kỳ 2, nhóm IIA.`,`chu kỳ 4, nhóm IVA.`], c: 0},
+        {type:'mcq', q:`Hạt nhân nguyên tử X có 15 proton. Vị trí của X trong bảng tuần hoàn là`, o:[`số thứ tự 15, chu kì 3, nhóm VIIA.`,`số thứ tự 15, chu kì 2, nhóm VA.`,`số thứ tự 15, chu kì 3, nhóm VA.`,`số thứ tự 15, chu kì 4, nhóm VA.`], c: 2},
+        {type:'mcq', q:`Số hiệu nguyên tử của nguyên tố Y là 19. Vị trí của Y trong bảng tuần hoàn là`, o:[`số thứ tự 19, chu kì 3, nhóm VIIA.`,`số thứ tự 19, chu kì 4, nhóm IA.`,`số thứ tự 19, chu kì 4, nhóm IIA.`,`số thứ tự 19, chu kì 3, nhóm IA.`], c: 1},
+        {type:'mcq', q:`Cho các nguyên tố sau: Ge, S, Br, Pb, C, Mo, Ba, Ar, Hg. Số nguyên tố kim loại, phi kim, khí hiếm lần lượt là`, o:[`4, 4, 1.`,`4, 3, 2.`,`5, 2, 2.`,`5, 3, 1.`], c: 3},
+        {type:'mcq', q:`Cho các phát biểu sau: 1. Bảng tuần hoàn hiện nay sắp xếp theo chiều tăng dần khối lượng nguyên tử. 2. Nguyên tử các nguyên tố trong cùng một hàng có cùng số lớp electron. 3. Số thứ tự của nhóm A luôn luôn bằng số electron ở lớp vỏ ngoài cùng của nguyên tử nguyên tố thuộc nhóm đó. 4. Các nguyên tố nhóm halogen hầu hết là các nguyên tố kim loại. 5. Tất cả các nguyên tố nhóm VIIIA đều là khí hiếm. Số phát biểu đúng là`, o:[`1.`,`2.`,`3.`,`4.`], c: 1},
+        {type:'mcq', q:`Phát biểu nào sau đây là đúng?`, o:[`Bảng tuần hoàn gồm 116 nguyên tố hóa học.`,`Bảng tuần hoàn gồm 6 chu kì.`,`Bảng tuần hoàn gồm 8 nhóm A và 8 nhóm B.`,`Các nguyên tố trong bảng tuần hoàn được xếp theo chiều tăng dần khối lượng nguyên tử.`], c: 2},
+        {type:'mcq', q:`Vị trí kim loại kiềm trong bảng tuần hoàn các nguyên tố hóa học thường`, o:[`ở đầu nhóm.`,`ở cuối nhóm.`,`ở đầu chu kì.`,`ở cuối chu kì.`], c: 2}
+        ]
+      },
+
+      'ly': {
+        name: 'LY',
+        fullName: 'Vật lý',
+        questions: [
+{type:'mcq', q:`Đồ thị quãng đường – thời gian của vật chuyển động thẳng với tốc độ không đổi có dạng là`, o:[`đường thẳng song song với trục thời gian.`,`đường thẳng nằm nghiêng góc với trục thời gian.`,`đường cong.`,`đường gấp khúc.`], c:1},
+{type:'mcq', q:`Dụng cụ để xác định sự nhanh chậm của chuyển động của một vật gọi là`, o:[`Vôn kế`,`Nhiệt kế`,`Tốc kế`,`Ampe kế`], c:2},
+{type:'mcq', q:`Một ô tô chuyển động thẳng đều trên đoạn đường từ địa điểm M đến địa điểm N với thời gian dự tính là t. Nếu giảm vận tốc của ô tô lên 1,5 lần thì thời gian t`, o:[`giảm 2/3 lần`,`tăng 4/3 lần`,`giảm 3/4 lần`,`tăng 3/2 lần`], c:0},
+{type:'mcq', q:`Sắp xếp các tốc độ sau theo thứ tự tăng dần: 5,5 m/s; 18 km/h; 240 m/min`, o:[`5,5 m/s; 18 km/h; 240 m/min`,`240 m/min; 18 km/h; 5,5 m/s`,`5,5 m/s; 240 m/min; 18 km/h`,`18 km/h; 5,5 m/s; 240 m/min`], c:1},
+{type:'mcq', q:`Một ô tô lên dốc với tốc độ 16 km/h, khi xuống lại dốc đó, ô tô này chuyển động nhanh gấp đôi khi lên dốc. Tốc độ trung bình của ô tô trong cả hai đoạn đường lên dốc và xuống dốc là`, o:[`24 km/h`,`32 km/h`,`21,33 km/h`,`26 km/h`], c:2},
+{type:'mcq', q:`Bảng kết quả đo thời gian chạy 100 m của một học sinh trong các lần chạy khác nhau:<br>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr><th style="border:1px solid #ccc;padding:6px">Lần chạy</th><th style="border:1px solid #ccc;padding:6px">1</th><th style="border:1px solid #ccc;padding:6px">2</th><th style="border:1px solid #ccc;padding:6px">3</th></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">Thời gian (s)</td><td style="border:1px solid #ccc;padding:6px">14,25</td><td style="border:1px solid #ccc;padding:6px">14,15</td><td style="border:1px solid #ccc;padding:6px">14,35</td></tr>
+</table>
+<br>Tốc độ trung bình của học sinh này là`, o:[`7,02 m/s.`,`8,01 m/s.`,`6,90 m/s.`,`9,03 m/s.`], c:0},
+{type:'mcq', q:`<img src="https://i.postimg.cc/qMx6WpMG/cau7.jpg" alt="Hình câu 7" style="max-width:100%;height:auto;margin-top:8px;"> <br>Cho đồ thị: dựa vào hình, thông tin nào sai?`, o:[`Tốc độ của vật là 2 m/s.`,`Sau 2s, vật đi được 4 m.`,`Từ giây thứ 4 đến giây thứ 6, vật đi được 12 m.`,`Thời gian để vật đi được 8 m là 4 s.`], c:2},
+{type:'mcq', q:`Để đo tốc độ của một người chạy cự li ngắn, ta cần những dụng cụ đo nào?`, o:[`Thước cuộn và đồng hồ bấm giây.`,`Đồng hồ đo thời gian hiển số kết nối với cổng quang điện.`,`Thước thẳng và đồng hồ treo tường.`,`Cổng quang điện và thước cuộn.`], c:0},
+{type:'mcq', q:`Trong phòng thí nghiệm, dụng cụ nào thường dùng để đo tốc độ chuyển động nhanh và nhỏ?`, o:[`Thước, cổng quang điện và đồng hồ bấm giây.`,`Thước, đồng hồ đo thời gian hiển số kết nối với cổng quang điện.`,`Thước, đồng hồ đo thời gian hiển số.`,`Cổng quang điện và đồng hồ bấm giây.`], c:1},
+{type:'mcq', q:`Trường hợp nào nên sử dụng thước đo và đồng hồ bấm giờ để đo tốc độ của vật?`, o:[`Đo tốc độ của viên bi chuyển động trên bàn.`,`Đo tốc độ bơi của vận động viên.`,`Đo tốc độ rơi của vật trong phòng thí nghiệm.`,`Đo tốc độ bay hơi của nước.`], c:0},
+{type:'mcq', q:`Muốn đo được tốc độ của một vật đi trên một quãng đường nào đó, ta phải đo`, o:[`Độ dài quãng đường và thời gian vật đi hết quãng đường đó.`,`Độ dài quãng đường mà vật đó phải đi.`,`Thời gian mà vật đó đi hết quãng đường.`,`Quãng đường và hướng chuyển động của vật.`], c:0},
+{type:'mcq', q:`Sắp xếp các thao tác đúng khi sử dụng đồng hồ bấm ghi thời gian: (1) RESET về 0; (2) STOP khi kết thúc; (3) START để bắt đầu. Thứ tự đúng là`, o:[`(1), (2), (3).`,`(3), (1), (2).`,`(1), (3), (2).`,`(3), (2), (1).`], c:2},
+{type:'mcq', q:`Khi dùng đồng hồ bấm giây đo thời gian trong phòng thực hành, thao tác nào không đúng?`, o:[`Dùng thước đo quãng đường s; xác định vạch xuất phát và vạch đích.`,`Dùng đồng hồ bấm giây để đo thời gian t từ khi vật bắt đầu chuyển động đến khi vượt vạch đích.`,`Dùng công thức v = s/t tính tốc độ.`,`Dùng hồ cân để ở chế độ A ↔ B.`], c:3},
+{type:'mcq', q:`Trong thí nghiệm dùng đồng hồ hiển số và cổng quang điện, cần bao nhiêu cổng quang điện?`, o:[`1.`,`2.`,`3.`,`4.`], c:1},
+{type:'mcq', q:`Để kiểm tra tốc độ phương tiện giao thông, ta sử dụng thiết bị nào?`, o:[`Đồng hồ bấm giây.`,`Đồng hồ đo thời gian hiển số dùng cổng quang điện.`,`Đồng hồ hẹn giờ.`,`Thiết bị "bắn tốc độ".`], c:3},
+{type:'mcq', q:`<img src="https://i.postimg.cc/9XGDqcTC/cau16.jpg" alt="Hình câu 16" style="max-width:100%;height:auto;margin-top:8px;"> <br>Cho đồ thị quãng đường-thời gian: tốc độ của xe đạp trên đoạn BC là`, o:[`5 km/h`,`10 km/h`,`15 km/h`,`20 km/h`], c:1},
+{type:'mcq', q:`<img src="https://i.postimg.cc/RFwZfTWh/cau17.jpg" alt="Hình câu 17" style="max-width:100%;height:auto;margin-top:8px;"> <br>Cho đồ thị quãng đường-thời gian của con chuột: đoạn chuyển động với tốc độ lớn nhất là`, o:[`OA`,`AB`,`BC`,`CD`], c:1},
+{type:'mcq', q:`<img src="https://i.postimg.cc/5tC4dmqs/cau18.jpg" alt="Hình câu 18" style="max-width:100%;height:auto;margin-top:8px;"> <br>Cho đồ thị: khoảng thời gian xe dừng lại là`, o:[`0,5h`,`1h`,`1,5h`,`2h`], c:0},
+{type:'mcq', q:`Bảng 11.1: Khoảng cách an toàn tối thiểu theo tốc độ:<br>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr><th style="border:1px solid #ccc;padding:6px">Tốc độ lưu hành (km/h)</th><th style="border:1px solid #ccc;padding:6px">Khoảng cách an toàn tối thiểu (m)</th></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">v = 60</td><td style="border:1px solid #ccc;padding:6px">35</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">60 &lt; v ≤ 80</td><td style="border:1px solid #ccc;padding:6px">55</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">80 &lt; v ≤ 100</td><td style="border:1px solid #ccc;padding:6px">70</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">100 &lt; v ≤ 120</td><td style="border:1px solid #ccc;padding:6px">100</td></tr>
+</table>
+<br>Theo bảng trên: khoảng cách an toàn với tốc độ 20 m/s (≈72 km/h) là`, o:[`35 m`,`55 m`,`70 m`,`100 m`], c:1},
+{type:'mcq', q:`Bảng 11.1: Khoảng cách an toàn tối thiểu theo tốc độ:<br>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;">
+  <tr><th style="border:1px solid #ccc;padding:6px">Tốc độ lưu hành (km/h)</th><th style="border:1px solid #ccc;padding:6px">Khoảng cách an toàn tối thiểu (m)</th></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">v = 60</td><td style="border:1px solid #ccc;padding:6px">35</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">60 &lt; v ≤ 80</td><td style="border:1px solid #ccc;padding:6px">55</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">80 &lt; v ≤ 100</td><td style="border:1px solid #ccc;padding:6px">70</td></tr>
+  <tr><td style="border:1px solid #ccc;padding:6px">100 &lt; v ≤ 120</td><td style="border:1px solid #ccc;padding:6px">100</td></tr>
+</table>
+<br>Theo bảng trên: khoảng cách an toàn với tốc độ 25 m/s (≈90 km/h) là`, o:[`35 m`,`55 m`,`70 m`,`100 m`], c:2},
+{type:'mcq', q:`Cho biến báo tốc độ (hình): <img src="https://i.postimg.cc/nLvyGS1c/cau2122.jpg" alt="Hình câu 21/22" style="max-width:100%;height:auto;margin-top:8px;"> <br>Ý nghĩa của con số 70 là`, o:[`Tốc độ tối đa khi trời mưa là 70 km/h`,`Tốc độ tối đa khi trời nắng là 70 km/h`,`Tốc độ tối thiểu khi trời mưa là 70 km/h`,`Tốc độ tối thiểu khi trời nắng là 70 km/h`], c:3},
+{type:'mcq', q:`Cho cùng biển: Ý nghĩa của con số 100 là`, o:[`Tốc độ tối đa khi trời mưa là 100 km/h`,`Tốc độ tối đa khi trời nắng là 100 km/h`,`Tốc độ tối thiểu khi trời mưa là 100 km/h`,`Tốc độ tối thiểu khi trời nắng là 100 km/h`], c:0},
+{type:'mcq', q:`Phát biểu không đúng về khoảng cách an toàn giữa các xe đang lưu thông:`, o:[`Khoảng cách an toàn tối thiểu được quy định bởi luật giao thông.`,`Khoảng cách an toàn được quy định bởi luật giao thông bộ.`,`Tốc độ càng cao thì khoảng cách an toàn phải lớn hơn.`,`Trời mưa, lái xe nên giảm khoảng cách an toàn.`], c:1},
+{type:'mcq', q:`Thiết bị bắn tốc độ sử dụng trong giao thông gồm`, o:[`camera và máy tính.`,`thước và máy tính.`,`đồng hồ và máy tính.`,`camera và đồng hồ.`], c:0},
+{type:'mcq', q:`Thiết bị bắn tốc độ dùng để`, o:[`Đo thời gian chuyển động của phương tiện.`,`Kiểm tra hành trình di chuyển của phương tiện.`,`Đo quãng đường chuyển động của phương tiện.`,`Kiểm tra tốc độ của phương tiện trên đường bộ.`], c:3},
+{type:'mcq', q:`Tại sao khi xe đang chạy, người lái cần điều khiển tốc độ để giữ khoảng cách an toàn?`, o:[`Để đảm bảo tầm nhìn với xe phía trước.`,`Để tránh va chạm khi xe trước đột ngột dừng lại.`,`Để tránh bụi của xe phía trước.`,`Để giảm thiểu tác dụng.`], c:1},
+{type:'mcq', q:`Thiết bị "bắn tốc độ" ghi thời gian ô tô chạy giữa hai mốc 10 m là 0,56 s. Tốc độ của ô tô là bao nhiêu?`, o:[`64,3 km/h`,`60,3 km/h`,`34,3 km/h`,`30,3 km/h`], c:0},
+{type:'mcq', q:`Thiết bị bắn tốc độ: ô tô chạy giữa hai mốc 5 m trong 0,2 s. Nếu giới hạn 22 m/s, nhận xét nào đúng?`, o:[`Tốc độ ô tô là 20 m/s và không vượt tốc độ.`,`Tốc độ ô tô là 25 m/s và có vượt tốc độ.`,`Tốc độ ô tô là 28 m/s và có vượt tốc độ.`,`Không xác định.`], c:1},
+{type:'mcq', q:`Các biển báo khoảng cách trên đường cao tốc dùng để làm gì?`, o:[`Giúp lái xe ước lượng khoảng cách để giữ an toàn.`,`Để các xe đi đúng hướng.`,`Để các xe không vượt quá tốc độ.`,`Để các xe không vượt quá thời gian.`], c:0},
+{type:'mcq', q:`<img src="https://i.postimg.cc/tJfvjFzz/cau30.jpg" alt="Hình câu 30" style="max-width:100%;height:auto;margin-top:8px;"> <br>Trên đoạn đường có biển này, phương tiện được đi với tốc độ tối đa và tối thiểu là bao nhiêu?`, o:[`Tối đa 100 km/h, tối thiểu 60 km/h.`,`Tối đa 60 km/h, tối thiểu 60 km/h`,`Tối đa 100 km/h, tối thiểu 100 km/h`,`Tối đa 60 km/h, tối thiểu 100 km/h`], c:0},
+{type:'mcq', q:`Quãng đường CD có đặt thiết bị bắn tốc độ, hai mốc cách nhau 30 m, giới hạn 60 km/h. Khoảng thời gian đi giữa hai mốc để vượt quá tốc độ là`, o:[`Nhỏ hơn 1,8 s.`,`Lớn hơn 1,8 s.`,`Lớn hơn 0,5 s.`,`Nhỏ hơn 0,5 s.`], c:0},
+{type:'mcq', q:`Quãng đường AB có đặt thiết bị, hai mốc cách 8 m, giới hạn 45 km/h. Khoảng thời gian đi giữa hai mốc để không vượt quá tốc độ là`, o:[`Nhỏ hơn 0,64 s.`,`Lớn hơn 0,64 s.`,`Lớn hơn 0,7 s.`,`Nhỏ hơn 0,7 s.`], c:1},
+{type:'mcq', q:`Sóng âm không truyền được trong`, o:[`chất rắn.`,`chất rắn và chất lỏng.`,`chân không.`,`chất rắn, chất lỏng và chất khí.`], c:2},
+{type:'mcq', q:`Phát biểu nào không đúng về sóng âm?`, o:[`Sóng âm mang năng lượng.`,`Sóng âm do vật dao động tạo ra.`,`Chất rắn truyền âm kém hơn chất khí.`,`Sóng âm không truyền được trong chân không.`], c:2},
+{type:'mcq', q:`Môi trường truyền âm tốt nhất là`, o:[`Không khí.`,`Nước.`,`Gỗ.`,`Thép.`], c:3},
+{type:'mcq', q:`Gọi t1,t2,t3 là thời gian âm truyền trong rắn, lỏng, khí. Thứ tự tăng dần là`, o:[`t1 < t2 < t3`,`t3 < t2 < t1`,`t2 < t1 < t3`,`t3 < t1 < t2`], c:0},
+{type:'mcq', q:`Chọn câu không đúng (dao động):`, o:[`Sự chuyển động qua lại vị trí cân bằng gọi là dao động.`,`Ba chiếc kim đồng hồ đang quay, chứng tỏ đang dao động.`,`Nếu thổi vào miệng lọ, cột không khí dao động và phát ra âm.`,`Khi một vật phát ra âm, chắc chắn vật dao động.`], c:1},
+{type:'mcq', q:`Khi gõ trống, vật nào đã phát ra âm?`, o:[`Tay người gõ trống`,`Dùi trống`,`Mặt trống`,`Không khí xung quanh trống.`], c:2},
+{type:'mcq', q:`Khi chơi đàn guitar, nguồn âm là`, o:[`Tay bấm dây`,`Tay gảy dây`,`Hộp đàn`,`Dây đàn`], c:3},
+{type:'mcq', q:`Khi gõ tay xuống bàn, vật nào dao động phát ra âm?`, o:[`Mặt bàn`,`Tay gõ`,`Cả tay và mặt bàn`,`Lớp không khí giữa`], c:2},
+{type:'mcq', q:`Nghe tiếng ca sĩ trên tivi, nguồn âm thực sự là`, o:[`Người ca sĩ`,`Sóng vô tuyến`,`Màn hình tivi`,`Màng loa tivi`], c:3},
+{type:'mcq', q:`Tiếng sáo được tạo ra bởi dao động của`, o:[`các ngón tay`,`môi người thổi`,`cột không khí trong ống sáo`,`thành ống sáo`], c:2},
+{type:'mcq', q:`Độ lệch lớn nhất của vật dao động so với vị trí cân bằng gọi là`, o:[`tần số`,`vận tốc truyền`,`biên độ dao động`,`tốc độ`], c:2},
+{type:'mcq', q:`Khi biên độ dao động càng lớn thì`, o:[`âm phát ra càng to`,`âm phát ra càng nhỏ`,`âm phát ra càng bổng`,`âm phát ra càng trầm`], c:0},
+{type:'mcq', q:`Bốn con lắc lệch góc 30°,40°,45°,60°; con lắc có biên độ lớn nhất là`, o:[`30°`,`40°`,`45°`,`60°`], c:3},
+{type:'mcq', q:`<img src="https://i.postimg.cc/4xpLD7Hv/cau46.jpg" alt="Hình câu 46" style="max-width:100%;height:auto;margin-top:8px;"> <br>Gõ búa càng mạnh lên âm thoa thì`, o:[`âm càng to.`,`gõ càng nhiều âm càng to.`,`gõ mạnh âm càng cao.`,`âm to khi âm thoa lớn.`], c:0},
+{type:'mcq', q:`Sắp xếp các âm theo thứ tự từ nhỏ đến lớn (giả sử):`, o:[`Tiếng xe, tiếng trẻ đọc, tiếng thì thầm, tiếng máy móc.`,`Tiếng thì thầm, tiếng trẻ đọc, tiếng xe, tiếng máy móc.`,`Tiếng máy móc, tiếng xe, tiếng trẻ, thì thầm.`,`Tiếng trẻ, thì thầm, tiếng xe, máy móc.`], c:1},
+{type:'mcq', q:`Tại sao dùng dùi gõ mạnh mặt trống nghe to hơn?`, o:[`Vì tần số tăng.`,`Vì tần số giảm.`,`Vì biên độ tăng.`,`Vì biên độ giảm.`], c:2},
+{type:'mcq', q:`<img src="https://i.postimg.cc/9MQLwLgW/cau49.jpg" alt="Hình câu 49" style="max-width:100%;height:auto;margin-top:8px;"> <br>Đồ thị dao động âm: đoạn mô tả biên độ âm là`, o:[`(1)`,`(2)`,`(3)`,`(4)`], c:1},
+{type:'mcq', q:`Khi âm truyền đi xa, đại lượng nào thay đổi?`, o:[`Độ cao.` ,`Tần số.` ,`Biên độ.` ,`Không có đại lượng thay đổi.`], c:2}
+        ]
+      },
+
+
       'tinhoc': {
         name: 'Tin học',
         fullName: 'Tin học lớp 7 - Ôn tập HKI',
@@ -550,6 +923,7 @@
           }
         ] // end tin hoc questions
       } // end tinhoc
+	  
     }; // end subjectData
 
     // NOTE: To keep this response focused on the new Tin học addition, I left the original
@@ -580,7 +954,10 @@
     const selectGDCD = document.getElementById('selectGDCD');
     const selectCongNghe = document.getElementById('selectCongNghe');
     const selectTinHoc = document.getElementById('selectTinHoc');
-    
+    const selectSinh = document.getElementById('selectSinh');
+	const selectHoa = document.getElementById('selectHoa');
+	const selectLy = document.getElementById('selectLy');
+
     const backToSubject = document.getElementById('backToSubject');
     const subjectTitle = document.getElementById('subjectTitle');
     const fullModeDesc = document.getElementById('fullModeDesc');
@@ -705,7 +1082,7 @@
 
           const qTitle = document.createElement('h3');
           qTitle.className = 'text-lg font-semibold mb-3';
-          qTitle.textContent = `Câu ${qi+1}. ${q.q}`;
+          qTitle.innerHTML = `Câu ${qi+1}. ${q.q}`;
           qWrap.appendChild(qTitle);
 
           if (q.type === 'mcq') {
@@ -1212,6 +1589,27 @@ selectTinHoc.addEventListener('click', () => {
   currentSubject = 'tinhoc';
   subjectTitle.textContent = subjectData.tinhoc.fullName;
   fullModeDesc.textContent = `Làm hết ${subjectData.tinhoc.questions.length} câu hỏi`;
+  subjectScreen.classList.add('hidden');
+  modeScreen.classList.remove('hidden');
+});
+selectSinh.addEventListener('click', () => {
+  currentSubject = 'sinh';
+  subjectTitle.textContent = subjectData.sinh.fullName || 'Sinh học';
+  fullModeDesc.textContent = `Làm hết ${subjectData.sinh.questions ? subjectData.sinh.questions.length : '60'} câu hỏi`;
+  subjectScreen.classList.add('hidden');
+  modeScreen.classList.remove('hidden');
+});
+selectHoa.addEventListener('click', () => {
+  currentSubject = 'hoa';
+  subjectTitle.textContent = subjectData.hoa.fullName || 'Hóa học';
+  fullModeDesc.textContent = `Làm hết ${subjectData.hoa.questions ? subjectData.hoa.questions.length : '90'} câu hỏi`;
+  subjectScreen.classList.add('hidden');
+  modeScreen.classList.remove('hidden');
+});
+selectLy.addEventListener('click', () => {
+  currentSubject = 'ly';
+  subjectTitle.textContent = subjectData.ly.fullName || 'Vật lý';
+  fullModeDesc.textContent = `Làm hết ${subjectData.ly.questions ? subjectData.ly.questions.length : '50'} câu hỏi`;
   subjectScreen.classList.add('hidden');
   modeScreen.classList.remove('hidden');
 });
