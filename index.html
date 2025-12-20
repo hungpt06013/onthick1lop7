@@ -1210,7 +1210,7 @@
 
         const qTitle = document.createElement('h3');
         qTitle.className = 'text-2xl font-bold text-gray-800 mb-6';
-        qTitle.textContent = q.q;
+        qTitle.innerHTML = q.q;
         qWrap.appendChild(qTitle);
 
         if (q.type === 'mcq') {
@@ -1370,7 +1370,7 @@
           qWrap.className = 'mb-6 pb-4 border-b';
           const qTitle = document.createElement('h3');
           qTitle.className = 'text-lg font-semibold mb-3';
-          qTitle.textContent = `Câu ${qi+1}. ${q.q}`;
+          qTitle.innerHTML = `Câu ${qi+1}. ${q.q}`;
           qWrap.appendChild(qTitle);
 
           if (q.type === 'mcq') {
@@ -1454,7 +1454,7 @@
           const qWrap = document.createElement('div');
           const qTitle = document.createElement('h3');
           qTitle.className = 'text-2xl font-bold text-gray-800 mb-6';
-          qTitle.textContent = q.q;
+          qTitle.innerHTML = q.q;
           qWrap.appendChild(qTitle);
           const opts = document.createElement('div');
           opts.className = 'space-y-3 mb-6';
@@ -1491,7 +1491,7 @@
           const qWrap = document.createElement('div');
           const qTitle = document.createElement('h3');
           qTitle.className = 'text-2xl font-bold text-gray-800 mb-6';
-          qTitle.textContent = q.q;
+          qTitle.innerHTML = q.q;
           qWrap.appendChild(qTitle);
           const list = document.createElement('div'); list.className = 'space-y-3 mb-6';
           q.statements.forEach((stmt,sidx) => {
