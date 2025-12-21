@@ -1037,9 +1037,9 @@
     }
 // --- Thêm hàm này trước renderQuiz()
 function htmlDecode(input) {
+  if (!input) return '';
   const d = document.createElement('div');
   d.innerHTML = input;
-  // trả lại chuỗi đã giải mã (an toàn nếu input là chuỗi)
   return d.innerHTML;
 }
 
