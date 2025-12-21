@@ -5,9 +5,68 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Bài Kiểm Tra Cuối Kì 1 - Đa Môn</title>
   <script src="https://cdn.tailwindcss.com"></script>
+	<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+// Cấu hình Firebase (thay bằng config của bạn)
+const firebaseConfig = {
+  apiKey: "AIzaSyB0cL2gvBQHfz6oxrOVWDOR0h2xb822HDM",
+  authDomain: "bruh-68680.firebaseapp.com",
+databaseURL: "https://bruh-68680-default-rtdb.firebaseio.com",
+  projectId: "bruh-68680",
+  storageBucket: "bruh-68680.firebasestorage.app",
+  messagingSenderId: "322108184836",
+  appId: "1:322108184836:web:f3a60b8fbd50ac1387d851"
+};
+
+// Khởi tạo Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const presenceRef = database.ref('presence');
+
+// Tạo ID ngẫu nhiên cho user
+const userId = 'user_' + Math.random().toString(36).substr(2, 9);
+const myPresenceRef = presenceRef.child(userId);
+
+// Đánh dấu online khi vào trang
+myPresenceRef.set({
+  online: true,
+  timestamp: Date.now()
+});
+
+// Đánh dấu offline khi rời trang
+myPresenceRef.onDisconnect().remove();
+
+// Lắng nghe số người online
+presenceRef.on('value', (snapshot) => {
+  const onlineUsers = snapshot.numChildren();
+  document.getElementById('onlineCount').textContent = onlineUsers;
+});
+
+// Cleanup khi tắt tab/trình duyệt
+window.addEventListener('beforeunload', () => {
+  myPresenceRef.remove();
+});
+</script>
 </head>
 <body class="antialiased bg-gradient-to-br from-blue-50 to-green-50 min-h-screen p-6">
+<div style="position:fixed;top:10px;right:10px;z-index:9999;background:rgba(0,0,0,0.8);color:white;padding:10px 20px;border-radius:20px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <svg width="12" height="12" style="animation:blink 1.5s infinite;">
+    <circle cx="6" cy="6" r="6" fill="#22c55e"/>
+  </svg>
+  <span style="font-size:14px;font-weight:600;">
+    <span id="onlineCount">0</span> người đang online
+  </span>
+</div>
 
+<style>
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+</style>
 
   <!-- SUBJECT SELECTION SCREEN -->
   <div id="subjectScreen" class="min-h-screen flex items-center justify-center">
