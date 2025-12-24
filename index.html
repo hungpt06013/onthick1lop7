@@ -147,6 +147,21 @@
   </div>
 </button>
 <!-- --- /THÊM MÔN LÝ --- -->
+<!-- Thêm nút Lịch sử (Đ/S) vào grid môn học -->
+<button id="openHistoryBtn" class="group relative overflow-hidden bg-gradient-to-br from-red-600 to-red-700 text-white p-8 rounded-xl hover:from-red-700 hover:to-red-800 transition-all transform hover:scale-[1.02] shadow-lg">
+  <div class="relative z-10">
+    <div class="flex items-center justify-center mb-4">
+      <!-- Icon sách / lịch sử -->
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20l9-5-9-5-9 5 9 5z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12l9-5-9-5-9 5 9 5z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Lịch sử (Đ/S)</h3>
+    <p class="text-red-100 text-sm">Ôn tập lịch sử — đúng / sai</p>
+    <div class="mt-4 text-xs bg-white/20 rounded-full px-3 py-1 w-fit mx-auto">Mở trong trang</div>
+  </div>
+</button>
 
 
           </div>
@@ -1835,6 +1850,23 @@ setTimeout(() => {
 console.log('💡 Lệnh hữu ích:');
 console.log('   - cleanupOldPresence() : Xóa presence data cũ hơn 1 phút');
 console.log('   - resetOnlineCount() : Reset toàn bộ (cẩn thận!)');
+</script>
+<!-- Container để nhúng nội dung quizls.html -->
+<div id="embeddedHistoryWrap" class="fixed inset-0 z-50 bg-white/90 hidden overflow-auto p-6">
+  <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 relative">
+    <button id="closeHistoryBtn" class="absolute top-4 right-4 bg-gray-100 px-3 py-2 rounded-lg shadow hover:bg-gray-200">Đóng ✕</button>
+    <div id="embeddedHistory" class="prose"></div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const openHistoryBtn = document.getElementById('openHistoryBtn');
+  if (openHistoryBtn) {
+    openHistoryBtn.addEventListener('click', () => {
+      window.location.href = 'quizls.html';
+    });
+  }
+});
 </script>
 
 </body>
